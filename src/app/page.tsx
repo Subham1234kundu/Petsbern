@@ -5,7 +5,7 @@ import HeroSlider from "@/components/HeroSlider";
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans pb-12">
-      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+      <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <HeroSlider />
 
