@@ -376,8 +376,8 @@ export default function AboutUsPage() {
                   'border-t'
                 }`}
               >
-                <div className="w-[84px] h-[84px] rounded-2xl bg-[#FFF9E6] flex items-center justify-center flex-shrink-0">
-                  <img src={box.image} alt={box.title} className="w-10 h-10 object-contain" />
+                <div className="w-[84px] h-[84px] flex items-center justify-center flex-shrink-0">
+                  <img src={box.image} alt={box.title} className="w-[84px] h-[84px] object-contain" />
                 </div>
                 <div className="flex flex-col gap-4">
                   <h3 className="text-black font-bold text-[22px] leading-tight">
