@@ -14,8 +14,7 @@ export default function HeroSlider() {
 
   return (
     <div
-      className="relative w-full rounded-t-lg overflow-hidden"
-      style={{ height: "500px", maxHeight: "500px" }}
+      className="relative w-full rounded-t-lg overflow-hidden h-[400px] sm:h-[450px] lg:h-[500px]"
     >
       {/* Slide 1 */}
       <div
@@ -130,56 +129,56 @@ export default function HeroSlider() {
 
         {/* Floating breed buttons Left */}
         <div className="absolute top-[55%] left-[4%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             LABRADOR
           </button>
         </div>
         <div className="absolute top-[66%] left-[4%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             GOLDEN
           </button>
         </div>
         <div className="absolute top-[77%] left-[4%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             COCKER SPANIEL
           </button>
         </div>
 
         <div className="absolute top-[61%] left-[20%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             BEAGLE
           </button>
         </div>
         <div className="absolute top-[72%] left-[20%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             PUG
           </button>
         </div>
 
         {/* Floating breed buttons Right */}
         <div className="absolute top-[61%] right-[20%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             ROTTWEILER
           </button>
         </div>
         <div className="absolute top-[72%] right-[20%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             DOBERMAN
           </button>
         </div>
 
         <div className="absolute top-[55%] right-[4%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             HUSKY
           </button>
         </div>
         <div className="absolute top-[66%] right-[4%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             GERMAN
           </button>
         </div>
         <div className="absolute top-[77%] right-[4%] z-40">
-          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[10px] sm:text-[11px] w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <button className="bg-white text-black font-bold py-1 rounded-full border border-gray-100 shadow-[0_0_15px_rgba(252,138,227,0.4)] text-[7px] sm:text-[9px] lg:text-[11px] w-[90px] sm:w-[110px] lg:w-[140px] text-center hover:scale-110 hover:ring-4 hover:ring-white/40 transition-all" style={{ fontFamily: "'Inter', sans-serif" }}>
             SHIH TZU
           </button>
         </div>
@@ -233,23 +232,23 @@ export default function HeroSlider() {
           </div>
 
           {/* Breed Buttons Grid */}
-          <div className="flex flex-col gap-4 mt-2">
-            <div className="flex flex-row flex-wrap gap-4 w-full">
-              <button className="bg-[#5B92BD] text-white font-bold py-1.5 rounded-full text-[11px] sm:text-[13px] uppercase tracking-wider border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <div className="flex flex-col gap-2 sm:gap-4 mt-2 max-w-full">
+            <div className="flex flex-row flex-wrap gap-2 sm:gap-4 w-full">
+              <button className="bg-[#5B92BD] text-white font-bold py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[11px] lg:text-[13px] uppercase tracking-wider border-[2px] sm:border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[140px] sm:w-[180px] lg:w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
                 ROSE-RINGED PARAKEET
               </button>
-              <button className="bg-[#5B92BD] text-white font-bold py-1.5 rounded-full text-[11px] sm:text-[13px] uppercase tracking-wider border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <button className="bg-[#5B92BD] text-white font-bold py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[11px] lg:text-[13px] uppercase tracking-wider border-[2px] sm:border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[140px] sm:w-[180px] lg:w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
                 INDIAN RINGNECK PARROT
               </button>
-              <button className="bg-[#5B92BD] text-white font-bold py-1.5 rounded-full text-[11px] sm:text-[13px] uppercase tracking-wider border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <button className="bg-[#5B92BD] text-white font-bold py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[11px] lg:text-[13px] uppercase tracking-wider border-[2px] sm:border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[140px] sm:w-[180px] lg:w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
                 INDIAN SILVERBILL
               </button>
             </div>
-            <div className="flex flex-row flex-wrap gap-4 w-full">
-              <button className="bg-[#5B92BD] text-white font-bold py-1.5 rounded-full text-[11px] sm:text-[13px] uppercase tracking-wider border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <div className="flex flex-row flex-wrap gap-2 sm:gap-4 w-full">
+              <button className="bg-[#5B92BD] text-white font-bold py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[11px] lg:text-[13px] uppercase tracking-wider border-[2px] sm:border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[140px] sm:w-[180px] lg:w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
                 ALEXANDRINE PARAKEET
               </button>
-              <button className="bg-[#5B92BD] text-white font-bold py-1.5 rounded-full text-[11px] sm:text-[13px] uppercase tracking-wider border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
+              <button className="bg-[#5B92BD] text-white font-bold py-1 sm:py-1.5 rounded-full text-[9px] sm:text-[11px] lg:text-[13px] uppercase tracking-wider border-[2px] sm:border-[3px] border-[#A9C7DF] shadow-[0_0_15px_rgba(91,146,189,0.3)] hover:scale-105 transition-all w-[140px] sm:w-[180px] lg:w-[220px] text-center" style={{ fontFamily: "'Inter', sans-serif" }}>
                 COCKATIEL
               </button>
             </div>
@@ -257,11 +256,11 @@ export default function HeroSlider() {
         </div>
 
         {/* Right: Bird Image */}
-        <div className="absolute right-[-8%] bottom-0 z-20 pointer-events-none h-full w-[63%] flex items-end justify-end overflow-visible">
+        <div className="absolute right-[-8%] bottom-0 z-20 pointer-events-none h-[80%] sm:h-full w-[63%] flex items-end justify-end overflow-visible">
           <img
             src="/images/slide3.png"
             alt="Aviary Bird"
-            className="h-[150%] w-auto object-contain object-right-bottom drop-shadow-2xl"
+            className="h-[120%] lg:h-[150%] w-auto object-contain object-right-bottom drop-shadow-2xl"
           />
         </div>
 

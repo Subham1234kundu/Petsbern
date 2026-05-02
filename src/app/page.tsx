@@ -10,9 +10,9 @@ export default function Home() {
         <HeroSlider />
 
         {/* Features Bar */}
-        <div className="w-full border border-[#E4E7E9] rounded-sm flex flex-wrap md:flex-nowrap items-center justify-between bg-white py-8 px-4 sm:px-6">
+        <div className="w-full border border-[#E4E7E9] rounded-sm flex flex-col sm:flex-row sm:flex-wrap md:flex-nowrap items-center justify-between bg-white py-4 sm:py-8 px-4 sm:px-6">
           {/* Delivery */}
-          <div className="flex items-center gap-4 px-4 flex-1 min-w-[250px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-4 md:py-0">
+          <div className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
             <img
               src="/images/delivery.png"
               className="w-12 h-12 object-contain"
@@ -29,7 +29,7 @@ export default function Home() {
           </div>
 
           {/* Healthy */}
-          <div className="flex items-center gap-4 px-4 flex-1 min-w-[250px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-4 md:py-0">
+          <div className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
             <img
               src="/images/healthy.png"
               className="w-12 h-12 object-contain"
@@ -46,7 +46,7 @@ export default function Home() {
           </div>
 
           {/* Vaccinated */}
-          <div className="flex items-center gap-4 px-4 flex-1 min-w-[250px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-4 md:py-0">
+          <div className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
             <img
               src="/images/vaccinated.png"
               className="w-12 h-12 object-contain"
@@ -63,7 +63,7 @@ export default function Home() {
           </div>
 
           {/* Ready for Home */}
-          <div className="flex items-center gap-4 px-4 flex-1 min-w-[250px] justify-center last:border-r-0 py-4 md:py-0">
+          <div className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center last:border-r-0 py-3 md:py-0">
             <img
               src="/images/readyForHome.png"
               className="w-12 h-12 object-contain"
@@ -82,16 +82,14 @@ export default function Home() {
 
         {/* Pet Cards Grid */}
         <section className="mt-3 mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 pt-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-6 lg:gap-x-8 gap-y-12 sm:gap-y-16 pt-8">
             {/* Labrador Retriever */}
             <div
-              className="bg-[#F0F0F0] rounded-xl p-4 relative flex items-center mx-auto"
-              style={{ width: "398px", height: "251px" }}
+              className="bg-[#F0F0F0] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
                 src="/images/labrador.png"
-                className="absolute -left-6 -bottom-20 object-contain pointer-events-none drop-shadow-xl"
-                style={{ width: "171px", height: "257px" }}
+                className="absolute -left-2 sm:-left-4 lg:-left-6 -bottom-8 sm:-bottom-14 lg:-bottom-20 object-contain pointer-events-none drop-shadow-xl w-[120px] sm:w-[145px] lg:w-[171px] h-auto"
                 alt="Labrador Retriever"
               />
               <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
@@ -110,13 +108,11 @@ export default function Home() {
 
             {/* German Shepherd */}
             <div
-              className="bg-[#A58B7C] rounded-xl p-4 relative flex items-center mx-auto"
-              style={{ width: "398px", height: "251px" }}
+              className="bg-[#A58B7C] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
                 src="/images/GermanShepherd.png"
-                className="absolute -left-4 -bottom-4 object-contain pointer-events-none drop-shadow-xl"
-                style={{ width: "178px", height: "223px" }}
+                className="absolute -left-2 sm:-left-3 lg:-left-4 -bottom-2 sm:-bottom-3 lg:-bottom-4 object-contain pointer-events-none drop-shadow-xl w-[120px] sm:w-[150px] lg:w-[178px] h-auto"
                 alt="German Shepherd"
               />
               <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
@@ -135,13 +131,11 @@ export default function Home() {
 
             {/* Siberian Husky */}
             <div
-              className="bg-[#C9EAF1] rounded-xl p-4 relative flex items-center mx-auto"
-              style={{ width: "398px", height: "251px" }}
+              className="bg-[#C9EAF1] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
                 src="/images/SiberianHusky.png"
-                className="absolute -left-4 -bottom-6 object-contain pointer-events-none drop-shadow-xl"
-                style={{ width: "142px", height: "245px" }}
+                className="absolute -left-1 sm:-left-2 lg:-left-4 -bottom-2 sm:-bottom-4 lg:-bottom-6 object-contain pointer-events-none drop-shadow-xl w-[100px] sm:w-[120px] lg:w-[142px] h-auto"
                 alt="Siberian Husky"
               />
               <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
@@ -160,13 +154,11 @@ export default function Home() {
 
             {/* Snow White */}
             <div
-              className="bg-[#F2E7E7] rounded-xl p-4 relative flex items-center mx-auto"
-              style={{ width: "398px", height: "251px" }}
+              className="bg-[#F2E7E7] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
                 src="/images/SnowWhite.png"
-                className="absolute -left-4 -bottom-10 object-contain pointer-events-none drop-shadow-xl"
-                style={{ width: "163px", height: "230px" }}
+                className="absolute -left-1 sm:-left-2 lg:-left-4 -bottom-4 sm:-bottom-6 lg:-bottom-10 object-contain pointer-events-none drop-shadow-xl w-[110px] sm:w-[135px] lg:w-[163px] h-auto"
                 alt="Snow White"
               />
               <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
@@ -185,14 +177,11 @@ export default function Home() {
 
             {/* Siamese Cat */}
             <div
-              className="bg-[#DEC6A8] rounded-xl p-4 relative flex items-center mx-auto"
-              style={{ width: "398px", height: "251px" }}
+              className="bg-[#DEC6A8] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
                 src="/images/SiameseCat.png"
-                className="absolute -left-15 -bottom-9
-              object-contain pointer-events-none drop-shadow-xl"
-                style={{ width: "198px", height: "176px" }}
+                className="absolute -left-6 sm:-left-10 lg:-left-15 -bottom-4 sm:-bottom-6 lg:-bottom-9 object-contain pointer-events-none drop-shadow-xl w-[130px] sm:w-[160px] lg:w-[198px] h-auto"
                 alt="Siamese Cat"
               />
               <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
@@ -211,13 +200,11 @@ export default function Home() {
 
             {/* Maine Coon */}
             <div
-              className="bg-[#B3B9B5] rounded-xl p-4 relative flex items-center mx-auto"
-              style={{ width: "398px", height: "251px" }}
+              className="bg-[#B3B9B5] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
                 src="/images/MaineCoon.png"
-                className="absolute -left-9 -bottom-10 object-contain pointer-events-none drop-shadow-xl"
-                style={{ width: "191px", height: "286px" }}
+                className="absolute -left-3 sm:-left-6 lg:-left-9 -bottom-4 sm:-bottom-7 lg:-bottom-10 object-contain pointer-events-none drop-shadow-xl w-[130px] sm:w-[160px] lg:w-[191px] h-auto"
                 alt="Maine Coon"
               />
               <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
@@ -245,8 +232,7 @@ export default function Home() {
           >
             <svg
               viewBox="0 0 100 18"
-              className="w-full"
-              style={{ height: "143px" }}
+              className="w-full h-[80px] sm:h-[100px] lg:h-[143px]"
               aria-hidden="true"
             >
               <text
@@ -268,81 +254,81 @@ export default function Home() {
           </div>
 
           <div className="w-full px-4 sm:px-8 lg:px-12 relative z-10">
-            <h2 className="text-white text-[48px] leading-[1.1] mb-12">
+            <h2 className="text-white text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.1] mb-8 sm:mb-12">
               Why Pet Parents Prefer <br />
               <span className="font-bold">PETSBARN?</span>
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16">
               {/* Box 1 */}
-              <div className="rounded-2xl p-6 h-[267px] relative flex flex-col bg-white/10 overflow-hidden border border-white/5">
-                <div className="h-[42%] flex items-start">
-                  <h3 className="text-white text-[20px] font-semibold leading-tight pt-2">
+              <div className="rounded-2xl p-5 sm:p-6 h-auto sm:h-[240px] lg:h-[267px] relative flex flex-col bg-white/10 overflow-hidden border border-white/5">
+                <div className="flex items-start mb-3 sm:mb-0 sm:h-[42%]">
+                  <h3 className="text-white text-[18px] sm:text-[20px] font-semibold leading-tight pt-2">
                     Ethical Breeding <br /> Practices
                   </h3>
                 </div>
-                <p className="text-white/80 text-[16px] leading-snug">
+                <p className="text-white/80 text-[14px] sm:text-[16px] leading-snug">
                   Responsible, humane breeding standards ensuring healthy
                   lineage, proper care, transparency, and animal welfare
                   prioritization.
                 </p>
                 <img
                   src="/Images/eathcalBreed.png"
-                  className="absolute -right-2 top-1/2 -translate-y-1/2 w-[80px] select-none pointer-events-none"
+                  className="absolute -right-2 top-1/2 -translate-y-1/2 w-[60px] sm:w-[80px] select-none pointer-events-none opacity-40 sm:opacity-100"
                   alt=""
                 />
               </div>
 
               {/* Box 2 */}
-              <div className="rounded-2xl p-6 h-[267px] relative flex flex-col bg-white/10 overflow-hidden border border-white/5">
-                <div className="h-[42%] flex items-start">
-                  <h3 className="text-white text-[20px] font-semibold leading-tight pt-2">
+              <div className="rounded-2xl p-5 sm:p-6 h-auto sm:h-[240px] lg:h-[267px] relative flex flex-col bg-white/10 overflow-hidden border border-white/5">
+                <div className="flex items-start mb-3 sm:mb-0 sm:h-[42%]">
+                  <h3 className="text-white text-[18px] sm:text-[20px] font-semibold leading-tight pt-2">
                     Expert Guidance
                   </h3>
                 </div>
-                <p className="text-white/80 text-[16px] leading-snug">
+                <p className="text-white/80 text-[14px] sm:text-[16px] leading-snug">
                   Professional support to help you choose, care, train, and
                   understand your pet's unique needs.
                 </p>
                 <img
                   src="/Images/expartGuide.png"
-                  className="absolute -right-2 top-1/2 -translate-y-1/2 w-[100px] select-none pointer-events-none"
+                  className="absolute -right-2 top-1/2 -translate-y-1/2 w-[80px] sm:w-[100px] select-none pointer-events-none opacity-40 sm:opacity-100"
                   alt=""
                 />
               </div>
 
               {/* Box 3 */}
-              <div className="rounded-2xl p-6 h-[267px] relative flex flex-col bg-white/10 overflow-hidden border border-white/5">
-                <div className="h-[42%] flex items-start">
-                  <h3 className="text-white text-[20px] font-semibold leading-tight pt-2">
+              <div className="rounded-2xl p-5 sm:p-6 h-auto sm:h-[240px] lg:h-[267px] relative flex flex-col bg-white/10 overflow-hidden border border-white/5">
+                <div className="flex items-start mb-3 sm:mb-0 sm:h-[42%]">
+                  <h3 className="text-white text-[18px] sm:text-[20px] font-semibold leading-tight pt-2">
                     Safe Home <br /> Delivery
                   </h3>
                 </div>
-                <p className="text-white/80 text-[16px] leading-snug">
+                <p className="text-white/80 text-[14px] sm:text-[16px] leading-snug">
                   Stress-free, secure pet transportation ensuring comfort,
                   safety, and timely delivery directly to your doorstep.
                 </p>
                 <img
                   src="/Images/safehomedelevary.png"
-                  className="absolute -right-2 top-1/2 -translate-y-1/2 w-[100px] select-none pointer-events-none "
+                  className="absolute -right-2 top-1/2 -translate-y-1/2 w-[80px] sm:w-[100px] select-none pointer-events-none opacity-40 sm:opacity-100"
                   alt=""
                 />
               </div>
 
               {/* Box 4 */}
-              <div className="rounded-2xl p-6 h-[267px] relative flex flex-col bg-white/10 overflow-hidden border border-white/5">
-                <div className="h-[42%] flex items-start">
-                  <h3 className="text-white text-[20px] font-semibold leading-tight pt-2">
+              <div className="rounded-2xl p-5 sm:p-6 h-auto sm:h-[240px] lg:h-[267px] relative flex flex-col bg-white/10 overflow-hidden border border-white/5">
+                <div className="flex items-start mb-3 sm:mb-0 sm:h-[42%]">
+                  <h3 className="text-white text-[18px] sm:text-[20px] font-semibold leading-tight pt-2">
                     Post-Adoption <br /> Support
                   </h3>
                 </div>
-                <p className="text-white/80 text-[16px] leading-snug">
+                <p className="text-white/80 text-[14px] sm:text-[16px] leading-snug">
                   Ongoing assistance with health, training, nutrition, and care
                   to ensure a smooth transition home.
                 </p>
                 <img
                   src="/Images/addoptSupport.png"
-                  className="absolute -right-2 top-1/2 -translate-y-1/2 w-[100px] select-none pointer-events-none"
+                  className="absolute -right-2 top-1/2 -translate-y-1/2 w-[80px] sm:w-[100px] select-none pointer-events-none opacity-40 sm:opacity-100"
                   alt=""
                 />
               </div>
@@ -373,20 +359,19 @@ export default function Home() {
         </div>
 
         <div className="w-full max-w-[1200px] px-4 sm:px-8 lg:px-12 relative z-10 pt-16">
-          <h2 className="text-black text-[42px] font-bold leading-tight mb-12 text-center">
+          <h2 className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-bold leading-tight mb-12 text-center">
             Our Client <span className="text-[#FFC501]">Favorites</span>
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* Left Column: Large Golden Retriever Card */}
             <div
-              className="lg:col-span-4 rounded-[24px] overflow-hidden relative group cursor-pointer"
+              className="lg:col-span-4 rounded-[24px] overflow-hidden relative group cursor-pointer h-[350px] sm:h-[450px] lg:h-auto"
               style={{
-                height: "520px",
                 background: "linear-gradient(180deg, #FFC501 0%, #F8E08C 100%)",
               }}
             >
-              <div className="p-8 relative z-20">
+              <div className="p-6 sm:p-8 relative z-20">
                 <div className="flex justify-between items-start">
                   <h3 className="text-white text-[30px] font-normal leading-[0.9]">
                     Golden <br /> Retriever
@@ -420,14 +405,14 @@ export default function Home() {
             {/* Right Column: 2x2 Grid of Smaller Cards */}
             <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Pug Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-[24px] p-6 relative flex flex-col justify-between group cursor-pointer h-[250px] border border-white/40 shadow-sm hover:shadow-md transition-all">
+              <div className="bg-white/80 backdrop-blur-sm rounded-[24px] p-6 relative flex flex-col justify-between group cursor-pointer h-[200px] lg:h-[250px] border border-white/40 shadow-sm hover:shadow-md transition-all">
                 <div className="flex justify-between items-start relative z-20">
-                  <h4 className="text-black text-[30px] font-normal leading-[0.9]">
+                  <h4 className="text-black text-[24px] lg:text-[30px] font-normal leading-[0.9]">
                     Pug
                   </h4>
-                  <div className="w-10 h-10 flex items-center justify-center text-black/40 group-hover:text-black transition-all">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center text-black/40 group-hover:text-black transition-all">
                     <svg
-                      width="24"
+                      className="w-5 lg:w-6"
                       viewBox="0 0 14 14"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -445,20 +430,20 @@ export default function Home() {
                 </div>
                 <img
                   src="/Images/pugfav.png"
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                   alt="Pug"
                 />
               </div>
 
               {/* Rottweiler Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-[24px] p-6 relative flex flex-col justify-between group cursor-pointer h-[250px] border border-white/40 shadow-sm hover:shadow-md transition-all">
+              <div className="bg-white/80 backdrop-blur-sm rounded-[24px] p-6 relative flex flex-col justify-between group cursor-pointer h-[200px] lg:h-[250px] border border-white/40 shadow-sm hover:shadow-md transition-all">
                 <div className="flex justify-between items-start relative z-20">
-                  <h4 className="text-black text-[30px] font-normal leading-[0.9]">
+                  <h4 className="text-black text-[24px] lg:text-[30px] font-normal leading-[0.9]">
                     Rottweiler
                   </h4>
-                  <div className="w-10 h-10 flex items-center justify-center text-black/40 group-hover:text-black transition-all">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center text-black/40 group-hover:text-black transition-all">
                     <svg
-                      width="24"
+                      className="w-5 lg:w-6"
                       viewBox="0 0 14 14"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -476,20 +461,20 @@ export default function Home() {
                 </div>
                 <img
                   src="/Images/rotfav.png"
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                   alt="Rottweiler"
                 />
               </div>
 
               {/* German Shepard Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-[24px] p-6 relative flex flex-col justify-between group cursor-pointer h-[250px] border border-white/40 shadow-sm hover:shadow-md transition-all">
+              <div className="bg-white/80 backdrop-blur-sm rounded-[24px] p-6 relative flex flex-col justify-between group cursor-pointer h-[200px] lg:h-[250px] border border-white/40 shadow-sm hover:shadow-md transition-all">
                 <div className="flex justify-between items-start relative z-20">
-                  <h4 className="text-black text-[30px] font-normal leading-[0.9]">
+                  <h4 className="text-black text-[24px] lg:text-[30px] font-normal leading-[0.9]">
                     German <br /> Shepard
                   </h4>
-                  <div className="w-10 h-10 flex items-center justify-center text-black/40 group-hover:text-black transition-all">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center text-black/40 group-hover:text-black transition-all">
                     <svg
-                      width="24"
+                      className="w-5 lg:w-6"
                       viewBox="0 0 14 14"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -507,20 +492,20 @@ export default function Home() {
                 </div>
                 <img
                   src="/Images/germanfav.png"
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                   alt="German Shepard"
                 />
               </div>
 
               {/* Husky Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-[24px] p-6 relative flex flex-col justify-between group cursor-pointer h-[250px] border border-white/40 shadow-sm hover:shadow-md transition-all">
+              <div className="bg-white/80 backdrop-blur-sm rounded-[24px] p-6 relative flex flex-col justify-between group cursor-pointer h-[200px] lg:h-[250px] border border-white/40 shadow-sm hover:shadow-md transition-all">
                 <div className="flex justify-between items-start relative z-20">
-                  <h4 className="text-black text-[30px] font-normal leading-[0.9]">
+                  <h4 className="text-black text-[24px] lg:text-[30px] font-normal leading-[0.9]">
                     Husky
                   </h4>
-                  <div className="w-10 h-10 flex items-center justify-center text-black/40 group-hover:text-black transition-all">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 flex items-center justify-center text-black/40 group-hover:text-black transition-all">
                     <svg
-                      width="24"
+                      className="w-5 lg:w-6"
                       viewBox="0 0 14 14"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -538,7 +523,7 @@ export default function Home() {
                 </div>
                 <img
                   src="/Images/huskyfav.png"
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                   alt="Husky"
                 />
               </div>
@@ -548,7 +533,23 @@ export default function Home() {
       </section>
 
       {/* Available Pets Section */}
-      <section className="bg-[#F6F6F6] py-24 pb-0 relative overflow-hidden flex flex-col items-center w-full">
+      <section className="bg-[#F6F6F6] pt-24 relative overflow-hidden flex flex-col items-center w-full">
+        {/* Background Paw Pattern */}
+        <img
+          src="/Images/petfoot.png"
+          className="absolute top-[8%] left-[50%] -translate-x-1/2 w-[100px] lg:w-[200px] rotate-[300deg] z-0 pointer-events-none opacity-20 lg:opacity-100"
+          alt=""
+        />
+        <img
+          src="/Images/petfoot.png"
+          className="absolute top-[10%] left-[15%] -translate-x-1/2 w-[100px] lg:w-[200px] rotate-[300deg] z-0 pointer-events-none opacity-20 lg:opacity-100"
+          alt=""
+        />
+        <img
+          src="/Images/petfoot.png"
+          className="absolute top-[10%] right-[1%] -translate-x-1/2 w-[100px] lg:w-[200px] rotate-[300deg] z-0 pointer-events-none opacity-20 lg:opacity-100"
+          alt=""
+        />
         {/* Background Paw Pattern */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.06] z-0">
           <img
@@ -558,28 +559,29 @@ export default function Home() {
           />
         </div>
 
-        <div className="w-full max-w-[1200px] px-4 relative z-10 pb-28">
-          <h2 className="text-black text-[42px] font-bold mb-16 text-center">
+        <div className="w-full max-w-[1200px] px-4 relative z-10">
+          <h2 className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-bold mb-16 text-center">
             Available <span className="text-[#FFC501]">Pets</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 justify-items-center">
+          <div className="grid pb-30 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 justify-items-center">
+
             <BreedCard name="Labrador Retriever" image="/Images/labrador.png" />
             <BreedCard name="Siberian Husky" image="/Images/huskyfav.png" />
             <BreedCard name="German Shepherd" image="/Images/germanfav.png" />
             <BreedCard name="Doodle" image="/Images/SnowWhite.png" />
             <BreedCard name="Rottweiler" image="/Images/rotfav.png" />
             <BreedCard name="Sitzu" image="/Images/pugfav.png" />
+          </div>
 
             {/* Featured Puppy Image (Bottom Right) */}
-            <div className="lg:col-span-2 min-h-[400px]">
+            <div className="lg:col-span-2 min-h-[300px] sm:min-h-[400px] absolute bottom-0 w-full overflow-hidden lg:overflow-visible">
               <img
                 src="/Images/avilablePets.png"
-                className="absolute bottom-[0px] right-[-50px] w-auto h-[900px] object-contain z-20"
+                className="absolute bottom-0 right-0 lg:right-[-50px] w-full max-w-[400px] lg:max-w-none lg:w-auto h-auto lg:h-[900px] object-contain z-20"
                 alt="Featured Puppy"
               />
             </div>
-          </div>
         </div>
       </section>
 
@@ -590,26 +592,26 @@ export default function Home() {
           {/* Left paw */}
           <img
             src="/Images/bluefoot.png"
-            className="absolute bottom-[-20%] left-[20%] w-[420px] select-none rotate-[-35]"
+            className="absolute bottom-[-20%] left-[20%] w-[420px] select-none rotate-[-35] hidden sm:block"
             alt=""
           />
           {/* Middle/Bottom paw */}
           <img
             src="/Images/bluefoot.png"
-            className="absolute bottom-[1%] left-[60%] w-[90px]  select-none"
+            className="absolute bottom-[1%] left-[60%] w-[90px] select-none hidden sm:block"
             alt=""
           />
           {/* Right paw */}
           <img
             src="/Images/bluefoot.png"
-            className="absolute bottom-0 left-[76%] w-[80px]  select-none"
+            className="absolute bottom-0 left-[76%] w-[80px] select-none hidden sm:block"
             alt=""
           />
         </div>
 
         <div className="w-full max-w-[1240px] px-4 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
-            <h2 className="text-black text-[42px] font-normal leading-tight">
+            <h2 className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-normal leading-tight">
               Everything Your <br />
               <span className="text-[#FFC501]">Pet Needs</span>
             </h2>
@@ -621,7 +623,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
             {/* Box 1: Pet Consultation */}
-            <div className="w-[298px] h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
                 <img
                   src="/Images/needs1.png"
@@ -640,7 +642,7 @@ export default function Home() {
             </div>
 
             {/* Box 2: Pet Relocation */}
-            <div className="w-[298px] h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
                 <img
                   src="/Images/needs2.png"
@@ -659,7 +661,7 @@ export default function Home() {
             </div>
 
             {/* Box 3: Pet Training */}
-            <div className="w-[298px] h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
                 <img
                   src="/Images/needs3.png"
@@ -678,7 +680,7 @@ export default function Home() {
             </div>
 
             {/* Box 4: Pet Guidance */}
-            <div className="w-[298px] h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+            <div className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
                 <img
                   src="/Images/needs4.png"
@@ -715,14 +717,14 @@ export default function Home() {
         </div>
 
         <div className="w-full max-w-[1240px] px-4 relative z-10">
-          <h2 className="text-black text-[42px] font-normal mb-20 leading-tight">
+          <h2 className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-normal mb-12 lg:mb-20 leading-tight">
             Bringing Your Pet Home in <br />
             <span className="text-[#FFC501]">3 Simple Steps</span>
           </h2>
 
-          <div className="flex flex-col lg:flex-row items-end justify-center gap-5 ">
+          <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center gap-5 ">
             {/* Step 01 */}
-            <div className="w-full max-w-[390px] h-[580px] rounded-[40px] relative overflow-hidden p-10 flex flex-col bg-gradient-to-b from-[#53A4C0] via-[#53A4C0] to-white/60">
+            <div className="w-full max-w-[390px] h-[500px] lg:h-[580px] rounded-[40px] relative overflow-hidden p-6 lg:p-10 flex flex-col bg-gradient-to-b from-[#53A4C0] via-[#53A4C0] to-white/60">
               <div className="w-32 h-32 flex items-center justify-center self-center mb-10 mt-2">
                 <img
                   src="/Images/step1.png"
@@ -750,7 +752,7 @@ export default function Home() {
             </div>
 
             {/* Step 02 */}
-            <div className="w-full max-w-[390px] h-[640px] rounded-[40px] relative overflow-hidden p-10 flex flex-col bg-gradient-to-b from-[#FFA2B6] via-[#FFA2B6] to-white/60">
+            <div className="w-full max-w-[390px] h-[500px] lg:h-[640px] rounded-[40px] relative overflow-hidden p-6 lg:p-10 flex flex-col bg-gradient-to-b from-[#FFA2B6] via-[#FFA2B6] to-white/60">
               <div className="w-32 h-32 flex items-center justify-center self-center mb-10 mt-2">
                 <img
                   src="/Images/step2.png"
@@ -778,7 +780,7 @@ export default function Home() {
             </div>
 
             {/* Step 03 */}
-            <div className="w-full max-w-[390px] h-[700px] rounded-[40px] relative overflow-hidden p-10 flex flex-col bg-gradient-to-b from-[#066168] via-[#066168] to-white/60">
+            <div className="w-full max-w-[390px] h-[500px] lg:h-[700px] rounded-[40px] relative overflow-hidden p-6 lg:p-10 flex flex-col bg-gradient-to-b from-[#066168] via-[#066168] to-white/60">
               <div className="w-32 h-32 flex items-center justify-center self-center mb-10 mt-2">
                 <img
                   src="/Images/step3.png"
@@ -817,24 +819,40 @@ export default function Home() {
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
           <img
             src="/Images/bluefoot.png"
-            className="absolute top-[5%] left-[2%] w-[250px] opacity-10"
+            className="absolute top-[5%] left-[2%] w-[250px] opacity-10 hidden sm:block"
             alt=""
           />
           <img
             src="/Images/bluefoot.png"
-            className="absolute top-[5%] right-[2%] w-[250px] opacity-10 rotate-180"
+            className="absolute top-[5%] right-[2%] w-[250px] opacity-10 rotate-180 hidden sm:block"
+            alt=""
+          />
+          {/* New petfoot2 patterns */}
+          <img
+            src="/Images/petfoot2.png"
+            className="absolute top-[3%] left-[10%] w-[119px] rotate-[-15deg] hidden sm:block"
+            alt=""
+          />
+          <img
+            src="/Images/petfoot2.png"
+            className="absolute top-[8%] right-[5%] w-[119px] rotate-[20deg] hidden sm:block"
+            alt=""
+          />
+          <img
+            src="/Images/petfoot2.png"
+            className="absolute top-8 right-[-5%] w-[119px] rotate-[-10deg] hidden sm:block"
             alt=""
           />
         </div>
 
         <div className="w-full max-w-[1240px] px-4 relative z-10">
-          <h2 className="text-black text-[42px] font-semibold mb-12 text-center">
+          <h2 className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-semibold mb-12 text-center">
             Client <span className="text-[#FFC501]">Testimonials</span>
           </h2>
 
           <div className="flex flex-col lg:flex-row gap-10 items-stretch mb-15">
             {/* Video Thumbnail (40%) */}
-            <div className="lg:w-[40%] relative group cursor-pointer overflow-hidden rounded-3xl h-[388px]">
+            <div className="lg:w-[40%] relative group cursor-pointer overflow-hidden rounded-3xl h-[250px] sm:h-[350px] lg:h-[388px]">
               <img
                 src="/Images/clientVid.png"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -842,14 +860,14 @@ export default function Home() {
               />
               {/* Restoring Play Button for premium look */}
               <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/20 transition-all">
-                <div className="w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 shadow-xl group-hover:scale-110 transition-transform">
-                  <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-white border-b-[12px] border-b-transparent ml-2"></div>
+                <div className="w-14 h-14 lg:w-20 lg:h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center border border-white/50 shadow-xl group-hover:scale-110 transition-transform">
+                  <div className="w-0 h-0 border-t-[8px] lg:border-t-[12px] border-t-transparent border-l-[14px] lg:border-l-[20px] border-l-white border-b-[8px] lg:border-b-[12px] border-b-transparent ml-1 lg:ml-2"></div>
                 </div>
               </div>
             </div>
 
             {/* Quote Card (60%) */}
-            <div className="lg:w-[60%] bg-white rounded-3xl p-12 relative flex flex-col justify-between border border-[#EFEFEF] h-[388px] shadow-sm">
+            <div className="lg:w-[60%] bg-white rounded-3xl p-6 lg:p-12 relative flex flex-col justify-between border border-[#EFEFEF] h-auto min-h-[300px] lg:min-h-0 lg:h-[388px] shadow-sm">
               <div className="relative">
                 <span className="text-[120px] leading-none text-[#404547] font-serif absolute -top-12 -left-8 opacity-10 select-none">
                   “
@@ -865,11 +883,10 @@ export default function Home() {
               </div>
 
               {/* Navigation Arrows at bottom corner */}
-              <div className="flex gap-4 absolute bottom-8 right-8">
-                <button className="w-12 h-12 rounded-full border border-[#FFC501] flex items-center justify-center text-[#FFC501] hover:bg-[#FFC501] hover:text-white transition-all shadow-sm">
+              <div className="flex gap-3 lg:gap-4 absolute bottom-4 lg:bottom-8 right-4 lg:right-8">
+                <button className="w-10 h-10 lg:w-12 lg:h-12 rounded-full border border-[#FFC501] flex items-center justify-center text-[#FFC501] hover:bg-[#FFC501] hover:text-white transition-all shadow-sm">
                   <svg
-                    width="24"
-                    height="24"
+                    className="w-5 h-5 lg:w-6 lg:h-6"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -880,10 +897,9 @@ export default function Home() {
                     <path d="m15 18-6-6 6-6" />
                   </svg>
                 </button>
-                <button className="w-12 h-12 rounded-full border border-[#FFC501] flex items-center justify-center text-[#FFC501] hover:bg-[#FFC501] hover:text-white transition-all shadow-sm">
+                <button className="w-10 h-10 lg:w-12 lg:h-12 rounded-full border border-[#FFC501] flex items-center justify-center text-[#FFC501] hover:bg-[#FFC501] hover:text-white transition-all shadow-sm">
                   <svg
-                    width="24"
-                    height="24"
+                    className="w-5 h-5 lg:w-6 lg:h-6"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -911,11 +927,11 @@ export default function Home() {
             {/* White fog effect - positioned inside the grid to fade the image but not the text */}
             <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none"></div>
 
-            <div className="text-center absolute bottom-4 left-1/2 -translate-x-1/2 z-20">
-              <h3 className="text-[54px] leading-[1.1]">
+            <div className="text-center absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-full px-4">
+              <h3 className="text-[32px] sm:text-[42px] lg:text-[54px] leading-[1.1]">
                 <span className="font-bold text-[#FFC501]">10,000+</span>
                 <br />
-                <span className="font-normal text-4xl text-black">
+                <span className="font-normal text-2xl sm:text-3xl lg:text-4xl text-black">
                   Happy Families Served
                 </span>
               </h3>
@@ -927,13 +943,13 @@ export default function Home() {
       {/* Expert Tips & Guides Section */}
       <section className="py-24 bg-white flex flex-col items-center w-full">
         <div className="w-full max-w-[1240px] px-4">
-          <h2 className="text-black text-center mb-15 font-semibold" style={{ fontSize: "42px", fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
+          <h2 className="text-black text-[32px] sm:text-[38px] lg:text-[42px] text-center mb-15 font-semibold" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
             Expert Tips, <span className="text-[#FFC501]">Pet Care Guides</span>
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             {/* Tip Card 1 */}
-            <div className="bg-[#F6F6F6] rounded-[40px] p-6 h-[355px] flex items-center gap-8 group cursor-pointer transition-all hover:shadow-lg relative overflow-hidden">
+            <div className="bg-[#F6F6F6] rounded-[24px] sm:rounded-[40px] p-4 sm:p-6 h-auto sm:h-[300px] lg:h-[355px] flex flex-col sm:flex-row items-center gap-4 sm:gap-8 group cursor-pointer transition-all hover:shadow-lg relative overflow-hidden">
               {/* White file-tab cutout effect using precise SVG S-curve */}
               <div className="absolute top-0 left-0 w-full h-[25%] z-0 pointer-events-none">
                 <svg
@@ -948,7 +964,7 @@ export default function Home() {
                 </svg>
               </div>
 
-              <div className="w-[45%] h-full overflow-hidden rounded-[28px] relative z-10 shadow-sm">
+              <div className="w-full sm:w-[45%] h-[200px] sm:h-full overflow-hidden rounded-[20px] sm:rounded-[28px] relative z-10 shadow-sm flex-shrink-0">
                 <img
                   src="/Images/expaer1.png"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -956,12 +972,12 @@ export default function Home() {
                 />
               </div>
 
-              <div className="w-[55%] flex flex-col justify-between h-full py-4 relative z-10">
-                <div className="pt-2">
-                  <span className="text-[11px] text-[#242424] font-bold uppercase tracking-widest mb-10 block ml-2">
+              <div className="w-full sm:w-[55%] flex flex-col justify-between sm:h-full py-2 sm:py-4 relative z-10">
+                <div className="pt-1 sm:pt-2">
+                  <span className="text-[10px] sm:text-[11px] text-[#242424] font-bold uppercase tracking-widest mb-4 sm:mb-10 block">
                     PET TRAVEL
                   </span>
-                  <h3 className="text-[20px] text-black font-normal leading-[1.4] pr-4 ml-2">
+                  <h3 className="text-[16px] sm:text-[18px] lg:text-[20px] text-black font-normal leading-[1.4] pr-2 sm:pr-4">
                     10 Things Every New Pet Owner Should Know Before Traveling
                     With Pets
                   </h3>
@@ -986,7 +1002,7 @@ export default function Home() {
             </div>
 
             {/* Tip Card 2 */}
-            <div className="bg-[#F6F6F6] rounded-[40px] p-6 h-[355px] flex items-center gap-8 group cursor-pointer transition-all hover:shadow-lg relative overflow-hidden">
+            <div className="bg-[#F6F6F6] rounded-[24px] sm:rounded-[40px] p-4 sm:p-6 h-auto sm:h-[300px] lg:h-[355px] flex flex-col sm:flex-row items-center gap-4 sm:gap-8 group cursor-pointer transition-all hover:shadow-lg relative overflow-hidden">
               {/* White file-tab cutout effect using precise SVG S-curve */}
               <div className="absolute top-0 left-0 w-full h-[25%] z-0 pointer-events-none">
                 <svg
@@ -1001,7 +1017,7 @@ export default function Home() {
                 </svg>
               </div>
 
-              <div className="w-[45%] h-full overflow-hidden rounded-[28px] relative z-10 shadow-sm">
+              <div className="w-full sm:w-[45%] h-[200px] sm:h-full overflow-hidden rounded-[20px] sm:rounded-[28px] relative z-10 shadow-sm flex-shrink-0">
                 <img
                   src="/Images/expart2.png"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -1009,12 +1025,12 @@ export default function Home() {
                 />
               </div>
 
-              <div className="w-[55%] flex flex-col justify-between h-full py-4 relative z-10">
-                <div className="pt-2">
-                  <span className="text-[11px] text-[#242424] font-bold uppercase tracking-widest mb-10 block ml-2">
+              <div className="w-full sm:w-[55%] flex flex-col justify-between sm:h-full py-2 sm:py-4 relative z-10">
+                <div className="pt-1 sm:pt-2">
+                  <span className="text-[10px] sm:text-[11px] text-[#242424] font-bold uppercase tracking-widest mb-4 sm:mb-10 block">
                     PET TRAVEL
                   </span>
-                  <h3 className="text-[20px] text-black font-normal leading-[1.4] pr-4 ml-2">
+                  <h3 className="text-[16px] sm:text-[18px] lg:text-[20px] text-black font-normal leading-[1.4] pr-2 sm:pr-4">
                     10 Things Every New Pet Owner Should Know Before Traveling
                     With Pets
                   </h3>
@@ -1052,8 +1068,8 @@ export default function Home() {
         <div className="w-full max-w-[1240px] px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left side: Form */}
-            <div className="bg-[#F6F6F6] rounded-[32px] p-10 lg:p-12 flex flex-col justify-center">
-              <h2 className="text-[36px] lg:text-[42px] font-semibold text-black leading-[1.2] mb-4">
+            <div className="bg-[#F6F6F6] rounded-[24px] sm:rounded-[32px] p-6 sm:p-8 lg:p-12 flex flex-col justify-center">
+              <h2 className="text-[26px] sm:text-[32px] lg:text-[42px] font-semibold text-black leading-[1.2] mb-4">
                 Not Sure Which Pet Is
                 <br />
                 <span className="text-[#FFC501]">Right for You</span>?
@@ -1126,7 +1142,7 @@ export default function Home() {
             </div>
 
             {/* Right side: Image & Overlay */}
-            <div className="relative rounded-[32px] overflow-hidden min-h-[500px] lg:min-h-0">
+            <div className="relative rounded-[24px] sm:rounded-[32px] overflow-hidden min-h-[350px] sm:min-h-[450px] lg:min-h-0">
               <img
                 src="/Images/goldenfav.png"
                 alt="Consultation Puppy"
@@ -1134,7 +1150,7 @@ export default function Home() {
               />
 
               {/* Call overlay */}
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[85%] max-w-[420px] bg-[#EBE7E1] rounded-full p-2.5 pr-6 flex items-center gap-4">
+              <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 w-[90%] sm:w-[85%] max-w-[420px] bg-[#EBE7E1] rounded-full p-2 sm:p-2.5 pr-4 sm:pr-6 flex items-center gap-3 sm:gap-4">
                 <div className="w-[42px] h-[42px] shrink-0 rounded-full bg-[#1C4B42] flex items-center justify-center text-white">
                   <svg
                     width="18"

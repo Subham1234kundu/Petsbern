@@ -39,7 +39,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
         <Navbar />
-        <main className="pt-[148px] border-0 outline-none flex-grow">
+        <main className="pt-[64px] sm:pt-[74px] lg:pt-[148px] border-0 outline-none flex-grow">
           {children}
         </main>
         <Footer />
