@@ -108,7 +108,7 @@ export default function AboutUsPage() {
           backgroundPosition: "center"
         }}
       >
-        <h1 className="text-white text-[42px] font-bold tracking-tight z-10">
+        <h1 className="text-white font-semibold tracking-tight z-10" style={{ fontSize: "32px", fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
           About Us
         </h1>
       </section>

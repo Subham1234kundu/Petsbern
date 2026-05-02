@@ -339,7 +339,7 @@ export default function PetDetailsPage() {
             </div>
 
             {/* Arrow 1 */}
-            <div className="hidden lg:flex w-10 h-10 rounded-full bg-black items-center justify-center z-10 -mx-5 flex-shrink-0">
+            <div className="hidden lg:flex w-10 h-10 rounded-full bg-[#FFC501] items-center justify-center z-10 -mx-5 flex-shrink-0">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -358,7 +358,7 @@ export default function PetDetailsPage() {
             </div>
 
             {/* Arrow 2 */}
-            <div className="hidden lg:flex w-10 h-10 rounded-full bg-black items-center justify-center z-10 -mx-5 flex-shrink-0">
+            <div className="hidden lg:flex w-10 h-10 rounded-full bg-[#FFC501] items-center justify-center z-10 -mx-5 flex-shrink-0">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -480,14 +480,7 @@ export default function PetDetailsPage() {
         </div>
       </section>
 
-      {/* Client Talk Section */}
-      <section className="w-full pt-24 bg-white">
-        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 text-center">
-          <h2 className="text-black font-normal leading-tight mb-4" style={{ fontSize: "42px", fontFamily: "var(--font-public-sans), sans-serif" }}>
-            Our Client <span className="text-[#FFC501]">Talk</span>
-          </h2>
-        </div>
-      </section>
+
       <TestimonialSlider />
 
       {/* Contact CTA Section (Bottom) */}

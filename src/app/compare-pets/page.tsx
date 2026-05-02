@@ -373,6 +373,101 @@ export default function ComparePetsPage() {
 
 
       </main>
+
+      {/* 3 Simple Steps Section */}
+      <section className="bg-white w-full">
+        <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 mb-14 mt-10">
+          <h2 className="text-black text-[36px] font-normal text-center mb-10">
+            Bringing Your Pet Home in <span className="text-[#FFC501]">3 Simple Steps</span>
+          </h2>
+
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-2 relative ">
+            {/* Step 1 */}
+            <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
+              <div className="h-[90px] flex items-center justify-center mb-6">
+                <img src="/images/choosePet.png" alt="Choose Your Pet" className="h-full object-contain" />
+              </div>
+              <h3 className="text-black text-[20px] font-bold mb-4">Choose Your Pet</h3>
+              <p className="text-[#4A5565] text-[14px] leading-relaxed">
+                Explore our carefully selected range of healthy dogs, cats, and birds. Compare breeds, understand their temperament.
+              </p>
+            </div>
+
+            {/* Arrow 1 */}
+            <div className="hidden lg:flex w-10 h-10 rounded-full bg-[#FFC501] items-center justify-center z-10 -mx-5 flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+
+            {/* Step 2 */}
+            <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
+              <div className="h-[90px] flex items-center justify-center mb-6">
+                <img src="/images/healthAndVerification.png" alt="Health & Verification" className="h-full object-contain" />
+              </div>
+              <h3 className="text-black text-[20px] font-bold mb-4">Health & Verification</h3>
+              <p className="text-[#4A5565] text-[14px] leading-relaxed">
+                Every pet undergoes thorough veterinary health checks, age-appropriate vaccinations, and proper documentation.
+              </p>
+            </div>
+
+            {/* Arrow 2 */}
+            <div className="hidden lg:flex w-10 h-10 rounded-full bg-[#FFC501] items-center justify-center z-10 -mx-5 flex-shrink-0">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+
+            {/* Step 3 */}
+            <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
+              <div className="h-[90px] flex items-center justify-center mb-6">
+                <img src="/images/PetHome.png" alt="Get Your Pet Home" className="h-full object-contain" />
+              </div>
+              <h3 className="text-black text-[20px] font-bold mb-4">Get Your Pet Home</h3>
+              <p className="text-[#4A5565] text-[14px] leading-relaxed">
+                Your new family member is transported with comfort and care through secure travel arrangements.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Waiting Section */}
+      <section className="w-full bg-[#F6F5F2] flex items-center justify-center overflow-visible relative" style={{ height: "510px" }}>
+        <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 flex justify-between items-center h-full relative">
+          
+          {/* Text Content */}
+          <div className="flex flex-col z-10 w-full md:w-1/2">
+            <h2 className="text-black leading-tight mb-6" style={{ fontSize: "36px", fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif", fontWeight: 400 }}>
+              Your New Best Friend<br />
+              Is <span className="text-[#FFC501]">Waiting</span>
+            </h2>
+            <p className="text-[#4A5565] mb-10" style={{ fontSize: "18px" }}>
+              Bring home love, joy, and companionship today.
+            </p>
+            
+            <div className="flex items-center gap-3">
+              <button className="bg-black text-white rounded-full flex items-center justify-center transition-all hover:bg-gray-800" style={{ width: "184px", height: "47px", fontSize: "15px", fontFamily: "var(--font-work-sans), 'Work Sans', sans-serif" }}>
+                Browse Available Pets
+              </button>
+              <button className="bg-black text-white rounded-full flex items-center justify-center transition-all hover:bg-gray-800" style={{ width: "47px", height: "47px" }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Image */}
+          <div className="absolute right-0 bottom-0 lg:right-12 flex items-end justify-center pointer-events-none z-0">
+            <img src="/images/waiting.png" alt="Waiting Dog" className="object-cover" style={{ width: "420px", height: "485px" }} />
+          </div>
+
+        </div>
+      </section>
+
     </div>
   );
 }

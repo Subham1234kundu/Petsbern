@@ -33,7 +33,7 @@ export function TestimonialSlider() {
   }, [slides.length]);
 
   return (
-    <section className="w-full py-24 bg-white overflow-hidden">
+    <section className="w-full pb-20 bg-white overflow-hidden">
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 relative">
         <div className="flex transition-transform duration-700 ease-in-out" style={{ transform: `translateX(-${current * 100}%)` }}>
           {slides.map((slide, index) => (
