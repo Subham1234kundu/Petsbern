@@ -609,7 +609,7 @@ export default function Home() {
 
         <div className="w-full max-w-[1240px] px-4 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
-            <h2 className="text-black text-[42px] font-semibold leading-tight">
+            <h2 className="text-black text-[42px] font-normal leading-tight">
               Everything Your <br />
               <span className="text-[#FFC501]">Pet Needs</span>
             </h2>
@@ -703,7 +703,7 @@ export default function Home() {
       <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-6"></div>
 
       {/* Bringing Your Pet Home Section */}
-      <section className="py-24 relative overflow-hidden flex flex-col items-center w-full ">
+      <section className="pt-8 pb-18 relative overflow-hidden flex flex-col items-center w-full ">
         {/* Background Pattern (pethomeBG.png) */}
         <div className="absolute inset-0 pointer-events-none z-0 ">
           <img
@@ -715,7 +715,7 @@ export default function Home() {
         </div>
 
         <div className="w-full max-w-[1240px] px-4 relative z-10">
-          <h2 className="text-black text-[42px] font-bold mb-20 leading-tight">
+          <h2 className="text-black text-[42px] font-normal mb-20 leading-tight">
             Bringing Your Pet Home in <br />
             <span className="text-[#FFC501]">3 Simple Steps</span>
           </h2>
@@ -925,13 +925,13 @@ export default function Home() {
       </section>
 
       {/* Expert Tips & Guides Section */}
-      <section className="py-32 bg-white flex flex-col items-center w-full">
+      <section className="py-24 bg-white flex flex-col items-center w-full">
         <div className="w-full max-w-[1240px] px-4">
-          <h2 className="text-black text-[42px] font-semibold text-center mb-20">
+          <h2 className="text-black text-center mb-15 font-semibold" style={{ fontSize: "42px", fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
             Expert Tips, <span className="text-[#FFC501]">Pet Care Guides</span>
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             {/* Tip Card 1 */}
             <div className="bg-[#F6F6F6] rounded-[40px] p-6 h-[355px] flex items-center gap-8 group cursor-pointer transition-all hover:shadow-lg relative overflow-hidden">
               {/* White file-tab cutout effect using precise SVG S-curve */}
@@ -1040,7 +1040,7 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center">
-            <button className="bg-black text-white px-12 py-4 rounded-full font-bold hover:bg-gray-800 transition-all shadow-xl hover:scale-105">
+            <button className="bg-black text-white px-12 py-3 rounded-full font-medium hover:bg-gray-800 transition-all hover:scale-105">
               View All Pets
             </button>
           </div>
@@ -1048,7 +1048,7 @@ export default function Home() {
       </section>
 
       {/* Consultation Section */}
-      <section className="pb-32 bg-white flex flex-col items-center w-full">
+      <section className=" bg-white flex flex-col items-center w-full">
         <div className="w-full max-w-[1240px] px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left side: Form */}

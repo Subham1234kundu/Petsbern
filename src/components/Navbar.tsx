@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 export default function Navbar() {
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
   return (
     <header className="w-full bg-white fixed top-0 left-0 z-[100]" style={{ borderBottom: 'none', boxShadow: 'none' }}>
       {/* Top Row: Logo, Search, Social */}
@@ -69,35 +70,79 @@ export default function Navbar() {
             "Compare Pets",
             "Blogs",
             "Contact Us",
-          ].map((item) => (
-            <Link
-              key={item}
-              href={
-                item === "Home" 
-                  ? "/" 
-                  : item === "Our Pets" 
-                    ? "/pet-categories/dogs" 
-                    : `/${item.toLowerCase().replace(" ", "-")}`
-              }
-              className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-[#8B5E3C] hover:after:w-full after:transition-all flex items-center gap-1"
-            >
-              {item}
-              {(item === "Our Pets" || item === "Services") && (
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              )}
-            </Link>
-          ))}
+          ].map((item) => {
+            if (item === "Services") {
+              return (
+                <div key={item} className="relative">
+                  <button
+                    onClick={() => setIsServicesOpen(!isServicesOpen)}
+                    className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative flex items-center gap-1 group"
+                  >
+                    {item}
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+
+                  {isServicesOpen && (
+                    <div className="absolute top-[calc(100%+15px)] left-0 bg-white rounded-[12px] py-2 min-w-[240px] z-[120]" style={{ boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.12)", border: "1px solid #E5E7EB" }}>
+                      {["Pet Training", "Pet Relocation", "Breed Consultation"].map((service) => (
+                        <Link
+                          key={service}
+                          href={`/services/${service.toLowerCase().replace(" ", "-")}`}
+                          onClick={() => setIsServicesOpen(false)}
+                          className="block px-5 py-3 text-[#5F6C72] text-[14px] font-medium transition-colors hover:bg-[#F2F4F5] hover:text-[#191C1F] active:bg-[#F2F4F5] active:text-[#191C1F]"
+                          style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+                        >
+                          {service}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <Link
+                key={item}
+                href={
+                  item === "Home" 
+                    ? "/" 
+                    : item === "Our Pets" 
+                      ? "/pet-categories/dogs" 
+                      : `/${item.toLowerCase().replace(" ", "-")}`
+                }
+                className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-[#8B5E3C] hover:after:w-full after:transition-all flex items-center gap-1"
+              >
+                {item}
+                {item === "Our Pets" && (
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* WhatsApp Button */}
