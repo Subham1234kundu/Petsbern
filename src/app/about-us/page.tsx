@@ -18,7 +18,7 @@ function TestimonialSlider() {
       author: "Ananya Sharma, Delhi"
     },
     {
-      image: "/images/avilablePets.png",
+      image: "/images/avilablepets.png",
       title: "“The Best Pet Adoption Service”",
       desc: "I was skeptical about home delivery for a puppy, but the care they took was incredible. Our Labrador arrived happy and energetic. They provided all the necessary documentation and a starter kit. Thank you for everything!",
       author: "Vikram Singh, Mumbai"
@@ -103,7 +103,7 @@ export default function AboutUsPage() {
       <section
         className="w-full h-[268px] relative flex items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/aboutusHeader.jpg')",
+          backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/aboutusheader.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -219,7 +219,7 @@ export default function AboutUsPage() {
               {
                 title: "Pet-First Philosophy",
                 description: "Every product we offer is carefully selected with your pet’s comfort, safety, and joy in mind.",
-                image: "/images/aboutDiff1.png"
+                image: "/images/aboutdiff1.png"
               },
               {
                 title: "Quality You Can Trust",
@@ -288,7 +288,7 @@ export default function AboutUsPage() {
             {[
               {
                 title: "Ethical Breeding Standards",
-                image: "/images/aboutChoose1.png"
+                image: "/images/aboutchoose1.png"
               },
               {
                 title: "Up-to-Date Vaccinations",
@@ -296,7 +296,7 @@ export default function AboutUsPage() {
               },
               {
                 title: "Certified Lineage",
-                image: "/images/aboutChoose3.png"
+                image: "/images/aboutchoose3.png"
               },
               {
                 title: "Doorstep Joy (Home Delivery)",
@@ -355,17 +355,17 @@ export default function AboutUsPage() {
               {
                 title: "Expert Guidance",
                 description: "Offering expert guidance in post-adoption pet care to support your journey as a new pet parent from day one.",
-                image: "/images/exAbout1.png"
+                image: "/images/exabout1.png"
               },
               {
                 title: "Health Checked",
                 description: "Every puppy undergoes a thorough health check by certified veterinarians to ensure they are active and healthy.",
-                image: "/images/exAbout2.png"
+                image: "/images/exabout2.png"
               },
               {
                 title: "Verified Lineage",
                 description: "Providing a verified pedigree and lineage with an included microchip, ensuring your puppy's heritage is documented.",
-                image: "/images/exAbout3.png"
+                image: "/images/exabout3.png"
               }
             ].map((box, index) => (
               <div 
@@ -418,34 +418,34 @@ export default function AboutUsPage() {
 
             {/* Image 3 */}
             <div className="rounded-[32px] overflow-hidden h-[300px]">
-              <img src="/images/happyFamily3.png" className="w-full h-full object-cover" alt="Owner with Pet" />
+              <img src="/images/happyfamily3.png" className="w-full h-full object-cover" alt="Owner with Pet" />
             </div>
 
             {/* Image 4 */}
             <div className="rounded-[32px] overflow-hidden h-[300px]">
-              <img src="/images/happyFamily4.png" className="w-full h-full object-cover" alt="Happy Pet" />
+              <img src="/images/happyfamily4.png" className="w-full h-full object-cover" alt="Happy Pet" />
             </div>
 
             {/* Image 5 */}
             <div className="rounded-[32px] overflow-hidden h-[300px]">
-              <img src="/images/happyFamily5.png" className="w-full h-full object-cover" alt="Happy Cat" />
+              <img src="/images/happyfamily5.png" className="w-full h-full object-cover" alt="Happy Cat" />
             </div>
 
             {/* Image 6 - Enhanced Bottom Fade */}
             <div className="rounded-[32px] overflow-hidden h-[300px] relative">
-              <img src="/images/happyFamily6.png" className="w-full h-full object-cover" alt="Happy Family" />
+              <img src="/images/happyfamily6.png" className="w-full h-full object-cover" alt="Happy Family" />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
             </div>
 
             {/* Image 7 - Enhanced Bottom Fade */}
             <div className="rounded-[32px] overflow-hidden h-[300px] relative">
-              <img src="/images/happyFamily7.png" className="w-full h-full object-cover" alt="Pet Playtime" />
+              <img src="/images/happyfamily7.png" className="w-full h-full object-cover" alt="Pet Playtime" />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
             </div>
 
             {/* Image 8: Wide Landscape - Enhanced Bottom Fade */}
             <div className="lg:col-span-2 rounded-[32px] overflow-hidden h-[300px] relative">
-              <img src="/images/happyFamily8.png" className="w-full h-full object-cover" alt="Happy Corgi" />
+              <img src="/images/happyfamily8.png" className="w-full h-full object-cover" alt="Happy Corgi" />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
             </div>
           </div>
@@ -461,7 +461,7 @@ export default function AboutUsPage() {
         <div
           className="absolute inset-0 w-full h-full"
           style={{
-            backgroundImage: "url('/images/contactAbout.jpg')",
+            backgroundImage: "url('/images/contactabout.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center"
           }}

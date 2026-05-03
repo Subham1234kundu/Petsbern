@@ -18,7 +18,7 @@ export function TestimonialSlider() {
       author: "Ananya Sharma, Delhi"
     },
     {
-      image: "/images/avilablePets.png",
+      image: "/images/avilablepets.png",
       title: "“The Best Pet Adoption Service”",
       desc: "I was skeptical about home delivery for a puppy, but the care they took was incredible. Our Labrador arrived happy and energetic. They provided all the necessary documentation and a starter kit. Thank you for everything!",
       author: "Vikram Singh, Mumbai"

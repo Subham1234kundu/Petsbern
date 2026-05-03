@@ -12,7 +12,7 @@ export default function BreedConsultationPage() {
         className="w-full h-[268px] relative flex flex-col items-center justify-center overflow-hidden text-center"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/contactUs.jpg')",
+            "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/contactus.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center 40%",
         }}
@@ -183,7 +183,7 @@ export default function BreedConsultationPage() {
             {/* Card 2: Personalized Advice */}
             <div className="border border-[#DFDFDF] rounded-[24px] flex flex-col overflow-hidden" style={{ height: "397px" }}>
               <div className="flex-1 p-8 flex items-start px-8">
-                <img src="/images/Personalized.png" alt="Personalized" style={{ width: "74px", height: "52px", objectFit: "contain" }} />
+                <img src="/images/personalized.png" alt="Personalized" style={{ width: "74px", height: "52px", objectFit: "contain" }} />
               </div>
               <div className="bg-[#F6F5F2] p-8 flex flex-col gap-3 rounded-[16px] mb-4 mx-auto" style={{ height: "198px", width: "282px" }}>
                 <h3 style={{ fontSize: "22px", fontWeight: 500, color: "#0A0A0A" }}>Personalized Advice</h3>
@@ -196,7 +196,7 @@ export default function BreedConsultationPage() {
             {/* Card 3: Stress-Free Pet Parenting */}
             <div className="border border-[#DFDFDF] rounded-[24px] flex flex-col overflow-hidden" style={{ height: "397px" }}>
               <div className="flex-1 p-8 flex items-start px-8">
-                <img src="/images/Stress-Free.png" alt="Stress Free" style={{ width: "52px", height: "52px", objectFit: "contain" }} />
+                <img src="/images/stress-free.png" alt="Stress Free" style={{ width: "52px", height: "52px", objectFit: "contain" }} />
               </div>
               <div className="bg-[#F6F5F2] p-8 flex flex-col gap-3 rounded-[16px] mb-4 mx-auto" style={{ height: "198px", width: "282px" }}>
                 <h3 style={{ fontSize: "22px", fontWeight: 500, color: "#0A0A0A" }}>Stress-Free Pet Parenting</h3>
@@ -250,17 +250,17 @@ export default function BreedConsultationPage() {
               {
                 title: "Expert Guidance",
                 description: "Offering expert guidance in post-adoption pet care to support your journey as a new pet parent from day one.",
-                image: "/images/exAbout1.png"
+                image: "/images/exabout1.png"
               },
               {
                 title: "Health Checked",
                 description: "Every puppy undergoes a thorough health check by certified veterinarians to ensure they are active and healthy.",
-                image: "/images/exAbout2.png"
+                image: "/images/exabout2.png"
               },
               {
                 title: "Verified Lineage",
                 description: "Providing a verified pedigree and lineage with an included microchip, ensuring your puppy's heritage is documented.",
-                image: "/images/exAbout3.png"
+                image: "/images/exabout3.png"
               }
             ].map((box, index) => (
               <div 
@@ -417,7 +417,7 @@ export default function BreedConsultationPage() {
             {/* Left Column: Dog Expert Image */}
             <div className="h-full flex items-end">
               <img 
-                src="/images/dogExpart.png" 
+                src="/images/dogexpart.png" 
                 alt="Dog Expert" 
                 className="h-[90%] object-contain object-bottom"
               />

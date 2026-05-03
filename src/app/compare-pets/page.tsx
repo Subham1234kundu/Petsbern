@@ -292,7 +292,7 @@ export default function ComparePetsPage() {
                       Call Us Now
                     </button>
                     <Link href="#" className="w-8 h-8 transition-transform hover:scale-110">
-                      <img src="/images/whatsApp.png" alt="WhatsApp" className="w-full h-full object-contain" />
+                      <img src="/images/whatsapp.png" alt="WhatsApp" className="w-full h-full object-contain" />
                     </Link>
                   </div>
                 </div>
@@ -318,7 +318,7 @@ export default function ComparePetsPage() {
                       Call Us Now
                     </button>
                     <Link href="#" className="w-8 h-8 transition-transform hover:scale-110">
-                      <img src="/images/whatsApp.png" alt="WhatsApp" className="w-full h-full object-contain" />
+                      <img src="/images/whatsapp.png" alt="WhatsApp" className="w-full h-full object-contain" />
                     </Link>
                   </div>
                 </div>
@@ -385,7 +385,7 @@ export default function ComparePetsPage() {
             {/* Step 1 */}
             <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
               <div className="h-[90px] flex items-center justify-center mb-6">
-                <img src="/images/choosePet.png" alt="Choose Your Pet" className="h-full object-contain" />
+                <img src="/images/choosepet.png" alt="Choose Your Pet" className="h-full object-contain" />
               </div>
               <h3 className="text-black text-[20px] font-bold mb-4">Choose Your Pet</h3>
               <p className="text-[#4A5565] text-[14px] leading-relaxed">
@@ -404,7 +404,7 @@ export default function ComparePetsPage() {
             {/* Step 2 */}
             <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
               <div className="h-[90px] flex items-center justify-center mb-6">
-                <img src="/images/healthAndVerification.png" alt="Health & Verification" className="h-full object-contain" />
+                <img src="/images/healthandverification.png" alt="Health & Verification" className="h-full object-contain" />
               </div>
               <h3 className="text-black text-[20px] font-bold mb-4">Health & Verification</h3>
               <p className="text-[#4A5565] text-[14px] leading-relaxed">
@@ -423,7 +423,7 @@ export default function ComparePetsPage() {
             {/* Step 3 */}
             <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
               <div className="h-[90px] flex items-center justify-center mb-6">
-                <img src="/images/PetHome.png" alt="Get Your Pet Home" className="h-full object-contain" />
+                <img src="/images/pethome.png" alt="Get Your Pet Home" className="h-full object-contain" />
               </div>
               <h3 className="text-black text-[20px] font-bold mb-4">Get Your Pet Home</h3>
               <p className="text-[#4A5565] text-[14px] leading-relaxed">

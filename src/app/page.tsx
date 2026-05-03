@@ -65,7 +65,7 @@ export default function Home() {
           {/* Ready for Home */}
           <div className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center last:border-r-0 py-3 md:py-0">
             <img
-              src="/images/readyForHome.png"
+              src="/images/readyforhome.png"
               className="w-12 h-12 object-contain"
               alt="Ready For Home"
             />
@@ -111,7 +111,7 @@ export default function Home() {
               className="bg-[#A58B7C] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
-                src="/images/GermanShepherd.png"
+                src="/images/germanshepherd.png"
                 className="absolute -left-2 sm:-left-3 lg:-left-4 -bottom-2 sm:-bottom-3 lg:-bottom-4 object-contain pointer-events-none drop-shadow-xl w-[120px] sm:w-[150px] lg:w-[178px] h-auto"
                 alt="German Shepherd"
               />
@@ -134,7 +134,7 @@ export default function Home() {
               className="bg-[#C9EAF1] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
-                src="/images/SiberianHusky.png"
+                src="/images/siberianhusky.png"
                 className="absolute -left-1 sm:-left-2 lg:-left-4 -bottom-2 sm:-bottom-4 lg:-bottom-6 object-contain pointer-events-none drop-shadow-xl w-[100px] sm:w-[120px] lg:w-[142px] h-auto"
                 alt="Siberian Husky"
               />
@@ -157,7 +157,7 @@ export default function Home() {
               className="bg-[#F2E7E7] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
-                src="/images/SnowWhite.png"
+                src="/images/snowwhite.png"
                 className="absolute -left-1 sm:-left-2 lg:-left-4 -bottom-4 sm:-bottom-6 lg:-bottom-10 object-contain pointer-events-none drop-shadow-xl w-[110px] sm:w-[135px] lg:w-[163px] h-auto"
                 alt="Snow White"
               />
@@ -180,7 +180,7 @@ export default function Home() {
               className="bg-[#DEC6A8] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
-                src="/images/SiameseCat.png"
+                src="/images/siamesecat.png"
                 className="absolute -left-6 sm:-left-10 lg:-left-15 -bottom-4 sm:-bottom-6 lg:-bottom-9 object-contain pointer-events-none drop-shadow-xl w-[130px] sm:w-[160px] lg:w-[198px] h-auto"
                 alt="Siamese Cat"
               />
@@ -203,7 +203,7 @@ export default function Home() {
               className="bg-[#B3B9B5] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
             >
               <img
-                src="/images/MaineCoon.png"
+                src="/images/mainecoon.png"
                 className="absolute -left-3 sm:-left-6 lg:-left-9 -bottom-4 sm:-bottom-7 lg:-bottom-10 object-contain pointer-events-none drop-shadow-xl w-[130px] sm:w-[160px] lg:w-[191px] h-auto"
                 alt="Maine Coon"
               />
@@ -273,7 +273,7 @@ export default function Home() {
                   prioritization.
                 </p>
                 <img
-                  src="/Images/eathcalBreed.png"
+                  src="/images/eathcalbreed.png"
                   className="absolute -right-2 top-1/2 -translate-y-1/2 w-[60px] sm:w-[80px] select-none pointer-events-none opacity-40 sm:opacity-100"
                   alt=""
                 />
@@ -291,7 +291,7 @@ export default function Home() {
                   understand your pet's unique needs.
                 </p>
                 <img
-                  src="/Images/expartGuide.png"
+                  src="/images/expartguide.png"
                   className="absolute -right-2 top-1/2 -translate-y-1/2 w-[80px] sm:w-[100px] select-none pointer-events-none opacity-40 sm:opacity-100"
                   alt=""
                 />
@@ -309,7 +309,7 @@ export default function Home() {
                   safety, and timely delivery directly to your doorstep.
                 </p>
                 <img
-                  src="/Images/safehomedelevary.png"
+                  src="/images/safehomedelevary.png"
                   className="absolute -right-2 top-1/2 -translate-y-1/2 w-[80px] sm:w-[100px] select-none pointer-events-none opacity-40 sm:opacity-100"
                   alt=""
                 />
@@ -327,7 +327,7 @@ export default function Home() {
                   to ensure a smooth transition home.
                 </p>
                 <img
-                  src="/Images/addoptSupport.png"
+                  src="/images/addoptsupport.png"
                   className="absolute -right-2 top-1/2 -translate-y-1/2 w-[80px] sm:w-[100px] select-none pointer-events-none opacity-40 sm:opacity-100"
                   alt=""
                 />
@@ -338,7 +338,7 @@ export default function Home() {
           {/* Bottom Image */}
           <div className="w-full mt-auto">
             <img
-              src="/Images/whyPets.png"
+              src="/images/whypets.png"
               alt="Why Pets"
               className="w-full h-auto object-cover"
             />
@@ -351,7 +351,7 @@ export default function Home() {
         {/* Background Pattern - Wavy lines as seen in image */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
           <img
-            src="/Images/favPattern.png"
+            src="/images/favpattern.png"
             className="w-full h-full object-cover opacity-10"
             style={{ filter: "grayscale(100%) brightness(0.96)" }}
             alt=""
@@ -396,7 +396,7 @@ export default function Home() {
                 </div>
               </div>
               <img
-                src="/Images/goldenfav.png"
+                src="/images/goldenfav.png"
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[110%] object-contain group-hover:scale-105 transition-transform duration-500 z-10"
                 alt="Golden Retriever"
               />
@@ -429,7 +429,7 @@ export default function Home() {
                   </div>
                 </div>
                 <img
-                  src="/Images/pugfav.png"
+                  src="/images/pugfav.png"
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                   alt="Pug"
                 />
@@ -460,7 +460,7 @@ export default function Home() {
                   </div>
                 </div>
                 <img
-                  src="/Images/rotfav.png"
+                  src="/images/rotfav.png"
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                   alt="Rottweiler"
                 />
@@ -491,7 +491,7 @@ export default function Home() {
                   </div>
                 </div>
                 <img
-                  src="/Images/germanfav.png"
+                  src="/images/germanfav.png"
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                   alt="German Shepard"
                 />
@@ -522,7 +522,7 @@ export default function Home() {
                   </div>
                 </div>
                 <img
-                  src="/Images/huskyfav.png"
+                  src="/images/huskyfav.png"
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                   alt="Husky"
                 />
@@ -536,24 +536,24 @@ export default function Home() {
       <section className="bg-[#F6F6F6] pt-24 relative overflow-hidden flex flex-col items-center w-full">
         {/* Background Paw Pattern */}
         <img
-          src="/Images/petfoot.png"
+          src="/images/petfoot.png"
           className="absolute top-[8%] left-[50%] -translate-x-1/2 w-[100px] lg:w-[200px] rotate-[300deg] z-0 pointer-events-none opacity-20 lg:opacity-100"
           alt=""
         />
         <img
-          src="/Images/petfoot.png"
+          src="/images/petfoot.png"
           className="absolute top-[10%] left-[15%] -translate-x-1/2 w-[100px] lg:w-[200px] rotate-[300deg] z-0 pointer-events-none opacity-20 lg:opacity-100"
           alt=""
         />
         <img
-          src="/Images/petfoot.png"
+          src="/images/petfoot.png"
           className="absolute top-[10%] right-[1%] -translate-x-1/2 w-[100px] lg:w-[200px] rotate-[300deg] z-0 pointer-events-none opacity-20 lg:opacity-100"
           alt=""
         />
         {/* Background Paw Pattern */}
         <div className="absolute inset-0 pointer-events-none opacity-[0.06] z-0">
           <img
-            src="/Images/availableFoot.png"
+            src="/images/availablefoot.png"
             className="w-full h-full object-cover"
             alt=""
           />
@@ -566,18 +566,18 @@ export default function Home() {
 
           <div className="grid pb-30 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 justify-items-center">
 
-            <BreedCard name="Labrador Retriever" image="/Images/labrador.png" />
-            <BreedCard name="Siberian Husky" image="/Images/huskyfav.png" />
-            <BreedCard name="German Shepherd" image="/Images/germanfav.png" />
-            <BreedCard name="Doodle" image="/Images/SnowWhite.png" />
-            <BreedCard name="Rottweiler" image="/Images/rotfav.png" />
-            <BreedCard name="Sitzu" image="/Images/pugfav.png" />
+            <BreedCard name="Labrador Retriever" image="/images/labrador.png" />
+            <BreedCard name="Siberian Husky" image="/images/huskyfav.png" />
+            <BreedCard name="German Shepherd" image="/images/germanfav.png" />
+            <BreedCard name="Doodle" image="/images/snowwhite.png" />
+            <BreedCard name="Rottweiler" image="/images/rotfav.png" />
+            <BreedCard name="Sitzu" image="/images/pugfav.png" />
           </div>
 
             {/* Featured Puppy Image (Bottom Right) */}
             <div className="lg:col-span-2 min-h-[300px] sm:min-h-[400px] absolute bottom-0 w-full overflow-hidden lg:overflow-visible">
               <img
-                src="/Images/avilablePets.png"
+                src="/images/avilablepets.png"
                 className="absolute bottom-0 right-0 lg:right-[-50px] w-full max-w-[400px] lg:max-w-none lg:w-auto h-auto lg:h-[900px] object-contain z-20"
                 alt="Featured Puppy"
               />
@@ -591,19 +591,19 @@ export default function Home() {
         <div className="absolute inset-0 pointer-events-none z-0">
           {/* Left paw */}
           <img
-            src="/Images/bluefoot.png"
+            src="/images/bluefoot.png"
             className="absolute bottom-[-20%] left-[20%] w-[420px] select-none rotate-[-35] hidden sm:block"
             alt=""
           />
           {/* Middle/Bottom paw */}
           <img
-            src="/Images/bluefoot.png"
+            src="/images/bluefoot.png"
             className="absolute bottom-[1%] left-[60%] w-[90px] select-none hidden sm:block"
             alt=""
           />
           {/* Right paw */}
           <img
-            src="/Images/bluefoot.png"
+            src="/images/bluefoot.png"
             className="absolute bottom-0 left-[76%] w-[80px] select-none hidden sm:block"
             alt=""
           />
@@ -626,7 +626,7 @@ export default function Home() {
             <div className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
                 <img
-                  src="/Images/needs1.png"
+                  src="/images/needs1.png"
                   alt="Pet Consultation"
                   className="w-full h-full object-cover"
                 />
@@ -645,7 +645,7 @@ export default function Home() {
             <div className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
                 <img
-                  src="/Images/needs2.png"
+                  src="/images/needs2.png"
                   alt="Pet Relocation"
                   className="w-full h-full object-cover"
                 />
@@ -664,7 +664,7 @@ export default function Home() {
             <div className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
                 <img
-                  src="/Images/needs3.png"
+                  src="/images/needs3.png"
                   alt="Pet Training"
                   className="w-full h-full object-cover"
                 />
@@ -683,7 +683,7 @@ export default function Home() {
             <div className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
               <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
                 <img
-                  src="/Images/needs4.png"
+                  src="/images/needs4.png"
                   alt="Pet Guidance"
                   className="w-full h-full object-cover"
                 />
@@ -706,10 +706,10 @@ export default function Home() {
 
       {/* Bringing Your Pet Home Section */}
       <section className="pt-8 pb-18 relative overflow-hidden flex flex-col items-center w-full ">
-        {/* Background Pattern (pethomeBG.png) */}
+        {/* Background Pattern (pethomebg.png) */}
         <div className="absolute inset-0 pointer-events-none z-0 ">
           <img
-            src="/Images/pethomeBG.png"
+            src="/images/pethomebg.png"
             className="w-full h-full object-cover opacity-60 mix-blend-multiply"
             alt=""
             color={"#F0F9FF"}
@@ -727,7 +727,7 @@ export default function Home() {
             <div className="w-full max-w-[390px] h-[500px] lg:h-[580px] rounded-[40px] relative overflow-hidden p-6 lg:p-10 flex flex-col bg-gradient-to-b from-[#53A4C0] via-[#53A4C0] to-white/60">
               <div className="w-32 h-32 flex items-center justify-center self-center mb-10 mt-2">
                 <img
-                  src="/Images/step1.png"
+                  src="/images/step1.png"
                   className="w-full h-full object-contain"
                   alt="Step 1"
                 />
@@ -741,7 +741,7 @@ export default function Home() {
               </p>
               <div className="mt-auto flex items-end justify-between relative h-40">
                 <img
-                  src="/Images/closeYourPet.png"
+                  src="/images/closeyourpet.png"
                   className="w-[138px] h-[207px] absolute left-[-10px] bottom-[-45px] object-contain"
                   alt=""
                 />
@@ -755,7 +755,7 @@ export default function Home() {
             <div className="w-full max-w-[390px] h-[500px] lg:h-[640px] rounded-[40px] relative overflow-hidden p-6 lg:p-10 flex flex-col bg-gradient-to-b from-[#FFA2B6] via-[#FFA2B6] to-white/60">
               <div className="w-32 h-32 flex items-center justify-center self-center mb-10 mt-2">
                 <img
-                  src="/Images/step2.png"
+                  src="/images/step2.png"
                   className="w-full h-full object-contain"
                   alt="Step 2"
                 />
@@ -769,7 +769,7 @@ export default function Home() {
               </p>
               <div className="mt-auto flex items-end justify-between relative h-48">
                 <img
-                  src="/Images/health.png"
+                  src="/images/health.png"
                   className="w-[208px] h-[253px] absolute left-[-20px] bottom-[-55px] object-contain"
                   alt=""
                 />
@@ -783,7 +783,7 @@ export default function Home() {
             <div className="w-full max-w-[390px] h-[500px] lg:h-[700px] rounded-[40px] relative overflow-hidden p-6 lg:p-10 flex flex-col bg-gradient-to-b from-[#066168] via-[#066168] to-white/60">
               <div className="w-32 h-32 flex items-center justify-center self-center mb-10 mt-2">
                 <img
-                  src="/Images/step3.png"
+                  src="/images/step3.png"
                   className="w-full h-full object-contain"
                   alt="Step 3"
                 />
@@ -797,7 +797,7 @@ export default function Home() {
               </p>
               <div className="mt-auto flex items-end justify-between relative h-40">
                 <img
-                  src="/Images/plane.png"
+                  src="/images/plane.png"
                   className="w-[174px] h-[174px] absolute left-[-10px] bottom-[-20px] object-contain"
                   alt=""
                 />
@@ -818,28 +818,28 @@ export default function Home() {
         {/* Background Paw Patterns (bluefoot.png) */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
           <img
-            src="/Images/bluefoot.png"
+            src="/images/bluefoot.png"
             className="absolute top-[5%] left-[2%] w-[250px] opacity-10 hidden sm:block"
             alt=""
           />
           <img
-            src="/Images/bluefoot.png"
+            src="/images/bluefoot.png"
             className="absolute top-[5%] right-[2%] w-[250px] opacity-10 rotate-180 hidden sm:block"
             alt=""
           />
           {/* New petfoot2 patterns */}
           <img
-            src="/Images/petfoot2.png"
+            src="/images/petfoot2.png"
             className="absolute top-[3%] left-[10%] w-[119px] rotate-[-15deg] hidden sm:block"
             alt=""
           />
           <img
-            src="/Images/petfoot2.png"
+            src="/images/petfoot2.png"
             className="absolute top-[8%] right-[5%] w-[119px] rotate-[20deg] hidden sm:block"
             alt=""
           />
           <img
-            src="/Images/petfoot2.png"
+            src="/images/petfoot2.png"
             className="absolute top-8 right-[-5%] w-[119px] rotate-[-10deg] hidden sm:block"
             alt=""
           />
@@ -854,7 +854,7 @@ export default function Home() {
             {/* Video Thumbnail (40%) */}
             <div className="lg:w-[40%] relative group cursor-pointer overflow-hidden rounded-3xl h-[250px] sm:h-[350px] lg:h-[388px]">
               <img
-                src="/Images/clientVid.png"
+                src="/images/clientvid.png"
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 alt="Client Video"
               />
@@ -918,7 +918,7 @@ export default function Home() {
           <div className="flex flex-col relative items-center z-10">
             <div className="w-full">
               <img
-                src="/Images/familyy.png"
+                src="/images/familyy.png"
                 className="w-full h-auto"
                 alt="Happy Families Grid"
               />
@@ -966,7 +966,7 @@ export default function Home() {
 
               <div className="w-full sm:w-[45%] h-[200px] sm:h-full overflow-hidden rounded-[20px] sm:rounded-[28px] relative z-10 shadow-sm flex-shrink-0">
                 <img
-                  src="/Images/expaer1.png"
+                  src="/images/expaer1.png"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   alt="Expert Tip 1"
                 />
@@ -1019,7 +1019,7 @@ export default function Home() {
 
               <div className="w-full sm:w-[45%] h-[200px] sm:h-full overflow-hidden rounded-[20px] sm:rounded-[28px] relative z-10 shadow-sm flex-shrink-0">
                 <img
-                  src="/Images/expart2.png"
+                  src="/images/expart2.png"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   alt="Expert Tip 2"
                 />
@@ -1144,7 +1144,7 @@ export default function Home() {
             {/* Right side: Image & Overlay */}
             <div className="relative rounded-[24px] sm:rounded-[32px] overflow-hidden min-h-[350px] sm:min-h-[450px] lg:min-h-0">
               <img
-                src="/Images/goldenfav.png"
+                src="/images/goldenfav.png"
                 alt="Consultation Puppy"
                 className="absolute inset-0 w-full h-full object-cover"
               />

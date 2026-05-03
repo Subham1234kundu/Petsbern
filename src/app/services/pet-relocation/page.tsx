@@ -155,7 +155,7 @@ export default function PetRelocationPage() {
             {/* Step 1 */}
             <div className="w-[356px] h-[380px] border border-[#C8C8C8] rounded-xl p-6 pt-10 flex flex-col items-center text-center">
               <div className="h-[110px] flex items-center justify-center mb-6">
-                <img src="/images/Consultation&Assessment.png" alt="Consultation & Assessment" className="h-full object-contain" />
+                <img src="/images/consultation&assessment.png" alt="Consultation & Assessment" className="h-full object-contain" />
               </div>
               <h3 className="text-black text-[20px] font-bold mb-4">Consultation & Assessment</h3>
               <p className="text-[#4A5565] text-[14px] leading-relaxed">

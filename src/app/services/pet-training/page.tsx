@@ -12,7 +12,7 @@ export default function PetTrainingPage() {
         className="w-full h-[268px] relative flex flex-col items-center justify-center overflow-hidden text-center"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/petTraining.jpg')",
+            "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/pettraining.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center 40%",
         }}
@@ -121,7 +121,7 @@ export default function PetTrainingPage() {
           {/* Right Column: Image */}
           <div className="flex-shrink-0">
             <img
-              src="/images/whyChoose.png"
+              src="/images/whychoose.png"
               alt="Why Choose Pets Barn Training"
               style={{ width: "581px", height: "608px", objectFit: "cover", borderRadius: "16px" }}
             />
@@ -216,7 +216,7 @@ export default function PetTrainingPage() {
             {/* Step 1 */}
             <div className="w-[356px] h-[380px] border border-[#C8C8C8] rounded-xl p-6 pt-10 flex flex-col items-center text-center">
               <div className="h-[110px] flex items-center justify-center mb-6">
-                <img src="/images/Consultation&Assessment.png" alt="Consultation & Assessment" className="h-full object-contain" />
+                <img src="/images/consultation&assessment.png" alt="Consultation & Assessment" className="h-full object-contain" />
               </div>
               <h3 className="text-black text-[20px] font-bold mb-4">Consultation & Assessment</h3>
               <p className="text-[#4A5565] text-[14px] leading-relaxed">
@@ -293,7 +293,7 @@ export default function PetTrainingPage() {
 
               <div className="w-[45%] h-full overflow-hidden rounded-[28px] relative z-10 shadow-sm">
                 <img
-                  src="/images/petTravel1.png"
+                  src="/images/pettravel1.png"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   alt="Expert Tip 1"
                 />
@@ -345,7 +345,7 @@ export default function PetTrainingPage() {
 
               <div className="w-[45%] h-full overflow-hidden rounded-[28px] relative z-10 shadow-sm">
                 <img
-                  src="/images/petTravel2.png"
+                  src="/images/pettravel2.png"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   alt="Expert Tip 2"
                 />
@@ -580,7 +580,7 @@ export default function PetTrainingPage() {
         {/* Right Column (60%) */}
         <div className="w-full lg:w-[60%] h-full relative">
           <img 
-            src="/images/trainingProgram.png" 
+            src="/images/trainingprogram.png" 
             className="w-full h-full object-cover"
             alt="Pet Training Program"
           />

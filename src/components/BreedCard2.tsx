@@ -62,7 +62,7 @@ const BreedCard2 = ({
           
           <button className="w-[44px] h-[44px] flex items-center justify-center">
             <img 
-                src="/images/whatsApp.png" 
+                src="/images/whatsapp.png" 
                 alt="WhatsApp" 
                 className="w-[40px] h-[40px] object-contain"
             />

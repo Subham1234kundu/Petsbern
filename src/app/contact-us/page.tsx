@@ -11,7 +11,7 @@ export default function ContactUsPage() {
         className="w-full h-[268px] relative flex flex-col items-center justify-center overflow-hidden text-center"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/contactUs.jpg')",
+            "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/contactus.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center 40%",
         }}
