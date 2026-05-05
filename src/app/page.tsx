@@ -80,150 +80,64 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Pet Cards Grid */}
-        <section className="mt-3 mb-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-6 lg:gap-x-8 gap-y-12 sm:gap-y-16 pt-8">
-            {/* Labrador Retriever */}
-            <div
-              className="bg-[#F0F0F0] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
-            >
-              <img
-                src="/images/labrador.png"
-                className="absolute -left-2 sm:-left-4 lg:-left-6 -bottom-8 sm:-bottom-14 lg:-bottom-20 object-contain pointer-events-none drop-shadow-xl w-[120px] sm:w-[145px] lg:w-[171px] h-auto"
-                alt="Labrador Retriever"
-              />
-              <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
-                <h3 className="text-[24px] font-bold text-black mb-1 leading-tight">
-                  Labrador Retriever
-                </h3>
-                <p className="text-[14px] text-[#484554] mb-3 leading-relaxed">
-                  Friendly, intelligent, and loyal companion, great with
-                  families, easy to train, and highly energetic.
-                </p>
-                <button className="bg-black text-white text-[14px] px-8 py-2.5 rounded-md hover:bg-gray-800 transition-colors w-fit font-medium">
-                  View More
-                </button>
-              </div>
-            </div>
-
-            {/* German Shepherd */}
-            <div
-              className="bg-[#A58B7C] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
-            >
-              <img
-                src="/images/germanshepherd.png"
-                className="absolute -left-2 sm:-left-3 lg:-left-4 -bottom-2 sm:-bottom-3 lg:-bottom-4 object-contain pointer-events-none drop-shadow-xl w-[120px] sm:w-[150px] lg:w-[178px] h-auto"
-                alt="German Shepherd"
-              />
-              <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
-                <h3 className="text-[24px] font-bold text-black mb-1 leading-tight">
-                  German Shepherd
-                </h3>
-                <p className="text-[14px] text-[#484554] mb-3 leading-relaxed">
-                  Confident, courageous, and highly trainable, known for
-                  protection, intelligence, and strong loyalty to owners.
-                </p>
-                <button className="bg-black text-white text-[14px] px-8 py-2.5 rounded-md hover:bg-gray-800 transition-colors w-fit font-medium">
-                  View More
-                </button>
-              </div>
-            </div>
-
-            {/* Siberian Husky */}
-            <div
-              className="bg-[#C9EAF1] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
-            >
-              <img
-                src="/images/siberianhusky.png"
-                className="absolute -left-1 sm:-left-2 lg:-left-4 -bottom-2 sm:-bottom-4 lg:-bottom-6 object-contain pointer-events-none drop-shadow-xl w-[100px] sm:w-[120px] lg:w-[142px] h-auto"
-                alt="Siberian Husky"
-              />
-              <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
-                <h3 className="text-[24px] font-bold text-black mb-1 leading-tight">
-                  Siberian Husky
-                </h3>
-                <p className="text-[14px] text-[#484554] mb-3 leading-relaxed">
-                  Energetic, striking appearance, loves cold climates, playful
-                  nature, and requires regular exercise and attention.
-                </p>
-                <button className="bg-black text-white text-[14px] px-8 py-2.5 rounded-md hover:bg-gray-800 transition-colors w-fit font-medium">
-                  View More
-                </button>
-              </div>
-            </div>
-
-            {/* Snow White */}
-            <div
-              className="bg-[#F2E7E7] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
-            >
-              <img
-                src="/images/snowwhite.png"
-                className="absolute -left-1 sm:-left-2 lg:-left-4 -bottom-4 sm:-bottom-6 lg:-bottom-10 object-contain pointer-events-none drop-shadow-xl w-[110px] sm:w-[135px] lg:w-[163px] h-auto"
-                alt="Snow White"
-              />
-              <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
-                <h3 className="text-[24px] font-bold text-black mb-1 leading-tight">
-                  Snow White
-                </h3>
-                <p className="text-[14px] text-[#484554] mb-3 leading-relaxed">
-                  Calm, affectionate, long-haired breed, prefers quiet
-                  environments, enjoys lounging, and requires regular grooming.
-                </p>
-                <button className="bg-black text-white text-[14px] px-8 py-2.5 rounded-md hover:bg-gray-800 transition-colors w-fit font-medium">
-                  View More
-                </button>
-              </div>
-            </div>
-
-            {/* Siamese Cat */}
-            <div
-              className="bg-[#DEC6A8] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
-            >
-              <img
-                src="/images/siamesecat.png"
-                className="absolute -left-6 sm:-left-10 lg:-left-15 -bottom-4 sm:-bottom-6 lg:-bottom-9 object-contain pointer-events-none drop-shadow-xl w-[130px] sm:w-[160px] lg:w-[198px] h-auto"
-                alt="Siamese Cat"
-              />
-              <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
-                <h3 className="text-[24px] font-bold text-black mb-1 leading-tight">
-                  Siamese Cat
-                </h3>
-                <p className="text-[14px] text-[#484554] mb-3 leading-relaxed">
-                  Vocal, social, and intelligent breed, forms strong bonds,
-                  loves attention, and thrives in interactive environments.
-                </p>
-                <button className="bg-black text-white text-[14px] px-8 py-2.5 rounded-md hover:bg-gray-800 transition-colors w-fit font-medium">
-                  View More
-                </button>
-              </div>
-            </div>
-
-            {/* Maine Coon */}
-            <div
-              className="bg-[#B3B9B5] rounded-xl p-4 relative flex items-center mx-auto w-full max-w-[398px] h-[220px] sm:h-[240px] lg:h-[251px]"
-            >
-              <img
-                src="/images/mainecoon.png"
-                className="absolute -left-3 sm:-left-6 lg:-left-9 -bottom-4 sm:-bottom-7 lg:-bottom-10 object-contain pointer-events-none drop-shadow-xl w-[130px] sm:w-[160px] lg:w-[191px] h-auto"
-                alt="Maine Coon"
-              />
-              <div className="w-[63%] ml-auto z-10 flex flex-col pr-2">
-                <h3 className="text-[24px] font-bold text-black mb-1 leading-tight">
-                  Maine Coon
-                </h3>
-                <p className="text-[14px] text-[#484554] mb-3 leading-relaxed">
-                  Large, friendly, and intelligent, known for its gentle
-                  personality, and adaptability to families.
-                </p>
-                <button className="bg-black text-white text-[14px] px-8 py-2.5 rounded-md hover:bg-gray-800 transition-colors w-fit font-medium">
-                  View More
-                </button>
-              </div>
+        {/* 12 Breeds Grid Section */}
+        <section className="w-full py-16">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-16 max-w-[1200px] mx-auto">
+              {[
+                { name: "Rottweiler", img: "/images/pet1.png", desc: "Known for their loyalty, intelligence, and protective nature. Family pets, easy to train, and are strong, energetic" },
+                { name: "Labrador Retriever", img: "/images/pet2.png", desc: "Friendly, intelligent, and loyal companion, great with families, easy to train, and highly energetic." },
+                { name: "German Shepherd", img: "/images/pet3.png", desc: "Confident, courageous, and highly trainable, known for protection, intelligence, and strong loyalty to owners." },
+                { name: "Siberian Husky", img: "/images/pet4.png", desc: "Energetic, striking appearance, loves cold climates, playful nature, and requires regular exercise and attention." },
+                { name: "Pomeranian", img: "/images/pet5.png", desc: "Bold, lion-like mane, surprisingly hardy in the cold, fiercely spirited, and demands constant interaction and mental play." },
+                { name: "Saint Bernard", img: "/images/pet6.png", desc: "Known for their loyalty, intelligence, and protective nature. Family pets, easy to train, and are strong, energetic." },
+                { name: "English Mastiff", img: "/images/pet7.png", desc: "Friendly, intelligent, and loyal companion, great with families. Easy to train, and highly energetic." },
+                { name: "Goldendoodle", img: "/images/pet8.png", desc: "Confident, courageous, and highly trainable. Known for protection, intelligence, and strong loyalty to owners." },
+                { name: "Afghan Hound", img: "/images/pet9.png", desc: "Energetic, striking appearance, loves cold climates. Playful nature, and requires regular exercise and attention." },
+                { name: "Shih Tzu", img: "/images/pet10.png", desc: "Bold, lion-like mane, surprisingly hardy in the cold. Fiercely spirited, and demands constant interaction and mental play." },
+                { name: "Chihuahua", img: "/images/pet11.png", desc: "Known for their loyalty, intelligence, and protective nature. Family pets, easy to train, and are strong, energetic." },
+                { name: "Charles Spaniel", img: "/images/pet12.png", desc: "Friendly, intelligent, and loyal companion, great with families. Easy to train, and highly energetic." },
+              ].map((breed, i) => (
+                <div key={i} className="flex flex-col items-center text-center w-[218px]">
+                  <div className="w-[218px] h-[278px] mb-6 flex items-center justify-center overflow-hidden">
+                    <img 
+                      src={breed.img} 
+                      alt={breed.name}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <h3 
+                    className="text-[24px] font-bold text-black mb-2 leading-tight"
+                    style={{ fontFamily: "var(--font-plus-jakarta-sans), sans-serif" }}
+                  >
+                    {breed.name}
+                  </h3>
+                  <p 
+                    className="text-[14px] leading-relaxed mb-6 flex-grow"
+                    style={{ 
+                      fontFamily: "var(--font-inter), sans-serif",
+                      color: "#484554"
+                    }}
+                  >
+                    {breed.desc}
+                  </p>
+                  <button 
+                    className="bg-black text-white rounded-md flex items-center justify-center hover:bg-gray-800 transition-colors"
+                    style={{ 
+                      width: "120px", 
+                      height: "36px", 
+                      fontSize: "14px", 
+                      fontFamily: "var(--font-inter), sans-serif",
+                      fontWeight: 500
+                    }}
+                  >
+                    View More
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
-
-        {/* Why PetsBarn Section */}
+        </section>        {/* Why PetsBarn Section */}
         <section className="mt-16 bg-[#1C4B42] rounded-[32px] overflow-hidden relative flex flex-col items-center pt-16">
           {/* Background Outline Text */}
           <div
@@ -574,14 +488,14 @@ export default function Home() {
             <BreedCard name="Sitzu" image="/images/pugfav.png" />
           </div>
 
-            {/* Featured Puppy Image (Bottom Right) */}
-            <div className="lg:col-span-2 min-h-[300px] sm:min-h-[400px] absolute bottom-0 w-full overflow-hidden lg:overflow-visible">
-              <img
-                src="/images/avilablepets.png"
-                className="absolute bottom-0 right-0 lg:right-[-50px] w-full max-w-[400px] lg:max-w-none lg:w-auto h-auto lg:h-[900px] object-contain z-20"
-                alt="Featured Puppy"
-              />
-            </div>
+          {/* Featured Puppy Image (Bottom Right) */}
+          <div className="lg:col-span-2 min-h-[300px] sm:min-h-[400px] absolute bottom-0 w-full overflow-hidden lg:overflow-visible">
+            <img
+              src="/images/avilablepets.png"
+              className="absolute bottom-0 right-0 lg:right-[-50px] w-full max-w-[400px] lg:max-w-none lg:w-auto h-auto lg:h-[900px] object-contain z-20"
+              alt="Featured Puppy"
+            />
+          </div>
         </div>
       </section>
 
@@ -1177,3 +1091,4 @@ export default function Home() {
     </div>
   );
 }
+
