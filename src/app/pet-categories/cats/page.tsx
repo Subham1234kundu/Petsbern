@@ -1,86 +1,31 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import BreedCard from '@/components/BreedCard';
-import { supabase } from '@/utils/supabase';
 
 const breeds = [
-  "Labrador Retriever",
-  "German Shepherd",
-  "Golden Retriever",
-  "French Bulldog",
-  "Poodle",
-  "Beagle",
-  "Rottweiler",
-  "Yorkshire Terrier",
-  "Dachshund",
-  "Siberian Husky"
+  "Persian",
+  "Maine Coon",
+  "Siamese",
+  "Bengal",
+  "Ragdoll",
+  "British Shorthair",
+  "Sphynx",
+  "Scottish Fold",
+  "Abyssinian",
+  "Russian Blue"
 ];
 
-export default function DogsCategoryPage() {
-  const [selectedBreed, setSelectedBreed] = useState("All Breeds");
-  const [selectedSize, setSelectedSize] = useState("All Sizes");
+export default function CatsCategoryPage() {
+  const [selectedBreed, setSelectedBreed] = useState("Persian");
+  const [selectedSize, setSelectedSize] = useState("Small");
   const [showFilters, setShowFilters] = useState(false);
   const [breedSearchQuery, setBreedSearchQuery] = useState("");
-  
-  // Real-time state
-  const [pets, setPets] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch initial pets and subscribe to changes
-  useEffect(() => {
-    const fetchPets = async () => {
-      const { data, error } = await supabase
-        .from('pets')
-        .select('*')
-        .eq('category', 'Dog')
-        .order('id', { ascending: false });
-
-      if (data) setPets(data);
-      setIsLoading(false);
-    };
-
-    fetchPets();
-
-    const channel = supabase
-      .channel('public:pets')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'pets', filter: "category=eq.Dog" }, (payload) => {
-        if (payload.eventType === 'INSERT') {
-          setPets((prev) => [payload.new, ...prev]);
-        } else if (payload.eventType === 'DELETE') {
-          setPets((prev) => prev.filter(p => p.id !== payload.old.id));
-        } else if (payload.eventType === 'UPDATE') {
-          setPets((prev) => prev.map(p => p.id === payload.new.id ? payload.new : p));
-        }
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
-  // Compute unique breeds dynamically from fetched pets
-  const dynamicBreeds = Array.from(new Set(pets.map(p => p.name)));
-  const filteredBreeds = dynamicBreeds.filter(breed => 
+  const filteredBreeds = breeds.filter(breed => 
     breed.toLowerCase().includes(breedSearchQuery.toLowerCase())
   );
-
-  // Filter the actual displayed pets based on Size and Breed
-  const displayPets = pets.filter(pet => {
-    // Breed filter
-    if (selectedBreed !== "All Breeds" && pet.name !== selectedBreed) return false;
-    
-    // Size/Weight filter
-    if (selectedSize === "Toy Breed") return pet.weight <= 4;
-    if (selectedSize === "Small") return pet.weight > 4 && pet.weight <= 10;
-    if (selectedSize === "Medium") return pet.weight > 10 && pet.weight <= 25;
-    if (selectedSize === "Large") return pet.weight > 25 && pet.weight <= 44;
-    if (selectedSize === "Giant Breed") return pet.weight > 44;
-    
-    return true; // All Sizes
-  });
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
@@ -100,7 +45,7 @@ export default function DogsCategoryPage() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           <span className="text-[#5F6C72] text-[14px]">Our Pets</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          <span className="text-black text-[14px] font-medium">Dogs</span>
+          <span className="text-black text-[14px] font-medium">Cats</span>
         </div>
       </div>
 
@@ -112,13 +57,13 @@ export default function DogsCategoryPage() {
             <div className="inline-flex p-1 bg-[#F3F4F6] rounded-full">
               <Link 
                 href="/pet-categories/dogs" 
-                className="px-8 py-2 rounded-full bg-black text-white text-sm font-bold shadow-sm transition-all active:scale-95"
+                className="px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95"
               >
                 Dogs
               </Link>
               <Link 
                 href="/pet-categories/cats" 
-                className="px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95"
+                className="px-8 py-2 rounded-full bg-black text-white text-sm font-bold shadow-sm transition-all active:scale-95"
               >
                 Cats
               </Link>
@@ -148,7 +93,7 @@ export default function DogsCategoryPage() {
       </div>
 
       {/* Main Content Layout */}
-      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 py-8 flex flex-col lg:flex-row gap-8 lg:gap-12">
+      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 py-8 flex flex-col lg:flex-row gap-8">
         
         {/* Left Sidebar (Responsive Toggle) */}
         <div className={`w-full lg:w-1/4 flex-shrink-0 transition-all duration-300 ${showFilters ? 'block' : 'hidden lg:block'}`}>
@@ -174,24 +119,6 @@ export default function DogsCategoryPage() {
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-2 lg:flex lg:flex-col gap-5 max-h-[300px] lg:max-h-none overflow-y-auto pr-2 custom-scrollbar">
-              {/* All Breeds Option */}
-              <div 
-                className="flex items-center gap-3 cursor-pointer group"
-                onClick={() => {
-                  setSelectedBreed("All Breeds");
-                  if (window.innerWidth < 1024) setShowFilters(false);
-                }}
-              >
-                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0 ${
-                  selectedBreed === "All Breeds" ? 'border-[#E2001A]' : 'border-[#D1D5DB] group-hover:border-gray-400'
-                }`}>
-                  {selectedBreed === "All Breeds" && <div className="w-2.5 h-2.5 rounded-full bg-[#E2001A]" />}
-                </div>
-                <span className={`text-[14px] md:text-[15px] transition-all leading-tight ${selectedBreed === "All Breeds" ? 'text-black font-bold' : 'text-[#4F4F4F] group-hover:text-black'}`}>
-                  All Breeds
-                </span>
-              </div>
-              
               {filteredBreeds.length > 0 ? (
                 filteredBreeds.map((breed) => (
                   <div 
@@ -228,60 +155,54 @@ export default function DogsCategoryPage() {
           </div>
         </div>
 
-        {/* Right Content Area (Responsive) */}
-        <div className="w-full lg:w-3/4 flex flex-col gap-10 pr-0">
+        {/* Right Content Area (75% space) */}
+        <div className="w-full lg:w-3/4 flex flex-col gap-10">
           
           {/* Filter with Size Section */}
-          <div className="flex flex-col gap-4 sm:gap-6">
-            <h2 className="text-[#191C1F] font-bold text-[16px] md:text-[18px] uppercase tracking-wide">
+          <div className="flex flex-col gap-6">
+            <h2 className="text-[#191C1F] font-bold text-[16px] uppercase tracking-wide">
               Filter with Size
             </h2>
             
-            <div className="flex flex-row overflow-x-auto sm:grid sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-3 lg:gap-4 pb-2 sm:pb-0 snap-x scrollbar-hide">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { name: "All Sizes", desc: "ALL WEIGHTS", image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=182&h=158&auto=format&fit=crop" },
-                { name: "Toy Breed", desc: "FOR DOGS UPTO 4KGS", image: "https://images.unsplash.com/photo-1591768226451-3444216831ce?q=80&w=182&h=158&auto=format&fit=crop" },
-                { name: "Small", desc: "FOR DOGS 5-10KGS", image: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=182&h=158&auto=format&fit=crop" },
-                { name: "Medium", desc: "FOR DOGS 11-25KGS", image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=182&h=158&auto=format&fit=crop" },
-                { name: "Large", desc: "FOR DOGS 26-44KGS", image: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=182&h=158&auto=format&fit=crop" },
-                { name: "Giant Breed", desc: "FOR DOGS 45+KGS", image: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=182&h=158&auto=format&fit=crop" }
+                { name: "Small", desc: "FOR CATS UPTO 3KGS", image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=182&h=158&auto=format&fit=crop" },
+                { name: "Medium", desc: "FOR CATS 4-6KGS", image: "https://images.unsplash.com/photo-1573865526739-10659fef78a5?q=80&w=182&h=158&auto=format&fit=crop" },
+                { name: "Large", desc: "FOR CATS 7-10KGS", image: "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=182&h=158&auto=format&fit=crop" },
+                { name: "X-Large", desc: "FOR CATS ABOVE 10KGS", image: "https://images.unsplash.com/photo-1513245538863-174d31210021?q=80&w=182&h=158&auto=format&fit=crop" }
               ].map((size) => {
                 const isSelected = selectedSize === size.name;
                 return (
                   <div 
                     key={size.name}
-                    onClick={() => setSelectedSize(size.name === selectedSize ? "All Sizes" : size.name)}
-                    className={`group snap-center shrink-0 cursor-pointer transition-all flex flex-col items-center sm:justify-between gap-2 sm:gap-0 sm:pt-2 sm:pb-3 sm:bg-white w-[75px] sm:w-full mx-auto sm:max-w-[180px] h-auto sm:h-[180px] sm:rounded-[12px] sm:border ${
+                    onClick={() => setSelectedSize(size.name)}
+                    className={`cursor-pointer rounded-[12px] border transition-all flex flex-col items-center justify-center gap-3 bg-white w-full mx-auto max-w-[216px] h-[235px] ${
                       isSelected 
-                      ? 'sm:border-[#FFC501] sm:ring-1 sm:ring-[#FFC501]' 
-                      : 'sm:border-[#E4E7E9] sm:hover:border-gray-300'
+                      ? 'border-[#FFC501] ring-1 ring-[#FFC501]' 
+                      : 'border-[#E4E7E9] hover:border-gray-300'
                     }`}
                   >
                     {/* Image Container */}
-                    <div className={`overflow-hidden shrink-0 transition-all ${
-                      isSelected 
-                      ? 'ring-2 ring-[#FFC501] ring-offset-2 sm:ring-0 sm:ring-offset-0' 
-                      : 'ring-1 ring-gray-200 sm:ring-0 group-hover:ring-[#FFC501]'
-                    } rounded-full w-[70px] h-[70px] sm:rounded-[8px] sm:w-[90%] sm:h-[100px]`}>
+                    <div className="overflow-hidden rounded-[8px] w-[90%] h-[158px]">
                       <img 
                         src={size.image} 
                         alt={size.name}
                         className={`w-full h-full object-cover transition-all duration-500 ${
-                          isSelected ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0 group-hover:scale-105'
+                          isSelected ? 'grayscale-0 scale-105' : 'grayscale'
                         }`}
                       />
                     </div>
                     
                     {/* Text Container */}
-                    <div className="flex flex-col items-center sm:items-start w-full sm:px-3 gap-0.5 sm:mt-auto text-center sm:text-left">
-                      <span className="text-[#0F172A] font-bold text-[11px] sm:text-[13px] leading-tight">
+                    <div className="flex flex-col items-start w-full px-4 gap-1">
+                      <span className="text-[#0F172A] font-bold text-[14px]">
                         {size.name}
                       </span>
                       <span 
-                        className="hidden sm:block text-[#94A3B8] font-light uppercase tracking-wider line-clamp-1" 
+                        className="text-[#94A3B8] font-light uppercase tracking-wider" 
                         style={{ 
-                          fontSize: "10px", 
-                          lineHeight: "14px",
+                          fontSize: "11px", 
+                          lineHeight: "16.5px",
                           fontFamily: "Inter, sans-serif" 
                         }}
                       >
@@ -295,11 +216,11 @@ export default function DogsCategoryPage() {
           </div>
 
           {/* Search and Sort Section */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="relative w-full md:w-[424px]">
               <input 
                 type="text" 
-                placeholder="Search for pets..." 
+                placeholder="Search for cats..." 
                 className="w-full h-[48px] pl-4 pr-12 border border-[#E4E7E9] text-[15px] focus:outline-none focus:border-[#8B5E3C] rounded-none"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -323,35 +244,32 @@ export default function DogsCategoryPage() {
           </div>
 
           {/* Breed Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {isLoading ? (
-              <div className="col-span-1 md:col-span-2 lg:col-span-3 py-10 flex justify-center text-gray-500 font-medium">Loading pets...</div>
-            ) : displayPets.length > 0 ? (
-              displayPets.map((dog) => (
-                <BreedCard key={dog.id} name={dog.name} image={dog.main_image || '/placeholder.png'} />
-              ))
-            ) : (
-              <div className="col-span-1 md:col-span-2 lg:col-span-3 py-10 text-center flex flex-col items-center">
-                <span className="text-xl font-bold text-gray-800">No pets match this criteria.</span>
-                <span className="text-gray-500 mt-2">Try adjusting your filters or add a new pet from the dashboard!</span>
-              </div>
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: "Persian Cat", image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=288&h=341&auto=format&fit=crop" },
+              { name: "Maine Coon", image: "https://images.unsplash.com/photo-1573865526739-10659fef78a5?q=80&w=288&h=341&auto=format&fit=crop" },
+              { name: "Siamese Cat", image: "https://images.unsplash.com/photo-1513245538863-174d31210021?q=80&w=288&h=341&auto=format&fit=crop" },
+              { name: "Bengal Cat", image: "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=288&h=341&auto=format&fit=crop" },
+              { name: "Ragdoll", image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=288&h=341&auto=format&fit=crop" },
+              { name: "British Shorthair", image: "https://images.unsplash.com/photo-1513245538863-174d31210021?q=80&w=288&h=341&auto=format&fit=crop" }
+            ].map((cat, idx) => (
+              <BreedCard key={idx} name={cat.name} image={cat.image} />
+            ))}
           </div>
 
           {/* Pagination Section */}
           <div className="flex items-center justify-center gap-4 mt-12 mb-16">
-            {/* ... pagination buttons ... */}
-            <button className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-50 transition-colors group">
+            <button className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-50 transition-colors">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
             <div className="flex items-center gap-2">
-              {[ "01", "02", "03", "04", "05", "06" ].map((num, i) => (
+              {[ "01", "02", "03" ].map((num, i) => (
                 <button key={num} className={`w-12 h-12 rounded-full flex items-center justify-center text-[16px] font-bold transition-all ${i === 0 ? 'bg-black text-white' : 'bg-white text-black border border-[#E4E7E9] hover:border-gray-400'}`}>{num}</button>
               ))}
             </div>
-            <button className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-50 transition-colors group">
+            <button className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-50 transition-colors">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -359,16 +277,16 @@ export default function DogsCategoryPage() {
           </div>
 
           {/* Explore Other Section (New) */}
-          <div className="w-full bg-[#F8FBFF] rounded-[24px] p-8 md:p-12 mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="w-full bg-[#FFFBF8] rounded-[24px] p-8 md:p-12 mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex flex-col gap-4 text-center md:text-left">
-              <h3 className="text-black text-[24px] md:text-[32px] font-normal leading-tight">Looking for a <span className="text-[#FFC501]">Feline Friend?</span></h3>
-              <p className="text-[#5F6C72] text-[16px]">Explore our beautiful collection of healthy and playful cats.</p>
+              <h3 className="text-black text-[24px] md:text-[32px] font-normal leading-tight">Want a <span className="text-[#FFC501]">Canine Companion?</span></h3>
+              <p className="text-[#5F6C72] text-[16px]">Browse our collection of loyal and energetic dog breeds.</p>
             </div>
             <Link 
-              href="/pet-categories/cats"
+              href="/pet-categories/dogs"
               className="bg-black text-white px-10 h-[56px] rounded-full flex items-center justify-center font-bold hover:bg-gray-900 transition-all active:scale-95 whitespace-nowrap"
             >
-              Browse Cats
+              Browse Dogs
             </Link>
           </div>
 

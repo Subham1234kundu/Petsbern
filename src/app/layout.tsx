@@ -46,12 +46,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${publicSans.variable} ${plusJakartaSans.variable} ${inter.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${publicSans.variable} ${plusJakartaSans.variable} ${inter.variable} h-full antialiased overflow-x-hidden max-w-[100vw]`}
       suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col overflow-x-hidden max-w-[100vw]" suppressHydrationWarning>
         <Navbar />
-        <main className="pt-[64px] sm:pt-[74px] lg:pt-[148px] border-0 outline-none flex-grow">
+        <main className="pt-[64px] sm:pt-[74px] lg:pt-[148px] border-0 outline-none flex-grow overflow-x-hidden">
           {children}
         </main>
         <Footer />

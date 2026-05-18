@@ -1,27 +1,77 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import BreedCard2 from '@/components/BreedCard2';
 import { TestimonialSlider } from "@/components/TestimonialSlider";
+import { supabase } from '@/utils/supabase';
 
 export default function PetDetailsPage() {
   const params = useParams();
   const slug = params.slug as string;
 
-  // Format slug back to display name (e.g. golden-retriever -> Golden Retriever)
-  const petName = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  const [pet, setPet] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeImage, setActiveImage] = useState("");
+  const [thumbnails, setThumbnails] = useState<string[]>([]);
 
-  const [activeImage, setActiveImage] = useState("https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=600&h=600&auto=format&fit=crop");
+  useEffect(() => {
+    async function fetchPet() {
+      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
+      
+      let query = supabase.from('pets').select('*');
+      if (isUUID) {
+        query = query.eq('id', slug);
+      } else {
+        const formattedName = slug.split('-').join(' ');
+        query = query.ilike('name', `%${formattedName}%`);
+      }
 
-  const thumbnails = [
-    "https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=600&h=600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=600&h=600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=600&h=600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=600&h=600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1591768226451-3444216831ce?q=80&w=600&h=600&auto=format&fit=crop"
-  ];
+      const { data, error } = await query.single();
+      
+      if (data) {
+        setPet(data);
+        setActiveImage(data.main_image || "https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=600&h=600&auto=format&fit=crop");
+        
+        let allImages = [];
+        if (data.main_image) allImages.push(data.main_image);
+        if (data.gallery && data.gallery.length > 0) {
+          allImages = [...allImages, ...data.gallery];
+        } else {
+          // Fallback thumbnails if none in gallery
+          allImages.push("https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=600&h=600&auto=format&fit=crop");
+        }
+        setThumbnails(allImages);
+      }
+      setLoading(false);
+    }
+    fetchPet();
+  }, [slug]);
+
+  // Fallback name if pet not found yet
+  const petName = pet ? pet.name : slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+  if (loading) {
+    return (
+      <div className="flex flex-col min-h-screen bg-white font-sans items-center justify-center">
+        <div className="w-16 h-16 border-4 border-[#FFC501] border-t-transparent rounded-full animate-spin"></div>
+        <p className="mt-4 text-gray-500 font-medium">Loading pet details...</p>
+      </div>
+    );
+  }
+
+  if (!pet && !loading) {
+    return (
+      <div className="flex flex-col min-h-screen bg-white font-sans items-center justify-center">
+        <h1 className="text-3xl font-bold mb-4">Pet Not Found</h1>
+        <p className="text-gray-500 mb-8">We couldn't find the pet you're looking for.</p>
+        <Link href="/pet-categories/dogs" className="bg-[#FFC501] text-black px-8 py-3 rounded-full font-bold">
+          Go Back to Dogs
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
@@ -88,9 +138,7 @@ export default function PetDetailsPage() {
             </h1>
 
             <p className="text-[14px] font-normal text-[#1E1E1E] leading-[1.6]">
-              The {petName} is a friendly, intelligent, and devoted family dog known for its gentle nature and beautiful coat. They are highly social and love being around people, making them excellent companions for families, children, and first-time pet owners.
-              <br /><br />
-              With their loving personality, patience, and loyalty, {petName}s quickly become a cherished member of any home. They thrive in environments where they receive plenty of attention, exercise, and affection.
+              {pet?.description || `The ${petName} is a friendly, intelligent, and devoted family dog known for its gentle nature and beautiful coat. They are highly social and love being around people, making them excellent companions for families, children, and first-time pet owners.`}
             </p>
           </div>
 
@@ -100,15 +148,15 @@ export default function PetDetailsPage() {
             <div className="flex flex-col gap-8">
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Gender</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">Female & Male</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.gender || "Female & Male"}</p>
               </div>
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Vaccinated</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">Yes</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.vaccinated || "Yes"}</p>
               </div>
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Shedding</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">Yes</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.shedding || "Yes"}</p>
               </div>
             </div>
 
@@ -116,15 +164,15 @@ export default function PetDetailsPage() {
             <div className="flex flex-col gap-8">
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Age</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">0-18 Years</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.age || "0-18 Years"}</p>
               </div>
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Location</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">Available for Delivery</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.location || "Available for Delivery"}</p>
               </div>
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Exercise</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">30 Mins Daily</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.exercise || "30 Mins Daily"}</p>
               </div>
             </div>
 
@@ -132,8 +180,14 @@ export default function PetDetailsPage() {
             <div className="flex flex-col gap-8">
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Color</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">Golden, Black, Brown</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.color || "Golden, Black, Brown"}</p>
               </div>
+              {pet?.weight > 0 && (
+                <div>
+                  <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Weight</p>
+                  <p className="text-[#1E1E1E] text-[18px] font-normal">{pet.weight} kg</p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -218,6 +272,46 @@ export default function PetDetailsPage() {
                 Prepared For Loving Homes
               </p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Personality Highlights */}
+      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
+        <div className="flex flex-col gap-6 max-w-[800px] mx-auto">
+          <h3 className="text-center text-[36px] font-normal text-black mb-6">
+            Personality <span className="text-[#D63B3B]">Highlights</span>
+          </h3>
+          
+          <div className="flex flex-col gap-6">
+            {[
+              { label: "Barking", value: pet?.barking ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Temperament with Kids", value: pet?.temperament_with_kids ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Playfulness", value: pet?.playfulness ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Friendliness", value: pet?.friendliness ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Need for attention", value: pet?.need_for_attention ?? 80, color: "bg-[#91C79B]" },
+              { label: "Compatibility with Dogs", value: pet?.compatibility_with_dogs ?? 25, color: "bg-[#D63B3B]" }
+            ].map((item, idx) => {
+              const totalBars = 60;
+              const activeBars = Math.floor((item.value / 100) * totalBars);
+              return (
+                <div key={idx} className="flex flex-col gap-2">
+                  <div className="flex justify-between items-center px-2">
+                    <span className="text-[15px] font-semibold text-[#5F6C72]">Low</span>
+                    <span className="text-[20px] font-normal text-black">{item.label}</span>
+                    <span className="text-[15px] font-semibold text-[#D63B3B]">High</span>
+                  </div>
+                  <div className="flex gap-[3px]">
+                    {[...Array(totalBars)].map((_, i) => (
+                      <div
+                        key={i}
+                        className={`h-7 flex-1 rounded-sm ${i < activeBars ? item.color : 'bg-[#E6E6E6]'}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

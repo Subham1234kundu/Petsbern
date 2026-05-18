@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import ServiceAnimations from "@/components/ServiceAnimations";
 
 function TestimonialSlider() {
   const [current, setCurrent] = useState(0);
@@ -45,26 +46,26 @@ function TestimonialSlider() {
                 </div>
 
                 {/* Right Side: Text Card */}
-                <div 
+                <div
                   className="rounded-[20px] p-8 md:p-12 lg:p-20 flex flex-col justify-between h-auto lg:h-[560px] min-h-[350px]"
                   style={{ backgroundColor: "#F6F5F2" }}
                 >
                   <div className="flex flex-col gap-6 lg:gap-10">
-                    <h3 className="text-black font-normal leading-tight text-[22px] md:text-[24px] lg:text-[28px]" style={{ 
+                    <h3 className="text-black font-normal leading-tight text-[22px] md:text-[24px] lg:text-[28px]" style={{
                       fontFamily: "var(--font-public-sans), sans-serif"
                     }}>
                       {slide.title}
                     </h3>
-                    <p className="text-[#4F4F4F] leading-relaxed text-[15px] md:text-[16px] lg:text-[18px]" style={{ 
+                    <p className="text-[#4F4F4F] leading-relaxed text-[15px] md:text-[16px] lg:text-[18px]" style={{
                       fontFamily: "var(--font-public-sans), sans-serif"
                     }}>
                       {slide.desc}
                     </p>
                   </div>
-                  
+
                   {/* Author at the bottom */}
                   <div className="flex items-center gap-3 mt-6 lg:mt-0">
-                    <span className="text-[#4F4F4F] font-normal text-[15px] md:text-[16px] lg:text-[18px]" style={{ 
+                    <span className="text-[#4F4F4F] font-normal text-[15px] md:text-[16px] lg:text-[18px]" style={{
                       fontFamily: "var(--font-public-sans), sans-serif"
                     }}>
                       — {slide.author}
@@ -95,6 +96,7 @@ function TestimonialSlider() {
 
 export default function AboutUsPage() {
   return (
+    <ServiceAnimations>
     <div className="flex flex-col min-h-screen bg-white font-sans">
       {/* About Us Header Section */}
       <section
@@ -105,7 +107,7 @@ export default function AboutUsPage() {
           backgroundPosition: "center"
         }}
       >
-        <h1 className="text-white font-semibold tracking-tight z-10 text-[24px] md:text-[28px] lg:text-[32px]" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
+        <h1 data-animate="service-title" className="text-white font-semibold tracking-tight z-10 text-[24px] md:text-[28px] lg:text-[32px]" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
           About Us
         </h1>
       </section>
@@ -115,7 +117,7 @@ export default function AboutUsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
           {/* Left Side: Dog Image */}
-          <div className="relative flex justify-center lg:justify-start">
+          <div data-animate="service-image" className="relative flex justify-center lg:justify-start">
             <div className="relative w-full max-w-[478px]">
               <img
                 src="/images/about-dog.png"
@@ -126,7 +128,7 @@ export default function AboutUsPage() {
           </div>
 
           {/* Right Side: Text Content */}
-          <div className="flex flex-col lg:pt-12">
+          <div data-animate="service-text" className="flex flex-col lg:pt-12">
             <span className="text-[#555] font-semibold uppercase tracking-widest mb-4 text-[11px] lg:text-[13px]">
               ABOUT PETS BARN
             </span>
@@ -173,7 +175,7 @@ export default function AboutUsPage() {
 
           {/* Our Mission */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
-            <div>
+            <div data-animate="service-card">
               <h3 className="text-black font-normal leading-tight text-[28px] md:text-[32px] lg:text-[36px]">
                 Our <span className="text-[#FFC501]">Mission</span>
               </h3>
@@ -187,7 +189,7 @@ export default function AboutUsPage() {
 
           {/* Our Vision */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-start">
-            <div>
+            <div data-animate="service-card">
               <h3 className="text-black font-normal leading-tight text-[28px] md:text-[32px] lg:text-[36px]">
                 Our <span className="text-[#FFC501]">Vision</span>
               </h3>
@@ -205,7 +207,7 @@ export default function AboutUsPage() {
       <section className="py-16 lg:py-24 w-full bg-gradient-to-b from-[#F6F5F2] to-white">
         <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-black font-normal leading-tight text-[28px] md:text-[32px] lg:text-[36px]">
+            <h2 data-animate="service-title" className="text-black font-normal leading-tight text-[28px] md:text-[32px] lg:text-[36px]">
               What Makes <span className="text-[#FFC501]">Us Different</span>?
             </h2>
           </div>
@@ -235,6 +237,7 @@ export default function AboutUsPage() {
             ].map((box, index) => (
               <div
                 key={index}
+                data-animate="service-card"
                 className="bg-white rounded-[32px] overflow-hidden flex flex-col h-auto lg:h-[683px]"
               >
                 {/* Image Area */}
@@ -328,7 +331,7 @@ export default function AboutUsPage() {
           {/* Header Area */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 lg:mb-24 gap-6">
             <div className="max-w-[700px]">
-              <h2 className="text-black font-normal leading-tight mb-4 text-[28px] md:text-[32px] lg:text-[36px]">
+              <h2 data-animate="service-title" className="text-black font-normal leading-tight mb-4 text-[28px] md:text-[32px] lg:text-[36px]">
                 Experience the <span className="text-[#FFC501]">Pets Barn</span> Promise of Pawsome Care
               </h2>
               <p className="text-[#6E6E6E] leading-relaxed text-[16px] lg:text-[18px]">
@@ -358,11 +361,10 @@ export default function AboutUsPage() {
                 image: "/images/exabout3.png"
               }
             ].map((box, index) => (
-              <div 
-                key={index} 
-                className={`p-8 lg:p-12 flex flex-col items-center text-center gap-6 lg:gap-8 border-gray-200 ${
-                  index !== 2 ? 'md:border-r' : ''
-                } border-t md:border-t-0 first:border-t-0`}
+              <div
+                key={index}
+                className={`p-8 lg:p-12 flex flex-col items-center text-center gap-6 lg:gap-8 border-gray-200 ${index !== 2 ? 'md:border-r' : ''
+                  } border-t md:border-t-0 first:border-t-0`}
               >
                 <div className="w-[64px] lg:w-[84px] h-[64px] lg:h-[84px] flex items-center justify-center flex-shrink-0">
                   <img src={box.image} alt={box.title} className="w-full h-full object-contain" />
@@ -385,7 +387,7 @@ export default function AboutUsPage() {
       <section className="py-16 lg:pt-24 lg:pb-5 bg-white w-full">
         <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
           <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-black font-normal leading-tight text-[28px] md:text-[36px] lg:text-[42px]" style={{
+            <h2 data-animate="service-title" className="text-black font-normal leading-tight text-[28px] md:text-[36px] lg:text-[42px]" style={{
               fontFamily: "var(--font-public-sans), sans-serif"
             }}>
               <span className="text-[#E2001A]">10,000+</span> Happy Families Served
@@ -472,5 +474,6 @@ export default function AboutUsPage() {
       </section>
 
     </div>
+    </ServiceAnimations>
   );
 }

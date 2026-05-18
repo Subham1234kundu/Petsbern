@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -22,6 +24,10 @@ export default function Navbar() {
     if (item === "Our Pets") return "/pet-categories/dogs";
     return `/${item.toLowerCase().replace(" ", "-")}`;
   };
+
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
 
   return (
     <header className="w-full bg-white fixed top-0 left-0 z-[100]" style={{ borderBottom: 'none', boxShadow: 'none' }}>
@@ -95,6 +101,7 @@ export default function Navbar() {
                 <div key={item} className="relative">
                   <button
                     onClick={() => setIsServicesOpen(!isServicesOpen)}
+                    onMouseEnter={() => setIsServicesOpen(true)}
                     className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative flex items-center gap-1 group"
                   >
                     {item}
@@ -114,13 +121,17 @@ export default function Navbar() {
                   </button>
 
                   {isServicesOpen && (
-                    <div className="absolute top-[calc(100%+15px)] left-0 bg-white rounded-[12px] py-2 min-w-[240px] z-[120]" style={{ boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.12)", border: "1px solid #E5E7EB" }}>
+                    <div 
+                      onMouseLeave={() => setIsServicesOpen(false)}
+                      className="absolute top-[calc(100%+15px)] left-0 bg-white rounded-[12px] py-2 min-w-[240px] z-[120]" 
+                      style={{ boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.12)", border: "1px solid #E5E7EB" }}
+                    >
                       {["Pet Training", "Pet Relocation", "Breed Consultation"].map((service) => (
                         <Link
                           key={service}
                           href={`/services/${service.toLowerCase().replace(" ", "-")}`}
                           onClick={() => setIsServicesOpen(false)}
-                          className="block px-5 py-3 text-[#5F6C72] text-[14px] font-medium transition-colors hover:bg-[#F2F4F5] hover:text-[#191C1F] active:bg-[#F2F4F5] active:text-[#191C1F]"
+                          className="block px-5 py-3 text-[#5F6C72] text-[14px] font-medium transition-colors hover:bg-[#F2F4F5] hover:text-[#191C1F]"
                           style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
                         >
                           {service}
@@ -132,6 +143,49 @@ export default function Navbar() {
               );
             }
 
+            if (item === "Our Pets") {
+              return (
+                <div key={item} className="relative group/pets">
+                  <button
+                    className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative flex items-center gap-1"
+                  >
+                    {item}
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="transition-transform duration-200 group-hover/pets:rotate-180"
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+
+                  <div className="absolute top-full left-0 pt-[15px] hidden group-hover/pets:block z-[120]">
+                    <div className="bg-white rounded-[12px] py-2 min-w-[200px]" style={{ boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.12)", border: "1px solid #E5E7EB" }}>
+                      {[
+                        { name: "Dogs", href: "/pet-categories/dogs" },
+                        { name: "Cats", href: "/pet-categories/cats" }
+                      ].map((category) => (
+                        <Link
+                          key={category.name}
+                          href={category.href}
+                          className="block px-5 py-3 text-[#5F6C72] text-[14px] font-medium transition-colors hover:bg-[#F2F4F5] hover:text-[#191C1F]"
+                          style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+                        >
+                          {category.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={item}
@@ -139,20 +193,6 @@ export default function Navbar() {
                 className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-[#8B5E3C] hover:after:w-full after:transition-all flex items-center gap-1"
               >
                 {item}
-                {item === "Our Pets" && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="m6 9 6 6 6-6" />
-                  </svg>
-                )}
               </Link>
             );
           })}
@@ -206,24 +246,35 @@ export default function Navbar() {
           {/* Mobile Nav Links */}
           <nav className="flex flex-col">
             {navItems.map((item) => {
-              if (item === "Services") {
+              if (item === "Services" || item === "Our Pets") {
+                const isServices = item === "Services";
+                const items = isServices 
+                  ? ["Pet Training", "Pet Relocation", "Breed Consultation"]
+                  : [{ name: "Dogs", href: "/pet-categories/dogs" }, { name: "Cats", href: "/pet-categories/cats" }];
+
                 return (
                   <div key={item}>
                     <button
-                      onClick={() => setIsServicesOpen(!isServicesOpen)}
+                      onClick={() => {
+                        if (isServices) setIsServicesOpen(!isServicesOpen);
+                        else {
+                          const el = document.getElementById('mobile-pets-dropdown');
+                          if (el) el.classList.toggle('hidden');
+                        }
+                      }}
                       className="w-full text-left px-6 py-4 text-[15px] font-bold text-[#1E1E1E] hover:bg-[#F9FAFB] transition-colors flex items-center justify-between border-b border-[#F5F5F5]"
                     >
                       {item}
                       <svg
                         width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                        className={`transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}
+                        className={`transition-transform duration-200 ${isServices && isServicesOpen ? 'rotate-180' : ''}`}
                       >
                         <path d="m6 9 6 6 6-6" />
                       </svg>
                     </button>
-                    {isServicesOpen && (
+                    {isServices && isServicesOpen && (
                       <div className="bg-[#F9FAFB]">
-                        {["Pet Training", "Pet Relocation", "Breed Consultation"].map((service) => (
+                        {(items as string[]).map((service) => (
                           <Link
                             key={service}
                             href={`/services/${service.toLowerCase().replace(" ", "-")}`}
@@ -231,6 +282,20 @@ export default function Navbar() {
                             className="block px-10 py-3 text-[14px] text-[#5F6C72] font-medium hover:text-[#1E1E1E] transition-colors border-b border-[#F0F0F0]"
                           >
                             {service}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                    {item === "Our Pets" && (
+                      <div id="mobile-pets-dropdown" className="bg-[#F9FAFB] hidden">
+                        {(items as {name: string, href: string}[]).map((cat) => (
+                          <Link
+                            key={cat.name}
+                            href={cat.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block px-10 py-3 text-[14px] text-[#5F6C72] font-medium hover:text-[#1E1E1E] transition-colors border-b border-[#F0F0F0]"
+                          >
+                            {cat.name}
                           </Link>
                         ))}
                       </div>

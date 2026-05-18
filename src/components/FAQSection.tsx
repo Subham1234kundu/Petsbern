@@ -19,10 +19,18 @@ const FAQSection: React.FC<FAQSectionProps> = ({ items }) => {
   };
 
   return (
-    <section className="py-24 bg-white flex flex-col items-center w-full">
+    <section className="py-16 md:py-24 bg-white flex flex-col items-center w-full">
       <div className="w-full max-w-[1043px] px-4">
-        <h2 className="text-center mb-12" style={{ fontSize: "36px", fontWeight: 400, fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif", color: "#0A0A0A" }}>
-          Frequently Asking <span style={{ color: "#FFC501" }}>Questions</span>
+        <h2 
+          className="text-center mb-10 md:mb-16 px-2" 
+          style={{ 
+            fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif", 
+            color: "#0A0A0A",
+            lineHeight: "1.2"
+          }}
+        >
+          <span className="text-[28px] md:text-[36px] font-normal block md:inline">Frequently Asking </span>
+          <span className="text-[28px] md:text-[36px] font-normal" style={{ color: "#FFC501" }}>Questions</span>
         </h2>
 
         <div className="flex flex-col gap-4">
@@ -40,8 +48,8 @@ const FAQSection: React.FC<FAQSectionProps> = ({ items }) => {
                 className="w-full h-[78px] px-8 flex items-center justify-between text-left transition-colors"
               >
                 <span
+                  className="text-[16px] md:text-[20px] pr-2 md:pr-4"
                   style={{
-                    fontSize: "20px",
                     fontWeight: 400,
                     fontFamily: "var(--font-public-sans), sans-serif",
                     color: openIndex === index ? "#000000" : "#565246",

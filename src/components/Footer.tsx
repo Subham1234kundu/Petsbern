@@ -1,30 +1,41 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname?.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <footer className="w-full bg-white pt-16 border-t border-[#E4E7E9] mt-auto">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12" suppressHydrationWarning>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12" suppressHydrationWarning>
           
           {/* Column 1: Logo and Contact Info */}
-          <div className="flex flex-col gap-4 lg:col-span-4 pr-8">
+          <div className="flex flex-col gap-4 lg:col-span-4 pr-8" suppressHydrationWarning>
             <Link href="/" className="inline-block mb-2">
               <img src="/images/logo.png" alt="PetsBARN Logo" width={302} height={50} className="w-[302px] h-[50px] object-contain" />
             </Link>
             
-            <div>
+            <div suppressHydrationWarning>
               <p className="text-[#5F6C72] text-[14px]">Customer Supports:</p>
-              <p className="text-[#1E1E1E] text-[16px] font-semibold mt-1">(629) 555-0129</p>
+              <p className="text-[#1E1E1E] text-[16px] font-semibold mt-1">
+                <a href="tel:+16295550129" className="hover:underline">(629) 555-0129</a>
+              </p>
             </div>
             
-            <div className="text-[#1E1E1E] text-[14px] leading-relaxed mt-1">
+            <div className="text-[#1E1E1E] text-[14px] leading-relaxed mt-1" suppressHydrationWarning>
               4517 Washington Ave. Manchester,<br />
               Kentucky 39495
             </div>
             
-            <div className="font-medium text-[#1E1E1E] text-[14px] mt-1">
-              support@petsbarn.in
+            <div className="font-medium text-[#1E1E1E] text-[14px] mt-1" suppressHydrationWarning>
+              <a href="mailto:support@petsbarn.in" className="hover:underline">support@petsbarn.in</a>
             </div>
           </div>
 
@@ -74,7 +85,7 @@ export default function Footer() {
       </div>
 
       {/* Copyright Bar */}
-      <div className="w-full bg-[#1E1E1E] mt-16 py-4">
+      <div className="w-full bg-[#1E1E1E] mt-16 py-4" suppressHydrationWarning>
         <p className="text-center text-white text-[14px]">
           Pets Barn © 2026
         </p>
