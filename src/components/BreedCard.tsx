@@ -4,18 +4,19 @@ import Link from 'next/link';
 interface BreedCardProps {
   name: string;
   image: string;
+  imageClassName?: string;
 }
 
-const BreedCard = ({ name, image }: BreedCardProps) => {
+const BreedCard = ({ name, image, imageClassName }: BreedCardProps) => {
   const slug = name.toLowerCase().replace(/\s+/g, '-');
 
   return (
     <div className="w-full h-[360px] sm:h-[400px] lg:h-[463px] bg-white rounded-xl border border-[#E6E6E6] flex flex-col p-3 sm:p-4 transition-all hover:shadow-md">
-      <div className="w-full h-[240px] sm:h-[280px] lg:h-[341px] overflow-hidden rounded-xl flex-shrink-0">
+      <div className="w-full h-[240px] sm:h-[280px] lg:h-[341px] overflow-hidden rounded-xl flex-shrink-0 bg-[#F6F6F6] p-4 flex items-center justify-center">
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          className={`w-full h-full object-contain transition-transform duration-500 hover:scale-105 ${imageClassName || ''}`}
         />
       </div>
       <div className="flex-grow flex items-center justify-center w-full">

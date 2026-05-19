@@ -5,17 +5,19 @@ interface BlogCardProps {
   category: string;
   title: string;
   date: string;
+  author?: string;
+  slug?: string;
 }
 
-export default function BlogCard({ image, category, title, date }: BlogCardProps) {
-  const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+export default function BlogCard({ image, category, title, date, author, slug }: BlogCardProps) {
+  const linkSlug = slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
   return (
     <Link 
-      href={`/blogs/${slug}`}
-      className="border border-[#E8E8EA] rounded-xl flex flex-col items-center bg-white shadow-none transition-transform hover:scale-[1.02]"
-      style={{ width: "392px", height: "448px" }}
+      href={`/blogs/${linkSlug}`}
+      className="border border-[#E8E8EA] rounded-xl flex flex-col items-center bg-white shadow-none transition-transform hover:scale-[1.02] w-full max-w-[392px]"
+      style={{ height: "448px" }}
     >
-      <div className="mt-4 overflow-hidden rounded-md" style={{ width: "360px", height: "240px", flexShrink: 0 }}>
+      <div className="mt-4 overflow-hidden rounded-md" style={{ width: "calc(100% - 32px)", height: "240px", flexShrink: 0 }}>
         <img src={image} alt={title} className="w-full h-full object-cover" />
       </div>
 
@@ -34,11 +36,18 @@ export default function BlogCard({ image, category, title, date }: BlogCardProps
           {title}
         </h3>
         
-        <span 
-          style={{ color: "#686972", fontWeight: 300, fontSize: "16px", marginTop: "16px", marginBottom: "16px" }}
-        >
-          {date}
-        </span>
+        <div className="flex items-center gap-3 mt-3 mb-4">
+          {author && (
+            <span style={{ color: "#111", fontWeight: 500, fontSize: "14px" }}>
+              {author}
+            </span>
+          )}
+          <span 
+            style={{ color: "#686972", fontWeight: 300, fontSize: "16px" }}
+          >
+            {date}
+          </span>
+        </div>
       </div>
     </Link>
   );

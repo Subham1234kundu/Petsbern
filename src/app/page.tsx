@@ -430,7 +430,7 @@ export default function Home() {
                   </div>
                   <img
                     src="/images/germanfav.png"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] lg:w-[115%] h-[95%] lg:h-[115%] object-contain z-10 group-hover:scale-105 transition-transform"
                     alt="German Shepard"
                   />
                 </div>
@@ -460,7 +460,7 @@ export default function Home() {
                     </div>
                   </div>
                   <img
-                    src="/images/huskyfav.png"
+                    src="/images/huskeyji.png"
                     className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[75%] lg:w-[85%] h-[75%] lg:h-[80%] object-contain z-10 group-hover:scale-105 transition-transform"
                     alt="Husky"
                   />
@@ -471,7 +471,7 @@ export default function Home() {
         </section>
 
         {/* Available Pets Section */}
-        <section data-animate="available-pets" className="bg-[#F6F6F6] pt-24 relative overflow-hidden flex flex-col items-center w-full">
+        <section data-animate="available-pets" className="bg-[#F6F6F6] pt-16 sm:pt-24 relative overflow-hidden flex flex-col items-center w-full">
           {/* Background Paw Pattern */}
           <img
             src="/images/petfoot.png"
@@ -498,25 +498,25 @@ export default function Home() {
           </div>
 
           <div className="w-full max-w-[1200px] px-4 relative z-10">
-            <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-bold mb-16 text-center">
+            <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-bold mb-10 sm:mb-16 text-center">
               Available <span className="text-[#FFC501]">Pets</span>
             </h2>
 
-            <div className="grid pb-30 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 justify-items-center">
+            <div className="grid pb-[280px] sm:pb-[340px] lg:pb-[120px] grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-x-6 sm:gap-y-12 justify-items-center">
 
-              <BreedCard name="Labrador Retriever" image="/images/labrador.png" />
-              <BreedCard name="Siberian Husky" image="/images/huskyfav.png" />
-              <BreedCard name="German Shepherd" image="/images/germanfav.png" />
-              <BreedCard name="Doodle" image="/images/snowwhite.png" />
-              <BreedCard name="Rottweiler" image="/images/rotfav.png" />
-              <BreedCard name="Sitzu" image="/images/pugfav.png" />
+              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Labrador Retriever" image="/images/labrador.png" imageClassName="scale-[1.15] hover:scale-125" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Siberian Husky" image="/images/huskeyji.png" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="German Shepherd" image="/images/germanfav.png" imageClassName="scale-125 hover:scale-150" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Doodle" image="/images/snowwhite.png" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Rottweiler" image="/images/rotfav.png" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Sitzu" image="/images/pugfav.png" /></div>
             </div>
 
             {/* Featured Puppy Image (Bottom Right) */}
-            <div data-animate="featured-puppy" className="lg:col-span-2 min-h-[300px] sm:min-h-[400px] absolute bottom-0 w-full overflow-hidden lg:overflow-visible">
+            <div data-animate="featured-puppy" className="absolute bottom-0 right-0 w-full h-[280px] sm:h-[340px] lg:h-[900px] pointer-events-none z-20 flex justify-end items-end overflow-hidden lg:overflow-visible">
               <img
                 src="/images/avilablepets.png"
-                className="absolute bottom-0 right-0 lg:right-[-50px] w-full max-w-[400px] lg:max-w-none lg:w-auto h-auto lg:h-[900px] object-contain z-20"
+                className="w-auto h-[110%] sm:h-[120%] lg:h-[900px] max-w-[90%] lg:max-w-none object-contain object-right-bottom mr-[-20px] lg:mr-[-50px]"
                 alt="Featured Puppy"
               />
             </div>
