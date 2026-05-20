@@ -11,6 +11,7 @@ export default function AddPetPage() {
   // Form State
   const [formData, setFormData] = useState({
     name: '',
+    breed: '',
     category: 'Dog',
     description: '',
     gender: 'Male',
@@ -73,6 +74,21 @@ export default function AddPetPage() {
     }
 
     try {
+      // UNIQUE VALIDATION: Check if same name AND same breed exists
+      const { data: existingPets, error: checkError } = await supabase
+        .from('pets')
+        .select('id')
+        .ilike('name', formData.name)
+        .ilike('breed', formData.breed);
+
+      if (checkError) throw checkError;
+
+      if (existingPets && existingPets.length > 0) {
+        setErrorMsg(`Cannot add pet: A ${formData.breed || 'pet'} named "${formData.name}" already exists in the database!`);
+        setIsLoading(false);
+        return;
+      }
+
       // Upload main image
       const mainImageUrl = await uploadImage(mainImageFile);
 
@@ -85,6 +101,7 @@ export default function AddPetPage() {
 
       const payload = {
         name: formData.name,
+        breed: formData.breed,
         category: formData.category,
         description: formData.description,
         gender: formData.gender,
@@ -111,9 +128,9 @@ export default function AddPetPage() {
       if (error) throw error;
 
       setSuccessMsg(`Successfully added ${formData.name} to the ${formData.category} category!`);
-      // Reset form
       setFormData({
         name: '',
+        breed: '',
         category: 'Dog',
         description: '',
         gender: 'Male',
@@ -172,10 +189,14 @@ export default function AddPetPage() {
           {/* Section 1: Basic Info */}
           <section>
             <h2 className="text-sm font-bold uppercase tracking-wider text-[#FFC501] mb-4">1. Basic Information</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Pet Name / Title *</label>
-                <input required type="text" name="name" value={formData.name} onChange={handleChange} placeholder="e.g. Golden Retriever Puppy" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFC501] focus:bg-white transition-all" />
+                <label className="block text-sm font-bold text-gray-700 mb-2">Pet Name *</label>
+                <input required type="text" name="name" value={formData.name} onChange={handleChange} placeholder="e.g. Shiro" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFC501] focus:bg-white transition-all" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Breed *</label>
+                <input required type="text" name="breed" value={formData.breed} onChange={handleChange} placeholder="e.g. Golden Retriever" className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFC501] focus:bg-white transition-all" />
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Category *</label>
@@ -185,7 +206,7 @@ export default function AddPetPage() {
                   <option value="Exotic">Exotic</option>
                 </select>
               </div>
-              <div className="md:col-span-2">
+              <div className="md:col-span-3">
                 <label className="block text-sm font-bold text-gray-700 mb-2">Detailed Description</label>
                 <textarea rows={4} name="description" value={formData.description} onChange={handleChange} placeholder="Describe the pet's personality, background, and why they make a great companion..." className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFC501] focus:bg-white transition-all resize-none"></textarea>
               </div>
@@ -435,7 +456,7 @@ export default function AddPetPage() {
           </h3>
           <p className="text-xs text-blue-900 leading-relaxed">
             To make this save to your database, create a table named <code className="bg-white px-1 py-0.5 rounded border border-gray-200">pets</code> with the following columns: <br/>
-            <code>name, category, description, gender, vaccinated, shedding, age, weight (numeric), location, exercise, color, barking (numeric), temperament_with_kids (numeric), playfulness (numeric), friendliness (numeric), need_for_attention (numeric), compatibility_with_dogs (numeric), main_image, gallery (text array)</code>
+            <code>name, breed, category, description, gender, vaccinated, shedding, age, weight (numeric), location, exercise, color, barking (numeric), temperament_with_kids (numeric), playfulness (numeric), friendliness (numeric), need_for_attention (numeric), compatibility_with_dogs (numeric), main_image, gallery (text array)</code>
           </p>
         </div>
 

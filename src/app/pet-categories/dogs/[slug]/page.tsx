@@ -15,6 +15,7 @@ export default function PetDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState("");
   const [thumbnails, setThumbnails] = useState<string[]>([]);
+  const [relatedPets, setRelatedPets] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchPet() {
@@ -43,6 +44,17 @@ export default function PetDetailsPage() {
           allImages.push("https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=600&h=600&auto=format&fit=crop");
         }
         setThumbnails(allImages);
+
+        // Fetch related pets based on breed
+        if (data.breed) {
+          const { data: relatedData } = await supabase
+            .from('pets')
+            .select('*')
+            .eq('breed', data.breed)
+            .neq('id', data.id)
+            .limit(4);
+          if (relatedData) setRelatedPets(relatedData);
+        }
       }
       setLoading(false);
     }
@@ -133,9 +145,16 @@ export default function PetDetailsPage() {
         {/* Right Section: Details */}
         <div className="flex-1 flex flex-col gap-8">
           <div className="flex flex-col gap-4">
-            <h1 className="text-[36px] font-normal text-black leading-tight">
-              {petName}
-            </h1>
+            <div>
+              <h1 className="text-[36px] font-normal text-black leading-tight">
+                {petName}
+              </h1>
+              {pet?.breed && (
+                <h2 className="text-[20px] font-medium text-[#FFC501] mt-1">
+                  Breed: {pet.breed}
+                </h2>
+              )}
+            </div>
 
             <p className="text-[14px] font-normal text-[#1E1E1E] leading-[1.6]">
               {pet?.description || `The ${petName} is a friendly, intelligent, and devoted family dog known for its gentle nature and beautiful coat. They are highly social and love being around people, making them excellent companions for families, children, and first-time pet owners.`}
@@ -317,18 +336,19 @@ export default function PetDetailsPage() {
       </div>
 
       {/* Available Pets Section */}
-      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
-        <h2 className="text-black text-[30px] font-semibold mb-10">
-          Available {petName}
-        </h2>
+      {relatedPets.length > 0 && (
+        <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
+          <h2 className="text-black text-[30px] font-semibold mb-10">
+            More {pet?.breed || 'Pets'} Like {petName}
+          </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <BreedCard2 name={petName} image="https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=400&h=400&auto=format&fit=crop" />
-          <BreedCard2 name={petName} image="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=400&h=400&auto=format&fit=crop" />
-          <BreedCard2 name={petName} image="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=400&h=400&auto=format&fit=crop" />
-          <BreedCard2 name={petName} image="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=400&h=400&auto=format&fit=crop" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {relatedPets.map((p) => (
+              <BreedCard2 key={p.id} name={p.name} image={p.main_image} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Promise Section */}
       <section className="py-32 bg-white w-full border-t border-gray-100">
