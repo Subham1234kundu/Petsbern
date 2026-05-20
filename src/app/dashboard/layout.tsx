@@ -14,7 +14,6 @@ export default function DashboardLayout({
     { name: "Dashboard", href: "/dashboard" },
     { name: "Add Pet", href: "/dashboard/add-pet" },
     { name: "Add Blogs", href: "/dashboard/add-blogs" },
-    { name: "Add Compare Pets Values", href: "/dashboard/compare-pets" },
   ];
 
   return (

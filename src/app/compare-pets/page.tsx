@@ -4,70 +4,73 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/utils/supabase";
 
-interface Breed {
+interface Pet {
   id: number;
   name: string;
   category: string;
-  image_url: string;
-  life_span: string;
-  weight: string;
-  temperament: string;
-  origin: string;
-  hypoallergenic: string;
-  description: string;
+  main_image?: string;
+  gender?: string;
+  age?: string;
+  weight?: number;
+  color?: string;
+  location?: string;
+  vaccinated?: string;
+  breed?: string;
+  description?: string;
+  shedding?: string;
+  exercise?: string;
 }
 
 type Category = "Dog" | "Cat" | "Exotic";
 
 export default function ComparePetsPage() {
   const [category, setCategory] = useState<Category>("Dog");
-  const [breeds, setBreeds] = useState<Breed[]>([]);
+  const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);
-  const [breed1Id, setBreed1Id] = useState<number | null>(null);
-  const [breed2Id, setBreed2Id] = useState<number | null>(null);
+  const [pet1Id, setPet1Id] = useState<number | null>(null);
+  const [pet2Id, setPet2Id] = useState<number | null>(null);
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [search1, setSearch1] = useState("");
   const [search2, setSearch2] = useState("");
 
-  // Fetch breeds from Supabase + real-time
   useEffect(() => {
     setLoading(true);
-    const fetchBreeds = async () => {
+    const fetchPets = async () => {
       const { data } = await supabase
-        .from("compare_pets")
+        .from("pets")
         .select("*")
         .eq("category", category)
         .order("name", { ascending: true });
       if (data) {
-        setBreeds(data);
-        setBreed1Id(data[0]?.id ?? null);
-        setBreed2Id(data[1]?.id ?? data[0]?.id ?? null);
+        setPets(data);
+        setPet1Id(data[0]?.id ?? null);
+        setPet2Id(data[1]?.id ?? data[0]?.id ?? null);
       }
       setLoading(false);
     };
-    fetchBreeds();
+    fetchPets();
 
     const channel = supabase
-      .channel(`compare-${category}`)
-      .on("postgres_changes", { event: "*", schema: "public", table: "compare_pets", filter: `category=eq.${category}` }, (payload) => {
-        if (payload.eventType === "INSERT") setBreeds((p) => [...p, payload.new as Breed].sort((a, b) => a.name.localeCompare(b.name)));
-        else if (payload.eventType === "DELETE") setBreeds((p) => p.filter((b) => b.id !== payload.old.id));
-        else if (payload.eventType === "UPDATE") setBreeds((p) => p.map((b) => (b.id === (payload.new as Breed).id ? (payload.new as Breed) : b)));
+      .channel(`compare-pets-${category}`)
+      .on("postgres_changes", { event: "*", schema: "public", table: "pets", filter: `category=eq.${category}` }, (payload) => {
+        if (payload.eventType === "INSERT") setPets((p) => [...p, payload.new as Pet].sort((a, b) => a.name.localeCompare(b.name)));
+        else if (payload.eventType === "DELETE") setPets((p) => p.filter((b) => b.id !== payload.old.id));
+        else if (payload.eventType === "UPDATE") setPets((p) => p.map((b) => (b.id === (payload.new as Pet).id ? (payload.new as Pet) : b)));
       })
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
   }, [category]);
 
-  const breed1 = breeds.find((b) => b.id === breed1Id) || breeds[0];
-  const breed2 = breeds.find((b) => b.id === breed2Id) || breeds[1] || breeds[0];
+  const pet1 = pets.find((p) => p.id === pet1Id) || pets[0];
+  const pet2 = pets.find((p) => p.id === pet2Id) || pets[1] || pets[0];
 
-  const BreedSelector = ({ value, onChange, isOpen, setIsOpen, search, setSearch, label, otherClose }: any) => (
+  const PetSelector = ({ value, onChange, isOpen, setIsOpen, search, setSearch, label, otherClose }: any) => (
     <div className="relative flex-1 w-[calc(50%-1.5rem)]">
       <label className="block text-[#4B5563] text-[10px] md:text-[12px] font-bold uppercase tracking-wider mb-2 text-center md:text-left">{label}</label>
       <div onClick={() => { setIsOpen(!isOpen); otherClose(); setSearch(""); }} className="w-full h-[48px] md:h-[56px] px-3 md:px-5 border border-[#E4E4E4] bg-white rounded-xl flex items-center justify-between cursor-pointer hover:border-black transition-all shadow-sm">
-        <span className="text-black font-semibold text-[13px] md:text-[15px] truncate pr-2">{breeds.find((b) => b.id === value)?.name || "Select..."}</span>
+        <span className="text-black font-semibold text-[13px] md:text-[15px] truncate pr-2">{pets.find((p) => p.id === value)?.name || "Select..."}</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform text-gray-400 shrink-0 ${isOpen ? "rotate-180" : ""}`}><path d="m6 9 6 6 6-6" /></svg>
       </div>
       {isOpen && (
@@ -81,10 +84,10 @@ export default function ComparePetsPage() {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto custom-scrollbar md:max-h-[250px]">
-              {breeds.filter((b) => b.name.toLowerCase().includes(search.toLowerCase())).map((b) => (
-                <div key={b.id} onClick={() => { onChange(b.id); setIsOpen(false); }} className={`px-4 py-4 md:py-3 cursor-pointer text-[14px] md:text-sm hover:bg-gray-50 border-b border-gray-50 last:border-0 transition-colors ${value === b.id ? "font-bold text-black bg-blue-50/50" : "text-gray-600"}`}>{b.name}</div>
+              {pets.filter((p) => p.name.toLowerCase().includes(search.toLowerCase())).map((p) => (
+                <div key={p.id} onClick={() => { onChange(p.id); setIsOpen(false); }} className={`px-4 py-4 md:py-3 cursor-pointer text-[14px] md:text-sm hover:bg-gray-50 border-b border-gray-50 last:border-0 transition-colors ${value === p.id ? "font-bold text-black bg-blue-50/50" : "text-gray-600"}`}>{p.name}</div>
               ))}
-              {breeds.filter((b) => b.name.toLowerCase().includes(search.toLowerCase())).length === 0 && (
+              {pets.filter((p) => p.name.toLowerCase().includes(search.toLowerCase())).length === 0 && (
                 <div className="px-4 py-8 text-center text-gray-400 text-sm">No results found</div>
               )}
             </div>
@@ -105,7 +108,6 @@ export default function ComparePetsPage() {
             <span className="text-white/60"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg></span>
             <span className="font-medium text-white">Compare Pets</span>
           </div>
-          {/* Real-time badge */}
           <div className="flex items-center gap-2 mt-2 text-[10px] font-bold text-green-300 bg-green-900/40 px-3 py-1 rounded-full border border-green-500/30">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             LIVE DATA
@@ -126,9 +128,9 @@ export default function ComparePetsPage() {
             </div>
 
             <div className="flex items-center justify-between w-full max-w-3xl gap-2 md:gap-6 relative">
-              <BreedSelector value={breed1Id} onChange={setBreed1Id} isOpen={isOpen1} setIsOpen={setIsOpen1} search={search1} setSearch={setSearch1} label={`${category} 1`} otherClose={() => setIsOpen2(false)} />
+              <PetSelector value={pet1Id} onChange={setPet1Id} isOpen={isOpen1} setIsOpen={setIsOpen1} search={search1} setSearch={setSearch1} label={`${category} 1`} otherClose={() => setIsOpen2(false)} />
               <div className="w-8 h-8 md:w-12 md:h-12 shrink-0 rounded-full bg-[#FFC501] text-black font-black flex items-center justify-center text-[11px] md:text-[14px] shadow-sm mt-6">VS</div>
-              <BreedSelector value={breed2Id} onChange={setBreed2Id} isOpen={isOpen2} setIsOpen={setIsOpen2} search={search2} setSearch={setSearch2} label={`${category} 2`} otherClose={() => setIsOpen1(false)} />
+              <PetSelector value={pet2Id} onChange={setPet2Id} isOpen={isOpen2} setIsOpen={setIsOpen2} search={search2} setSearch={setSearch2} label={`${category} 2`} otherClose={() => setIsOpen1(false)} />
             </div>
           </div>
 
@@ -137,37 +139,37 @@ export default function ComparePetsPage() {
             <div className="flex items-center justify-center py-20">
               <div className="flex flex-col items-center gap-4">
                 <div className="w-10 h-10 border-4 border-[#E4E4E4] border-t-[#FFC501] rounded-full animate-spin" />
-                <p className="text-[#4B5563] text-[14px]">Loading {category.toLowerCase()} breeds…</p>
+                <p className="text-[#4B5563] text-[14px]">Loading {category.toLowerCase()}s…</p>
               </div>
             </div>
           )}
 
           {/* No data */}
-          {!loading && breeds.length === 0 && (
+          {!loading && pets.length === 0 && (
             <div className="flex items-center justify-center py-20 text-center">
               <div className="flex flex-col items-center gap-3">
                 <span className="text-5xl">🐾</span>
-                <p className="text-gray-500 font-medium">No {category.toLowerCase()} breeds available yet.</p>
-                <p className="text-gray-400 text-sm">Admin needs to add breeds from the dashboard.</p>
+                <p className="text-gray-500 font-medium">No {category.toLowerCase()}s available yet.</p>
+                <p className="text-gray-400 text-sm">Pets will appear here once added from the dashboard.</p>
               </div>
             </div>
           )}
 
           {/* Comparison */}
-          {!loading && breed1 && breed2 && (
+          {!loading && pet1 && pet2 && (
             <>
               <div className="flex flex-row md:grid md:grid-cols-3">
                 <div className="hidden md:block" />
-                {[breed1, breed2].map((breed, idx) => (
-                  <div key={breed.id} className={`flex-1 p-4 md:p-8 flex flex-col items-center w-1/2 md:w-auto ${idx === 0 ? "border-r border-[#E4E4E4]" : ""}`}>
+                {[pet1, pet2].map((pet, idx) => (
+                  <div key={pet.id} className={`flex-1 p-4 md:p-8 flex flex-col items-center w-1/2 md:w-auto ${idx === 0 ? "border-r border-[#E4E4E4]" : ""}`}>
                     <div className="w-full max-w-[280px] md:w-[240px] aspect-[3/2] overflow-hidden mb-3 md:mb-5 shadow-sm bg-gray-100 rounded-lg">
-                      {breed.image_url ? (
-                        <img src={breed.image_url} alt={breed.name} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=400&h=300&auto=format&fit=crop"; }} />
+                      {pet.main_image ? (
+                        <img src={pet.main_image} alt={pet.name} className="w-full h-full object-cover" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-4xl text-gray-300">🐾</div>
                       )}
                     </div>
-                    <h3 className="text-[14px] md:text-[20px] font-bold text-black mb-4 md:mb-5 text-center min-h-[40px] md:min-h-0 flex items-center justify-center">{breed.name}</h3>
+                    <h3 className="text-[14px] md:text-[20px] font-bold text-black mb-4 md:mb-5 text-center min-h-[40px] md:min-h-0 flex items-center justify-center">{pet.name}</h3>
                     <div className="flex items-center gap-2 md:gap-3 w-full justify-center">
                       <a href="tel:#" className="w-8 h-8 md:w-10 md:h-10 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-all shadow-md shrink-0">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="md:w-[18px] md:h-[18px]"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
@@ -183,12 +185,16 @@ export default function ComparePetsPage() {
               {/* Comparison Table */}
               <div className="flex flex-col border-t border-[#E4E4E4]">
                 {[
-                  { label: "Breed Name", val1: breed1.name, val2: breed2.name },
-                  { label: "Life Span", val1: breed1.life_span || "—", val2: breed2.life_span || "—" },
-                  { label: "Weight", val1: breed1.weight || "—", val2: breed2.weight || "—" },
-                  { label: "Temperament", val1: breed1.temperament || "—", val2: breed2.temperament || "—" },
-                  { label: "Origin", val1: breed1.origin || "—", val2: breed2.origin || "—" },
-                  { label: "Hypoallergenic", val1: breed1.hypoallergenic || "No", val2: breed2.hypoallergenic || "No" },
+                  { label: "Name", val1: pet1.name, val2: pet2.name },
+                  { label: "Breed", val1: pet1.breed || "—", val2: pet2.breed || "—" },
+                  { label: "Gender", val1: pet1.gender || "—", val2: pet2.gender || "—" },
+                  { label: "Age", val1: pet1.age || "—", val2: pet2.age || "—" },
+                  { label: "Weight", val1: pet1.weight ? `${pet1.weight} kg` : "—", val2: pet2.weight ? `${pet2.weight} kg` : "—" },
+                  { label: "Color", val1: pet1.color || "—", val2: pet2.color || "—" },
+                  { label: "Vaccinated", val1: pet1.vaccinated || "—", val2: pet2.vaccinated || "—" },
+                  { label: "Location", val1: pet1.location || "—", val2: pet2.location || "—" },
+                  { label: "Exercise", val1: pet1.exercise || "—", val2: pet2.exercise || "—" },
+                  { label: "Shedding", val1: pet1.shedding || "—", val2: pet2.shedding || "—" },
                 ].map((row, i) => (
                   <div key={i} className="flex flex-col md:grid md:grid-cols-3 border-b border-[#E4E4E4] last:border-b-0">
                     <div className="w-full md:w-auto px-4 md:pl-8 py-2 md:py-3 text-[11px] md:text-[14px] font-bold uppercase tracking-wider md:normal-case md:font-medium text-[#4B5563] bg-gray-100 md:bg-transparent border-b md:border-b-0 border-[#E4E4E4] text-center md:text-left flex items-center justify-center md:justify-start">{row.label}</div>
@@ -205,8 +211,8 @@ export default function ComparePetsPage() {
                 <div className="flex flex-col md:grid md:grid-cols-3">
                   <div className="px-4 md:pl-8 py-2 md:py-4 text-[11px] md:text-[14px] font-bold uppercase tracking-wider md:normal-case md:font-medium text-[#4B5563] bg-gray-100 md:bg-transparent border-b md:border-b-0 border-[#E4E4E4] text-center md:text-left flex items-center justify-center md:justify-start">Description</div>
                   <div className="w-full flex flex-row md:contents bg-white">
-                    <div className="flex-1 p-4 md:pl-8 md:py-4 text-[12px] md:text-[13px] text-[#374151] md:border-l border-[#E4E4E4] leading-relaxed text-center md:text-left border-r md:border-r-0">{breed1.description || "—"}</div>
-                    <div className="flex-1 p-4 md:pr-4 md:py-4 text-[12px] md:text-[13px] text-[#374151] border-l border-[#E4E4E4] leading-relaxed text-center md:text-left">{breed2.description || "—"}</div>
+                    <div className="flex-1 p-4 md:pl-8 md:py-4 text-[12px] md:text-[13px] text-[#374151] md:border-l border-[#E4E4E4] leading-relaxed text-center md:text-left border-r md:border-r-0">{pet1.description || "—"}</div>
+                    <div className="flex-1 p-4 md:pr-4 md:py-4 text-[12px] md:text-[13px] text-[#374151] border-l border-[#E4E4E4] leading-relaxed text-center md:text-left">{pet2.description || "—"}</div>
                   </div>
                 </div>
               </div>

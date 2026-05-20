@@ -32,10 +32,12 @@ export default function SellerDashboard() {
   const [pets, setPets] = useState<Pet[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [counts, setCounts] = useState<Record<Category, number>>({ Dog: 0, Cat: 0, Exotic: 0 });
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   // Fetch pets for active category
   useEffect(() => {
     setIsLoading(true);
+    setErrorMsg('');
 
     const fetchPets = async () => {
       const { data, error } = await supabase
@@ -44,7 +46,12 @@ export default function SellerDashboard() {
         .eq('category', activeCategory)
         .order('id', { ascending: false });
 
-      if (!error && data) setPets(data);
+      if (error) {
+        console.error('Fetch pets error:', error);
+        setErrorMsg(error.message || String(error));
+      } else if (data) {
+        setPets(data);
+      }
       setIsLoading(false);
     };
 
@@ -77,11 +84,24 @@ export default function SellerDashboard() {
   useEffect(() => {
     const fetchCounts = async () => {
       const results: Record<string, number> = {};
+      let hasError = false;
+      let errorObj: any = null;
+
       for (const cat of CATEGORIES) {
-        const { count } = await supabase.from('pets').select('*', { count: 'exact', head: true }).eq('category', cat);
+        const { count, error } = await supabase.from('pets').select('*', { count: 'exact', head: true }).eq('category', cat);
+        if (error) {
+          hasError = true;
+          errorObj = error;
+        }
         results[cat] = count ?? 0;
       }
-      setCounts(results as Record<Category, number>);
+      
+      if (!hasError) {
+        setCounts(results as Record<Category, number>);
+      } else {
+        console.error('Fetch counts error:', errorObj);
+        setErrorMsg(errorObj.message || String(errorObj));
+      }
     };
     fetchCounts();
   }, []);
@@ -98,10 +118,54 @@ export default function SellerDashboard() {
       <div className="max-w-5xl mx-auto">
 
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="text-3xl font-black text-[#111] uppercase tracking-tight">Seller Dashboard</h1>
-          <p className="text-gray-500 mt-1">Browse and manage your pet listings in real-time.</p>
+        <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-black text-[#111] uppercase tracking-tight">Seller Dashboard</h1>
+            <p className="text-gray-500 mt-1">Browse and manage your pet listings in real-time.</p>
+          </div>
         </div>
+
+        {/* Database Error Banner */}
+        {errorMsg && (
+          <div className="mb-8 p-6 bg-red-50/90 backdrop-blur-sm border-2 border-red-500/20 rounded-2xl shadow-xl flex flex-col md:flex-row gap-5 items-start justify-between relative overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
+            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-red-500 to-rose-600" />
+            <div className="flex gap-4 items-start">
+              <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-2xl border border-red-500/20 shadow-inner shrink-0">
+                ⚠️
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-[#111] uppercase tracking-tight flex items-center gap-2">
+                  Database Schema Error
+                  <span className="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                    PostgREST Cache
+                  </span>
+                </h3>
+                <p className="text-sm font-semibold text-red-600 mt-1">
+                  {errorMsg}
+                </p>
+                <div className="mt-4 p-4 bg-white/80 border border-red-200/50 rounded-xl text-xs text-gray-600 leading-relaxed max-w-2xl font-mono">
+                  <p className="font-bold text-red-800 mb-1">🛠️ How to fix this in your Supabase Database:</p>
+                  <ol className="list-decimal pl-4 space-y-1.5 mt-1 text-gray-700">
+                    <li>Go to your <strong className="text-gray-900">Supabase SQL Editor</strong>.</li>
+                    <li>Verify that the table <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">pets</code> contains the column <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">barking</code> of type <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">numeric</code> (or integer).</li>
+                    <li>If you recently added it, PostgREST might have a stale schema cache. Reload the schema cache by running:
+                      <pre className="bg-[#111] text-[#fff] p-2.5 rounded-md mt-2 overflow-x-auto text-[11px] font-medium leading-normal shadow-md">
+{`-- Reload the Supabase PostgREST schema cache
+NOTIFY pgrst, 'reload schema';`}
+                      </pre>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <button 
+              onClick={() => setErrorMsg('')} 
+              className="text-gray-400 hover:text-gray-600 font-bold uppercase text-[10px] tracking-wider px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all cursor-pointer shrink-0 mt-2 md:mt-0"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
 
         {/* Category Tabs */}
         <div className="flex gap-3 mb-8">
@@ -134,12 +198,23 @@ export default function SellerDashboard() {
           })}
         </div>
 
-        {/* Live Indicator */}
-        <div className="flex items-center gap-2 mb-4">
-          <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: cfg.color }} />
-          <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: cfg.color }}>
-            Real-Time · {activeCategory}s
-          </span>
+        {/* Live Indicator & Dev Controls */}
+        <div className="flex items-center justify-between gap-2 mb-4">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: cfg.color }} />
+            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: cfg.color }}>
+              Real-Time · {activeCategory}s
+            </span>
+          </div>
+
+          <button
+            onClick={() => setErrorMsg("Could not find the 'barking' column of 'pets' in the schema cache")}
+            className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-red-200 hover:bg-red-50 text-red-500 transition-all flex items-center gap-1.5 cursor-pointer shadow-sm hover:shadow active:translate-y-[0.5px]"
+            title="Simulate schema cache database error to preview the premium error handling UI"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
+            Simulate Schema Error
+          </button>
         </div>
 
         {/* Pet Grid */}
