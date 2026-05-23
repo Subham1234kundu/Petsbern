@@ -49,14 +49,26 @@ export default function DogsCategoryPage() {
   }, []);
 
   // Compute unique breeds dynamically from fetched pets
-  const dynamicBreeds = Array.from(new Set(pets.map(p => p.name)));
+  const dynamicBreeds = Array.from(new Set(pets.map(p => p.breed))).filter(Boolean) as string[];
   const filteredBreeds = dynamicBreeds.filter(breed =>
     breed.toLowerCase().includes(breedSearchQuery.toLowerCase())
   );
 
-  // Filter the actual displayed pets based on Size and Breed
-  const displayPets = pets.filter(pet => {
-    if (selectedBreed !== "All Breeds" && pet.name !== selectedBreed) return false;
+  // Group pets by breed to show one card per breed
+  const groupedPets = React.useMemo(() => {
+    const map = new Map<string, any>();
+    for (const pet of pets) {
+      if (!pet.breed) continue;
+      if (!map.has(pet.breed)) {
+        map.set(pet.breed, pet); // keep first pet as representative
+      }
+    }
+    return Array.from(map.values());
+  }, [pets]);
+
+  // Filter the actual displayed breeds based on Size and selected Breed
+  const displayBreeds = groupedPets.filter(pet => {
+    if (selectedBreed !== "All Breeds" && pet.breed !== selectedBreed) return false;
 
     if (selectedSize === "Toy Breed") return pet.weight <= 4;
     if (selectedSize === "Small") return pet.weight > 4 && pet.weight <= 10;
@@ -287,14 +299,18 @@ export default function DogsCategoryPage() {
                 <div className="w-10 h-10 border-4 border-[#FFC501] border-t-transparent rounded-full animate-spin"/>
                 <span className="text-gray-500 font-medium">Loading pets...</span>
               </div>
-            ) : displayPets.length > 0 ? (
-              displayPets.map((dog) => (
-                <BreedCardFull
-                  key={dog.id}
-                  name={dog.name}
-                  image={dog.main_image || '/placeholder.png'}
-                />
-              ))
+            ) : displayBreeds.length > 0 ? (
+              displayBreeds.map((dog) => {
+                const slug = dog.breed.toLowerCase().replace(/\s+/g, '-');
+                return (
+                  <BreedCardFull
+                    key={dog.id}
+                    name={dog.breed}
+                    image={dog.main_image || '/placeholder.png'}
+                    href={`/pet-categories/dogs/${slug}`}
+                  />
+                );
+              })
             ) : (
               <div className="col-span-full py-16 text-center flex flex-col items-center gap-3">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">

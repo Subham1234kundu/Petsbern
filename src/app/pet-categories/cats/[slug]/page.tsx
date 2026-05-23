@@ -97,8 +97,8 @@ export default function PetDetailsPage() {
       <div className="flex flex-col min-h-screen bg-white font-sans items-center justify-center">
         <h1 className="text-3xl font-bold mb-4">Pet Not Found</h1>
         <p className="text-gray-500 mb-8">We couldn't find the pet you're looking for.</p>
-        <Link href="/pet-categories/dogs" className="bg-[#FFC501] text-black px-8 py-3 rounded-full font-bold">
-          Go Back to Dogs
+        <Link href="/pet-categories/cats" className="bg-[#FFC501] text-black px-8 py-3 rounded-full font-bold">
+          Go Back to Cats
         </Link>
       </div>
     );
@@ -122,12 +122,12 @@ export default function PetDetailsPage() {
             <path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
 
-          <Link href="/pet-categories/dogs" className="text-[#5F6C72] text-[14px] hover:text-[#8B5E3C]">Our Pets</Link>
+          <Link href="/pet-categories/cats" className="text-[#5F6C72] text-[14px] hover:text-[#8B5E3C]">Our Pets</Link>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
 
-          <Link href="/pet-categories/dogs" className="text-[#5F6C72] text-[14px] hover:text-[#8B5E3C]">Dogs</Link>
+          <Link href="/pet-categories/cats" className="text-[#5F6C72] text-[14px] hover:text-[#8B5E3C]">Cats</Link>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -363,7 +363,7 @@ export default function PetDetailsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedPets.map((p) => (
-              <BreedCard2 key={p.id} name={p.name} image={p.main_image} href={`/pet-categories/dogs/${p.id}`} />
+              <BreedCard2 key={p.id} name={p.name} image={p.main_image} href={`/pet-categories/cats/${p.id}`} />
             ))}
           </div>
         </div>

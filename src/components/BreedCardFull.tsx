@@ -4,10 +4,12 @@ import Link from 'next/link';
 interface BreedCardFullProps {
   name: string;
   image: string;
+  href?: string;
 }
 
-const BreedCardFull = ({ name, image }: BreedCardFullProps) => {
+const BreedCardFull = ({ name, image, href }: BreedCardFullProps) => {
   const slug = name.toLowerCase().replace(/\s+/g, '-');
+  const linkHref = href || `/pet-categories/dogs/${slug}`;
 
   return (
     <div className="w-full h-[360px] sm:h-[400px] lg:h-[463px] bg-white rounded-xl border border-[#E6E6E6] flex flex-col p-3 sm:p-4 transition-all hover:shadow-md">
@@ -22,7 +24,7 @@ const BreedCardFull = ({ name, image }: BreedCardFullProps) => {
         <h3 className="text-[18px] font-bold text-[#0A1D37] text-center">{name}</h3>
       </div>
       <Link
-        href={`/pet-categories/dogs/${slug}`}
+        href={linkHref}
         className="w-full h-[42px] bg-[#D3D3D3] hover:bg-[#C0C0C0] text-[14px] font-medium text-black rounded-xl transition-colors flex items-center justify-center flex-shrink-0"
       >
         View Details

@@ -51,7 +51,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col overflow-x-hidden max-w-[100vw]" suppressHydrationWarning>
         <Navbar />
-        <main className="pt-[64px] sm:pt-[74px] lg:pt-[148px] border-0 outline-none flex-grow overflow-x-hidden">
+        <main className="pt-[64px] sm:pt-[74px] lg:pt-[150px] border-0 outline-none flex-grow overflow-x-hidden max-w-[100vw]">
           {children}
         </main>
         <Footer />

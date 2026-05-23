@@ -7,6 +7,7 @@ interface BreedCard2Props {
   age?: string;
   gender?: 'Male' | 'Female';
   isGold?: boolean;
+  href?: string;
 }
 
 const BreedCard2 = ({ 
@@ -14,9 +15,11 @@ const BreedCard2 = ({
   image, 
   age = "16 WEEKS OLD", 
   gender = "Male", 
-  isGold = true 
+  isGold = true,
+  href
 }: BreedCard2Props) => {
   const slug = name.toLowerCase().replace(/\s+/g, '-');
+  const linkHref = href || `/pet-categories/dogs/${slug}`;
   
   return (
     <div className="w-[288px] h-[481px] bg-white rounded-[20px] border border-[#E2E8F0] p-3 flex flex-col transition-all overflow-hidden">
@@ -54,7 +57,7 @@ const BreedCard2 = ({
         {/* Action Section */}
         <div className="mt-auto flex items-center justify-between gap-2 pb-1">
           <Link 
-            href={`/pet-categories/dogs/${slug}`}
+            href={linkHref}
             className="w-[176px] h-[42px] bg-[#D9D9D9] hover:bg-[#CCCCCC] text-black text-[14px] font-medium rounded-[12px] flex items-center justify-center transition-colors"
           >
             View Details

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BreedCard from "@/components/BreedCard";
 import HeroSlider from "@/components/HeroSlider";
+import BreedsSlider from "@/components/BreedsSlider";
 import HomeAnimations from "@/components/HomeAnimations";
 import FAQSection from "@/components/FAQSection";
 
@@ -27,139 +28,85 @@ export default function Home() {
   return (
     <HomeAnimations>
       <div className="flex flex-col min-h-screen bg-white font-sans pb-12">
-        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-[4%]">
           {/* Hero Section */}
           <HeroSlider />
 
           {/* Features Bar */}
-          <div data-animate="features-bar" className="w-full border border-[#E4E7E9] rounded-sm flex flex-col sm:flex-row sm:flex-wrap md:flex-nowrap items-center justify-between bg-white py-4 sm:py-8 px-4 sm:px-6">
+          <div data-animate="features-bar" className="w-full border border-[#E4E7E9] rounded-sm flex  sm:flex-wrap md:flex-nowrap items-stretch justify-between bg-white py-4 sm:py-6 md:py-8 px-3 sm:px-4 md:px-6">
             {/* Delivery */}
-            <div data-animate="feature-item" className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
+            <div data-animate="feature-item" className="flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3 md:gap-4 px-1 sm:px-3 md:px-4 w-[25%] sm:flex-1 sm:min-w-[180px] md:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
               <img
                 src="/images/delivery.png"
-                className="w-12 h-12 object-contain"
+                className="w-6 h-6 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain flex-shrink-0"
                 alt="Delivery"
               />
-              <div className="flex flex-col">
-                <h4 className="font-bold text-[14px] text-black uppercase leading-tight whitespace-nowrap">
+              <div className="flex flex-col min-w-0 text-center sm:text-left">
+                <h4 className="font-bold text-[8px] sm:text-[12px] md:text-[14px] text-black uppercase leading-tight">
                   DELIVERY AVAILABLE
                 </h4>
-                <p className="text-[14px] text-[#5F6C72] leading-tight mt-1">
+                <p className="text-[7px] sm:text-[11px] md:text-[14px] text-[#5F6C72] leading-tight mt-0.5 sm:mt-1">
                   Safe Doorstep Pet Delivery
                 </p>
               </div>
             </div>
 
             {/* Healthy */}
-            <div data-animate="feature-item" className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
+            <div data-animate="feature-item" className="flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3 md:gap-4 px-1 sm:px-3 md:px-4 w-[25%] sm:flex-1 sm:min-w-[180px] md:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
               <img
                 src="/images/healthy.png"
-                className="w-12 h-12 object-contain"
+                className="w-6 h-6 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain flex-shrink-0"
                 alt="Healthy"
               />
-              <div className="flex flex-col">
-                <h4 className="font-bold text-[14px] text-black uppercase leading-tight whitespace-nowrap">
+              <div className="flex flex-col min-w-0 text-center sm:text-left">
+                <h4 className="font-bold text-[8px] sm:text-[12px] md:text-[14px] text-black uppercase leading-tight">
                   HEALTHY
                 </h4>
-                <p className="text-[14px] text-[#5F6C72] leading-tight mt-1">
+                <p className="text-[7px] sm:text-[11px] md:text-[14px] text-[#5F6C72] leading-tight mt-0.5 sm:mt-1">
                   Vet Checked Perfect Health
                 </p>
               </div>
             </div>
 
             {/* Vaccinated */}
-            <div data-animate="feature-item" className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
+            <div data-animate="feature-item" className="flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3 md:gap-4 px-1 sm:px-3 md:px-4 w-[25%] sm:flex-1 sm:min-w-[180px] md:min-w-[200px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-3 md:py-0">
               <img
                 src="/images/vaccinated.png"
-                className="w-12 h-12 object-contain"
+                className="w-6 h-6 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain flex-shrink-0"
                 alt="Vaccinated"
               />
-              <div className="flex flex-col">
-                <h4 className="font-bold text-[14px] text-black uppercase leading-tight whitespace-nowrap">
+              <div className="flex flex-col min-w-0 text-center sm:text-left">
+                <h4 className="font-bold text-[8px] sm:text-[12px] md:text-[14px] text-black uppercase leading-tight">
                   VACCINATED
                 </h4>
-                <p className="text-[14px] text-[#5F6C72] leading-tight mt-1">
+                <p className="text-[7px] sm:text-[11px] md:text-[14px] text-[#5F6C72] leading-tight mt-0.5 sm:mt-1">
                   Up To Date Vaccinations
                 </p>
               </div>
             </div>
 
             {/* Ready for Home */}
-            <div data-animate="feature-item" className="flex items-center gap-3 sm:gap-4 px-4 flex-1 min-w-0 sm:min-w-[200px] justify-center last:border-r-0 py-3 md:py-0">
+            <div data-animate="feature-item" className="flex flex-col items-center gap-1 sm:flex-row sm:items-center sm:gap-3 md:gap-4 px-1 sm:px-3 md:px-4 w-[25%] sm:flex-1 sm:min-w-[180px] md:min-w-[200px] justify-center last:border-r-0 py-3 md:py-0">
               <img
                 src="/images/readyforhome.png"
-                className="w-12 h-12 object-contain"
+                className="w-6 h-6 sm:w-10 sm:h-10 md:w-12 md:h-12 object-contain flex-shrink-0"
                 alt="Ready For Home"
               />
-              <div className="flex flex-col">
-                <h4 className="font-bold text-[14px] text-black uppercase leading-tight whitespace-nowrap">
+              <div className="flex flex-col min-w-0 text-center sm:text-left">
+                <h4 className="font-bold text-[8px] sm:text-[12px] md:text-[14px] text-black uppercase leading-tight">
                   READY FOR HOME
                 </h4>
-                <p className="text-[14px] text-[#5F6C72] leading-tight mt-1">
+                <p className="text-[7px] sm:text-[11px] md:text-[14px] text-[#5F6C72] leading-tight mt-0.5 sm:mt-1">
                   Prepared For Loving Homes
                 </p>
               </div>
             </div>
           </div>
 
-          {/* 12 Breeds Grid Section */}
-          <section className="w-full py-16">
-            <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
-              <div data-animate="breeds-grid" className="flex flex-wrap justify-center gap-x-6 gap-y-16 max-w-[1200px] mx-auto">
-                {[
-                  { name: "Rottweiler", img: "/images/pet1.png", desc: "Known for their loyalty, intelligence, and protective nature. Family pets, easy to train, and are strong, energetic" },
-                  { name: "Labrador Retriever", img: "/images/pet2.png", desc: "Friendly, intelligent, and loyal companion, great with families, easy to train, and highly energetic." },
-                  { name: "German Shepherd", img: "/images/pet3.png", desc: "Confident, courageous, and highly trainable, known for protection, intelligence, and strong loyalty to owners." },
-                  { name: "Siberian Husky", img: "/images/pet4.png", desc: "Energetic, striking appearance, loves cold climates, playful nature, and requires regular exercise and attention." },
-                  { name: "Pomeranian", img: "/images/pet5.png", desc: "Bold, lion-like mane, surprisingly hardy in the cold, fiercely spirited, and demands constant interaction and mental play." },
-                  { name: "Saint Bernard", img: "/images/pet6.png", desc: "Known for their loyalty, intelligence, and protective nature. Family pets, easy to train, and are strong, energetic." },
-                  { name: "English Mastiff", img: "/images/pet7.png", desc: "Friendly, intelligent, and loyal companion, great with families. Easy to train, and highly energetic." },
-                  { name: "Goldendoodle", img: "/images/pet8.png", desc: "Confident, courageous, and highly trainable. Known for protection, intelligence, and strong loyalty to owners." },
-                  { name: "Afghan Hound", img: "/images/pet9.png", desc: "Energetic, striking appearance, loves cold climates. Playful nature, and requires regular exercise and attention." },
-                  { name: "Shih Tzu", img: "/images/pet10.png", desc: "Bold, lion-like mane, surprisingly hardy in the cold. Fiercely spirited, and demands constant interaction and mental play." },
-                  { name: "Chihuahua", img: "/images/pet11.png", desc: "Known for their loyalty, intelligence, and protective nature. Family pets, easy to train, and are strong, energetic." },
-                  { name: "Charles Spaniel", img: "/images/pet12.png", desc: "Friendly, intelligent, and loyal companion, great with families. Easy to train, and highly energetic." },
-                ].map((breed, i) => (
-                  <div key={i} data-animate="breed-card" className="flex flex-col items-center text-center w-[218px]">
-                    <div className="w-[218px] h-[278px] mb-6 flex items-center justify-center overflow-hidden">
-                      <img
-                        src={breed.img}
-                        alt={breed.name}
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <h3
-                      className="text-[24px] font-bold text-black mb-2 leading-tight"
-                      style={{ fontFamily: "var(--font-plus-jakarta-sans), sans-serif" }}
-                    >
-                      {breed.name}
-                    </h3>
-                    <p
-                      className="text-[14px] leading-relaxed mb-6 flex-grow"
-                      style={{
-                        fontFamily: "var(--font-inter), sans-serif",
-                        color: "#484554"
-                      }}
-                    >
-                      {breed.desc}
-                    </p>
-                    <button
-                      className="bg-black text-white rounded-md flex items-center justify-center hover:bg-gray-800 transition-colors"
-                      style={{
-                        width: "120px",
-                        height: "36px",
-                        fontSize: "14px",
-                        fontFamily: "var(--font-inter), sans-serif",
-                        fontWeight: 500
-                      }}
-                    >
-                      View More
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>        {/* Why PetsBarn Section */}
+          {/* Signature Breeds Slider */}
+          <BreedsSlider />
+
+        {/* Why PetsBarn Section */}
           <section data-animate="why-petsbarn" className="mt-16 bg-[#1C4B42] rounded-[32px] overflow-hidden relative flex flex-col items-center pt-16">
             {/* Background Outline Text */}
             <div
@@ -190,7 +137,7 @@ export default function Home() {
               </svg>
             </div>
 
-            <div className="w-full px-4 sm:px-8 lg:px-12 relative z-10">
+            <div className="w-full px-[4%] relative z-10">
               <h2 className="text-white text-[28px] sm:text-[36px] lg:text-[48px] leading-[1.1] mb-8 sm:mb-12">
                 Why Pet Parents Prefer <br />
                 <span className="font-bold">PETSBARN?</span>
@@ -295,7 +242,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="w-full max-w-[1200px] px-4 sm:px-8 lg:px-12 relative z-10 pt-16">
+          <div className="w-full px-[4%] relative z-10 pt-16">
             <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-bold leading-tight mb-12 text-center">
               Our Client <span className="text-[#FFC501]">Favorites</span>
             </h2>
@@ -430,7 +377,7 @@ export default function Home() {
                   </div>
                   <img
                     src="/images/germanfav.png"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] lg:w-[115%] h-[95%] lg:h-[115%] object-contain z-10 group-hover:scale-105 transition-transform"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85%] sm:w-[90%] md:w-[95%] lg:w-[100%] xl:w-[105%] 2xl:w-[115%] h-[70%] sm:h-[75%] md:h-[80%] lg:h-[85%] xl:h-[90%] 2xl:h-[95%] object-contain object-bottom z-10 group-hover:scale-105 transition-transform"
                     alt="German Shepard"
                   />
                 </div>
@@ -497,19 +444,19 @@ export default function Home() {
             />
           </div>
 
-          <div className="w-full max-w-[1200px] px-4 relative z-10">
+          <div className="w-full px-[4%] relative z-10">
             <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-bold mb-10 sm:mb-16 text-center">
               Available <span className="text-[#FFC501]">Pets</span>
             </h2>
 
-            <div className="grid pb-[280px] sm:pb-[340px] lg:pb-[120px] grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-x-6 sm:gap-y-12 justify-items-center">
+            <div className="grid pb-[280px] sm:pb-[340px] lg:pb-[120px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-6 xl:gap-6 2xl:gap-8 justify-items-center max-w-[320px] sm:max-w-none mx-auto">
 
-              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Labrador Retriever" image="/images/labrador.png" imageClassName="scale-[1.15] hover:scale-125" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Siberian Husky" image="/images/huskeyji.png" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="German Shepherd" image="/images/germanfav.png" imageClassName="scale-125 hover:scale-150" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Doodle" image="/images/snowwhite.png" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Rottweiler" image="/images/rotfav.png" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-none flex justify-center"><BreedCard name="Sitzu" image="/images/pugfav.png" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center"><BreedCard name="Labrador Retriever" image="/images/labrador.png" imageClassName="scale-[1.15] hover:scale-125" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center"><BreedCard name="Siberian Husky" image="/images/huskeyji.png" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center"><BreedCard name="German Shepherd" image="/images/germanfav.png" imageClassName="scale-170 hover:scale-190 -translate-y-25" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center"><BreedCard name="Doodle" image="/images/snowwhite.png" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center sm:block lg:block xl:block 2xl:block"><BreedCard name="Rottweiler" image="/images/rotfav.png" /></div>
+              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center sm:block lg:block xl:block 2xl:block"><BreedCard name="Sitzu" image="/images/pugfav.png" /></div>
             </div>
 
             {/* Featured Puppy Image (Bottom Right) */}
@@ -524,113 +471,113 @@ export default function Home() {
         </section>
 
         {/* Everything Your Pet Needs Section */}
-        <section data-animate="needs-section" className="bg-[#F0F9FF] py-24 relative overflow-hidden flex flex-col items-center w-full">
+        <section data-animate="needs-section" className="bg-[#F0F9FF] py-24 2xl:py-32 relative overflow-hidden flex flex-col items-center w-full">
           {/* Background Paw Patterns (bluefoot.png) - Exactly 3 as requested */}
           <div className="absolute inset-0 pointer-events-none z-0">
             {/* Left paw */}
             <img
               src="/images/bluefoot.png"
-              className="absolute bottom-[-20%] left-[20%] w-[420px] select-none rotate-[-35] hidden sm:block"
+              className="absolute bottom-[-20%] left-[20%] w-[420px] 2xl:w-[520px] select-none rotate-[-35] hidden sm:block"
               alt=""
             />
             {/* Middle/Bottom paw */}
             <img
               src="/images/bluefoot.png"
-              className="absolute bottom-[1%] left-[60%] w-[90px] select-none hidden sm:block"
+              className="absolute bottom-[1%] left-[60%] w-[90px] 2xl:w-[120px] select-none hidden sm:block"
               alt=""
             />
             {/* Right paw */}
             <img
               src="/images/bluefoot.png"
-              className="absolute bottom-0 left-[76%] w-[80px] select-none hidden sm:block"
+              className="absolute bottom-0 left-[76%] w-[80px] 2xl:w-[110px] select-none hidden sm:block"
               alt=""
             />
           </div>
 
-          <div className="w-full max-w-[1240px] px-4 relative z-10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16">
-              <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-normal leading-tight">
+          <div className="w-full px-[4%] relative z-10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 2xl:mb-24">
+              <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] 2xl:text-[52px] font-normal leading-tight">
                 Everything Your <br />
                 <span className="text-[#FFC501]">Pet Needs</span>
               </h2>
-              <p className="text-[#6E6E6E] text-[16px] max-w-[400px] mt-4 md:mt-0 leading-relaxed">
+              <p className="text-[#6E6E6E] text-[16px] 2xl:text-[18px] max-w-[400px] 2xl:max-w-[500px] mt-4 md:mt-0 leading-relaxed">
                 Comprehensive services designed to support your pet's health,
                 happiness, and growth.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 2xl:gap-12 justify-items-center">
               {/* Box 1: Pet Consultation */}
-              <div data-animate="needs-card" className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
+              <div data-animate="needs-card" className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] 2xl:w-[360px] 2xl:h-[480px] bg-white rounded-[24px] 2xl:rounded-[32px] p-4 2xl:p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-full h-[250px] 2xl:h-[300px] overflow-hidden rounded-[20px] 2xl:rounded-[28px] mb-4 2xl:mb-6">
                   <img
                     src="/images/needs1.png"
                     alt="Pet Consultation"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="w-full px-2">
-                  <h3 className="text-black text-[18px] font-bold mb-2">
+                <div className="w-full px-2 2xl:px-4">
+                  <h3 className="text-black text-[18px] 2xl:text-[22px] font-bold mb-2 2xl:mb-4">
                     Pet Consultation
                   </h3>
-                  <p className="text-[#6E6E6E] text-[16px] leading-snug">
+                  <p className="text-[#6E6E6E] text-[16px] 2xl:text-[18px] leading-snug">
                     Get expert advice before choosing your pet.
                   </p>
                 </div>
               </div>
 
               {/* Box 2: Pet Relocation */}
-              <div data-animate="needs-card" className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
+              <div data-animate="needs-card" className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] 2xl:w-[360px] 2xl:h-[480px] bg-white rounded-[24px] 2xl:rounded-[32px] p-4 2xl:p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-full h-[250px] 2xl:h-[300px] overflow-hidden rounded-[20px] 2xl:rounded-[28px] mb-4 2xl:mb-6">
                   <img
                     src="/images/needs2.png"
                     alt="Pet Relocation"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="w-full px-2">
-                  <h3 className="text-black text-[18px] font-bold mb-2">
+                <div className="w-full px-2 2xl:px-4">
+                  <h3 className="text-black text-[18px] 2xl:text-[22px] font-bold mb-2 2xl:mb-4">
                     Pet Relocation
                   </h3>
-                  <p className="text-[#6E6E6E] text-[16px] leading-snug">
+                  <p className="text-[#6E6E6E] text-[16px] 2xl:text-[18px] leading-snug">
                     Safe domestic and international travel support.
                   </p>
                 </div>
               </div>
 
               {/* Box 3: Pet Training */}
-              <div data-animate="needs-card" className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
+              <div data-animate="needs-card" className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] 2xl:w-[360px] 2xl:h-[480px] bg-white rounded-[24px] 2xl:rounded-[32px] p-4 2xl:p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-full h-[250px] 2xl:h-[300px] overflow-hidden rounded-[20px] 2xl:rounded-[28px] mb-4 2xl:mb-6">
                   <img
                     src="/images/needs3.png"
                     alt="Pet Training"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="w-full px-2">
-                  <h3 className="text-black text-[18px] font-bold mb-2">
+                <div className="w-full px-2 2xl:px-4">
+                  <h3 className="text-black text-[18px] 2xl:text-[22px] font-bold mb-2 2xl:mb-4">
                     Pet Training
                   </h3>
-                  <p className="text-[#6E6E6E] text-[16px] leading-snug">
+                  <p className="text-[#6E6E6E] text-[16px] 2xl:text-[18px] leading-snug">
                     Professional programs for well-behaved pets.
                   </p>
                 </div>
               </div>
 
               {/* Box 4: Pet Guidance */}
-              <div data-animate="needs-card" className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] bg-white rounded-[24px] p-4 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-full h-[250px] overflow-hidden rounded-[20px] mb-4">
+              <div data-animate="needs-card" className="w-full max-w-[298px] h-auto min-h-[350px] lg:min-h-0 lg:w-[298px] lg:h-[398px] 2xl:w-[360px] 2xl:h-[480px] bg-white rounded-[24px] 2xl:rounded-[32px] p-4 2xl:p-8 flex flex-col items-center shadow-sm hover:shadow-md transition-shadow">
+                <div className="w-full h-[250px] 2xl:h-[300px] overflow-hidden rounded-[20px] 2xl:rounded-[28px] mb-4 2xl:mb-6">
                   <img
                     src="/images/needs4.png"
                     alt="Pet Guidance"
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="w-full px-2">
-                  <h3 className="text-black text-[18px] font-bold mb-2">
+                <div className="w-full px-2 2xl:px-4">
+                  <h3 className="text-black text-[18px] 2xl:text-[22px] font-bold mb-2 2xl:mb-4">
                     Pet Guidance
                   </h3>
-                  <p className="text-[#6E6E6E] text-[16px] leading-snug">
+                  <p className="text-[#6E6E6E] text-[16px] 2xl:text-[18px] leading-snug">
                     Professional guidance tailored to your pet's needs and your
                     lifestyle.
                   </p>
@@ -640,7 +587,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-6"></div>
+        <div className="w-full px-[4%] mt-6"></div>
 
         {/* Bringing Your Pet Home Section */}
         <section data-animate="steps-section" className="pt-8 pb-18 relative overflow-hidden flex flex-col items-center w-full ">
@@ -654,7 +601,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="w-full max-w-[1240px] px-4 relative z-10">
+          <div className="w-full px-[4%] relative z-10">
             <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-normal mb-12 lg:mb-20 leading-tight">
               Bringing Your Pet Home in <br />
               <span className="text-[#FFC501]">3 Simple Steps</span>
@@ -783,7 +730,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="w-full max-w-[1240px] px-4 relative z-10">
+          <div className="w-full px-[4%] relative z-10">
             <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] font-semibold mb-12 text-center">
               Client <span className="text-[#FFC501]">Testimonials</span>
             </h2>
@@ -880,7 +827,7 @@ export default function Home() {
 
         {/* Expert Tips & Guides Section */}
         <section data-animate="tips-section" className="py-24 bg-white flex flex-col items-center w-full">
-          <div className="w-full max-w-[1240px] px-4">
+          <div className="w-full px-[4%]">
             <h2 data-animate="section-heading" className="text-black text-[32px] sm:text-[38px] lg:text-[42px] text-center mb-15 font-semibold" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
               Expert Tips, <span className="text-[#FFC501]">Pet Care Guides</span>
             </h2>
@@ -1006,7 +953,7 @@ export default function Home() {
 
       {/* Consultation Section */}
         <section data-animate="consult-section" className=" bg-white flex flex-col items-center w-full">
-          <div className="w-full max-w-[1240px] px-4">
+          <div className="w-full px-[4%]">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Left side: Form */}
               <div data-animate="consult-form" className="bg-[#F6F6F6] rounded-[24px] sm:rounded-[32px] p-6 sm:p-8 lg:p-12 flex flex-col justify-center" suppressHydrationWarning>
