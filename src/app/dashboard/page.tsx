@@ -16,6 +16,7 @@ type Pet = {
   main_image?: string;
   vaccinated?: string;
   created_at?: string;
+  breed?: string;
 };
 
 const CATEGORIES = ['Dog', 'Cat', 'Exotic'] as const;
@@ -147,7 +148,7 @@ export default function SellerDashboard() {
                   <p className="font-bold text-red-800 mb-1">🛠️ How to fix this in your Supabase Database:</p>
                   <ol className="list-decimal pl-4 space-y-1.5 mt-1 text-gray-700">
                     <li>Go to your <strong className="text-gray-900">Supabase SQL Editor</strong>.</li>
-                    <li>Verify that the table <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">pets</code> contains the column <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">barking</code> of type <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">numeric</code> (or integer).</li>
+                    <li>Verify that the table <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">pets</code> contains the column <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">apartment_friendly</code> of type <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">numeric</code> (or integer).</li>
                     <li>If you recently added it, PostgREST might have a stale schema cache. Reload the schema cache by running:
                       <pre className="bg-[#111] text-[#fff] p-2.5 rounded-md mt-2 overflow-x-auto text-[11px] font-medium leading-normal shadow-md">
 {`-- Reload the Supabase PostgREST schema cache
@@ -208,7 +209,7 @@ NOTIFY pgrst, 'reload schema';`}
           </div>
 
           <button
-            onClick={() => setErrorMsg("Could not find the 'barking' column of 'pets' in the schema cache")}
+            onClick={() => setErrorMsg("Could not find the 'apartment_friendly' column of 'pets' in the schema cache")}
             className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-red-200 hover:bg-red-50 text-red-500 transition-all flex items-center gap-1.5 cursor-pointer shadow-sm hover:shadow active:translate-y-[0.5px]"
             title="Simulate schema cache database error to preview the premium error handling UI"
           >
@@ -252,8 +253,15 @@ NOTIFY pgrst, 'reload schema';`}
 
                   {/* Info */}
                   <div className="p-4">
-                    <h3 className="font-bold text-[#111] text-sm truncate">{pet.name}</h3>
+                    <h3 className="font-bold text-[#111] text-sm truncate">
+                      {pet.name || `${pet.breed} (Breed Profile)`}
+                    </h3>
                     <div className="flex flex-wrap gap-2 mt-2 text-[11px] text-gray-500">
+                      {!pet.name && (
+                        <span className="bg-blue-50 text-blue-600 border border-blue-100 px-2 py-0.5 rounded font-bold uppercase tracking-wider text-[9px]">
+                          Breed Profile
+                        </span>
+                      )}
                       {pet.gender && <span className="bg-gray-50 px-2 py-0.5 rounded">{pet.gender}</span>}
                       {pet.age && <span className="bg-gray-50 px-2 py-0.5 rounded">{pet.age}</span>}
                       {pet.color && <span className="bg-gray-50 px-2 py-0.5 rounded">{pet.color}</span>}

@@ -4,10 +4,11 @@ import Link from 'next/link';
 interface BreedCardFullProps {
   name: string;
   image: string;
+  weight?: number;
   href?: string;
 }
 
-const BreedCardFull = ({ name, image, href }: BreedCardFullProps) => {
+const BreedCardFull = ({ name, image, weight, href }: BreedCardFullProps) => {
   const slug = name.toLowerCase().replace(/\s+/g, '-');
   const linkHref = href || `/pet-categories/dogs/${slug}`;
 
@@ -20,8 +21,11 @@ const BreedCardFull = ({ name, image, href }: BreedCardFullProps) => {
           className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
       </div>
-      <div className="flex-grow flex items-center justify-center w-full">
-        <h3 className="text-[18px] font-bold text-[#0A1D37] text-center">{name}</h3>
+      <div className="flex-grow flex flex-col items-center justify-center w-full gap-0.5">
+        <h3 className="text-[18px] font-bold text-[#0A1D37] text-center leading-tight">{name}</h3>
+        {weight !== undefined && weight > 0 && (
+          <p className="text-[13px] text-gray-500 font-semibold font-inter">Avg. Weight: {weight} kg</p>
+        )}
       </div>
       <Link
         href={linkHref}

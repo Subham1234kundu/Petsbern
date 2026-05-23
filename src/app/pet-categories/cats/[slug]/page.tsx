@@ -37,12 +37,14 @@ export default function PetDetailsPage() {
         if (breedData && breedData.length > 0) {
           localIsBreedPage = true;
           setIsBreedPage(true);
-          petData = breedData[0]; // Use the first pet as representative
           
-          // Overwrite the pet.name with the breed name so the UI displays the Breed Name
-          petData = { ...petData, name: petData.breed };
+          // Find the representative Breed Profile (where name is null, empty, or same as breed)
+          const representative = breedData.find(p => !p.name || p.name === p.breed) || breedData[0];
+          petData = { ...representative, name: representative.breed };
           
-          setRelatedPets(breedData.slice(0, 4)); // Show up to 4 individual pets of this breed
+          // The related pets should be the individual pets of this breed (where name is not null, empty, or same as breed)
+          const individualPets = breedData.filter(p => p.name && p.name !== p.breed);
+          setRelatedPets(individualPets.slice(0, 4));
         } else {
           // Fallback: try searching by specific pet name
           const { data } = await supabase.from('pets').select('*').ilike('name', `%${formattedName}%`).single();
@@ -58,9 +60,6 @@ export default function PetDetailsPage() {
         if (petData.main_image) allImages.push(petData.main_image);
         if (petData.gallery && petData.gallery.length > 0) {
           allImages = [...allImages, ...petData.gallery];
-        } else {
-          // Fallback thumbnails if none in gallery
-          allImages.push("https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=600&h=600&auto=format&fit=crop");
         }
         setThumbnails(allImages);
 
@@ -71,8 +70,11 @@ export default function PetDetailsPage() {
             .select('*')
             .eq('breed', petData.breed)
             .neq('id', petData.id)
-            .limit(4);
-          if (relatedData) setRelatedPets(relatedData);
+            .limit(10);
+          if (relatedData) {
+            const individualRelated = relatedData.filter(p => p.name && p.name !== p.breed);
+            setRelatedPets(individualRelated.slice(0, 4));
+          }
         }
       }
       setLoading(false);
@@ -142,18 +144,20 @@ export default function PetDetailsPage() {
         {/* Left Section: Images */}
         <div className="relative w-[600px] h-[600px]">
           {/* Thumbnails Overlay */}
-          <div className="absolute top-4 left-4 z-10 flex flex-col gap-3">
-            {thumbnails.map((thumb, idx) => (
-              <div
-                key={idx}
-                className={`w-[80px] h-[80px] overflow-hidden border-2 cursor-pointer transition-all shadow-md ${activeImage.includes(thumb.split('&')[0]) ? 'border-[#8B5E3C]' : 'border-white opacity-80 hover:opacity-100'
-                  }`}
-                onClick={() => setActiveImage(thumb)}
-              >
-                <img src={thumb} alt="Pet thumbnail" className="w-full h-full object-cover" />
-              </div>
-            ))}
-          </div>
+          {thumbnails.length > 1 && (
+            <div className="absolute top-4 left-4 z-10 flex flex-col gap-3">
+              {thumbnails.map((thumb, idx) => (
+                <div
+                  key={idx}
+                  className={`w-[80px] h-[80px] overflow-hidden border-2 cursor-pointer transition-all shadow-md ${activeImage.includes(thumb.split('&')[0]) ? 'border-[#8B5E3C]' : 'border-white opacity-80 hover:opacity-100'
+                    }`}
+                  onClick={() => setActiveImage(thumb)}
+                >
+                  <img src={thumb} alt="Pet thumbnail" className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Main Image */}
           <div className="w-full h-full overflow-hidden border border-[#E4E7E9]">
@@ -196,14 +200,20 @@ export default function PetDetailsPage() {
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Shedding</p>
                 <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.shedding || "Yes"}</p>
               </div>
+              <div>
+                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Coat Length</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.coat_length || "Medium"}</p>
+              </div>
             </div>
 
             {/* Column 2 items */}
             <div className="flex flex-col gap-8">
-              <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Age</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.age || "0-18 Years"}</p>
-              </div>
+              {!isBreedPage && (
+                <div>
+                  <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Age</p>
+                  <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.age || "0-18 Years"}</p>
+                </div>
+              )}
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Location</p>
                 <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.location || "Available for Delivery"}</p>
@@ -211,6 +221,10 @@ export default function PetDetailsPage() {
               <div>
                 <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Exercise</p>
                 <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.exercise || "30 Mins Daily"}</p>
+              </div>
+              <div>
+                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Grooming</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.grooming || "Moderate"}</p>
               </div>
             </div>
 
@@ -226,6 +240,10 @@ export default function PetDetailsPage() {
                   <p className="text-[#1E1E1E] text-[18px] font-normal">{pet.weight} kg</p>
                 </div>
               )}
+              <div>
+                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Apartment Size</p>
+                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.apartment_size || "Apartment Friendly"}</p>
+              </div>
             </div>
           </div>
 
@@ -316,34 +334,39 @@ export default function PetDetailsPage() {
 
       {/* Personality Highlights */}
       <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
-        <div className="flex flex-col gap-6 max-w-[800px] mx-auto">
+        <div className="flex flex-col gap-6 max-w-[1024px] mx-auto">
           <h3 className="text-center text-[36px] font-normal text-black mb-6">
             Personality <span className="text-[#D63B3B]">Highlights</span>
           </h3>
           
-          <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
             {[
-              { label: "Barking", value: pet?.barking ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Temperament with Kids", value: pet?.temperament_with_kids ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Playfulness", value: pet?.playfulness ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Friendliness", value: pet?.friendliness ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Need for attention", value: pet?.need_for_attention ?? 80, color: "bg-[#91C79B]" },
-              { label: "Compatibility with Dogs", value: pet?.compatibility_with_dogs ?? 25, color: "bg-[#D63B3B]" }
+              { label: "Apartment Friendly", value: pet?.apartment_friendly ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Family Friendly", value: pet?.family_friendly ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Kid Friendly", value: pet?.kid_friendly ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Guard Dog", value: pet?.guard_dog ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Intelligent", value: pet?.intelligent ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Easy to Train", value: pet?.easy_to_train ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Active / Energetic", value: pet?.active_energetic ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Calm", value: pet?.calm ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Sociable", value: pet?.sociable ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Hypoallergenic", value: pet?.hypoallergenic ?? 60, color: "bg-[#FCC83C]" },
+              { label: "Low Shedding", value: pet?.low_shedding ?? 60, color: "bg-[#FCC83C]" }
             ].map((item, idx) => {
-              const totalBars = 60;
+              const totalBars = 30;
               const activeBars = Math.floor((item.value / 100) * totalBars);
               return (
                 <div key={idx} className="flex flex-col gap-2">
-                  <div className="flex justify-between items-center px-2">
-                    <span className="text-[15px] font-semibold text-[#5F6C72]">Low</span>
-                    <span className="text-[20px] font-normal text-black">{item.label}</span>
-                    <span className="text-[15px] font-semibold text-[#D63B3B]">High</span>
+                  <div className="flex justify-between items-center px-1">
+                    <span className="text-[12px] font-semibold text-[#5F6C72]">Low</span>
+                    <span className="text-[16px] font-bold text-black">{item.label}</span>
+                    <span className="text-[12px] font-semibold text-[#D63B3B]">High</span>
                   </div>
                   <div className="flex gap-[3px]">
                     {[...Array(totalBars)].map((_, i) => (
                       <div
                         key={i}
-                        className={`h-7 flex-1 rounded-sm ${i < activeBars ? item.color : 'bg-[#E6E6E6]'}`}
+                        className={`h-5 flex-1 rounded-sm ${i < activeBars ? item.color : 'bg-[#E6E6E6]'}`}
                       />
                     ))}
                   </div>

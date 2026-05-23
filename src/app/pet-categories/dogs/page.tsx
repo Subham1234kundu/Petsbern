@@ -15,6 +15,26 @@ export default function DogsCategoryPage() {
   const [pets, setPets] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+
+  const BREED_GROUPS = [
+    "Herding (Pastoral) Group",
+    "Hound Group",
+    "Sporting (Gun Dog) Group",
+    "Terrier Group",
+    "Toy Group",
+    "Working Group",
+    "Non-Sporting (Utility) Group"
+  ];
+
+  const handleGroupToggle = (groupName: string) => {
+    setSelectedGroups(prev => 
+      prev.includes(groupName)
+        ? prev.filter(g => g !== groupName)
+        : [...prev, groupName]
+    );
+  };
+
   // Fetch initial pets and subscribe to changes
   useEffect(() => {
     const fetchPets = async () => {
@@ -66,15 +86,56 @@ export default function DogsCategoryPage() {
     return Array.from(map.values());
   }, [pets]);
 
-  // Filter the actual displayed breeds based on Size and selected Breed
+  // Count breeds per breed group dynamically from all fetched pets (grouped by breed)
+  const groupCounts = React.useMemo(() => {
+    const counts: Record<string, number> = {};
+    BREED_GROUPS.forEach(g => counts[g] = 0);
+
+    for (const pet of groupedPets) {
+      const petGroups = Array.isArray(pet.breed_groups)
+        ? pet.breed_groups
+        : typeof pet.breed_groups === 'string'
+          ? pet.breed_groups.startsWith('[')
+            ? JSON.parse(pet.breed_groups)
+            : pet.breed_groups.split(',').map((g: string) => g.trim())
+          : [];
+
+      petGroups.forEach((g: string) => {
+        if (g in counts) {
+          counts[g]++;
+        }
+      });
+    }
+    return counts;
+  }, [groupedPets]);
+
+  // Filter the actual displayed breeds based on Size, selected Breed, and Breed Groups
   const displayBreeds = groupedPets.filter(pet => {
     if (selectedBreed !== "All Breeds" && pet.breed !== selectedBreed) return false;
 
-    if (selectedSize === "Toy Breed") return pet.weight <= 4;
-    if (selectedSize === "Small") return pet.weight > 4 && pet.weight <= 10;
-    if (selectedSize === "Medium") return pet.weight > 10 && pet.weight <= 25;
-    if (selectedSize === "Large") return pet.weight > 25 && pet.weight <= 44;
-    if (selectedSize === "Giant Breed") return pet.weight > 44;
+    if (selectedSize === "Toy Breed") {
+      if (!(pet.weight <= 4)) return false;
+    } else if (selectedSize === "Small") {
+      if (!(pet.weight > 4 && pet.weight <= 10)) return false;
+    } else if (selectedSize === "Medium") {
+      if (!(pet.weight > 10 && pet.weight <= 25)) return false;
+    } else if (selectedSize === "Large") {
+      if (!(pet.weight > 25 && pet.weight <= 44)) return false;
+    } else if (selectedSize === "Giant Breed") {
+      if (!(pet.weight > 44)) return false;
+    }
+
+    if (selectedGroups.length > 0) {
+      const petGroups = Array.isArray(pet.breed_groups)
+        ? pet.breed_groups
+        : typeof pet.breed_groups === 'string'
+          ? pet.breed_groups.startsWith('[')
+            ? JSON.parse(pet.breed_groups)
+            : pet.breed_groups.split(',').map((g: string) => g.trim())
+          : [];
+      const matchesAny = petGroups.some((g: string) => selectedGroups.includes(g));
+      if (!matchesAny) return false;
+    }
 
     return true; // All Sizes
   });
@@ -196,6 +257,51 @@ export default function DogsCategoryPage() {
                 <div className="text-sm text-gray-500 italic px-3">No breeds found</div>
               )}
             </div>
+
+            {/* Breed Groups Filter */}
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-black font-bold text-[16px] tracking-wide uppercase">Breed Groups</h3>
+                {selectedGroups.length > 0 && (
+                  <button
+                    onClick={() => setSelectedGroups([])}
+                    className="text-[12px] font-semibold text-gray-500 hover:text-black underline underline-offset-2 transition-colors"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+              <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
+                {BREED_GROUPS.map((group) => {
+                  const isChecked = selectedGroups.includes(group);
+                  const count = groupCounts[group] || 0;
+                  return (
+                    <div
+                      key={group}
+                      className={`flex items-center justify-between gap-3 cursor-pointer group px-3 py-2 rounded-xl transition-all select-none
+                        ${isChecked 
+                          ? 'bg-yellow-50/70 text-black border border-[#FFC501]/50 shadow-sm' 
+                          : 'hover:bg-gray-100 border border-transparent'}`}
+                      onClick={() => handleGroupToggle(group)}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${isChecked ? 'bg-[#FFC501] border-[#FFC501] text-white' : 'border-[#D1D5DB] bg-white group-hover:border-gray-400'}`}>
+                          {isChecked && (
+                            <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>
+                          )}
+                        </div>
+                        <span className={`text-[13px] leading-tight truncate ${isChecked ? 'text-black font-bold' : 'text-[#4F4F4F] group-hover:text-black'}`}>
+                          {group}
+                        </span>
+                      </div>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isChecked ? 'bg-[#FFC501] text-white' : 'bg-gray-100 text-gray-400'}`}>
+                        {count}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -281,14 +387,31 @@ export default function DogsCategoryPage() {
             </div>
           </div>
 
-          {/* Active filter badge */}
-          {selectedSize !== "All Sizes" && (
-            <div className="flex items-center gap-2 -mt-4">
-              <span className="text-[13px] text-gray-500">Filtering by:</span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FFF8E1] border border-[#FFC501] rounded-full text-[12px] font-bold text-[#7B5800]">
-                {selectedSize}
-                <button onClick={() => setSelectedSize("All Sizes")} className="ml-1 text-[#7B5800] hover:text-black transition-colors">×</button>
-              </span>
+          {/* Active filter badges */}
+          {(selectedSize !== "All Sizes" || selectedGroups.length > 0) && (
+            <div className="flex flex-wrap items-center gap-2 -mt-4">
+              <span className="text-[13px] text-gray-500 font-medium">Filtering by:</span>
+              
+              {selectedSize !== "All Sizes" && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FFF8E1] border border-[#FFC501] rounded-full text-[12px] font-bold text-[#7B5800]">
+                  Size: {selectedSize}
+                  <button onClick={() => setSelectedSize("All Sizes")} className="ml-1 text-[#7B5800] hover:text-black transition-colors font-bold text-sm">×</button>
+                </span>
+              )}
+
+              {selectedGroups.map(group => (
+                <span key={group} className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F0F7FF] border border-[#5B92BD]/60 rounded-full text-[12px] font-bold text-[#2A527A]">
+                  Group: {group.replace(' Group', '')}
+                  <button onClick={() => handleGroupToggle(group)} className="ml-1 text-[#2A527A] hover:text-black transition-colors font-bold text-sm">×</button>
+                </span>
+              ))}
+
+              <button
+                onClick={() => { setSelectedSize("All Sizes"); setSelectedGroups([]); }}
+                className="text-[11px] font-bold text-red-500 hover:text-red-700 ml-2 uppercase tracking-wider transition-all"
+              >
+                Clear All
+              </button>
             </div>
           )}
 
@@ -307,6 +430,7 @@ export default function DogsCategoryPage() {
                     key={dog.id}
                     name={dog.breed}
                     image={dog.main_image || '/placeholder.png'}
+                    weight={dog.weight}
                     href={`/pet-categories/dogs/${slug}`}
                   />
                 );

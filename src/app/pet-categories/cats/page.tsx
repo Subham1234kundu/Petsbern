@@ -307,6 +307,7 @@ export default function CatsCategoryPage() {
                     key={cat.id}
                     name={cat.breed}
                     image={cat.main_image || '/placeholder.png'}
+                    weight={cat.weight}
                     href={`/pet-categories/cats/${slug}`}
                   />
                 );
