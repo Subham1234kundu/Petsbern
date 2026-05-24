@@ -113,8 +113,9 @@ export default function CatsCategoryPage() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-6 pb-4">
           <div className="flex items-center justify-between gap-6">
             <div className="inline-flex p-1 bg-[#F3F4F6] rounded-full">
-              <Link href="/pet-categories/dogs" className="px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95">Dogs</Link>
-              <Link href="/pet-categories/cats" className="px-8 py-2 rounded-full bg-black text-white text-sm font-bold shadow-sm transition-all active:scale-95">Cats</Link>
+              <Link href="/pet-categories/dogs" className="px-6 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95">Dogs</Link>
+              <Link href="/pet-categories/cats" className="px-6 md:px-8 py-2 rounded-full bg-black text-white text-sm font-bold shadow-sm transition-all active:scale-95">Cats</Link>
+              <Link href="/pet-categories/exotic-birds" className="px-6 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95">Exotic Birds</Link>
             </div>
             <button
               onClick={() => setShowFilters(!showFilters)}

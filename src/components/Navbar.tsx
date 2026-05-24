@@ -19,10 +19,8 @@ export default function Navbar() {
 
       if (currentScrollY < 10) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY) {
-        setIsVisible(false);
       } else {
-        setIsVisible(true);
+        setIsVisible(false);
       }
       setLastScrollY(currentScrollY);
     };
@@ -102,15 +100,15 @@ export default function Navbar() {
         </div>
 
         {/* Social Icons - Top Row */}
-        <div className="hidden lg:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-0.5">
           <Link href="#" className="hover:scale-110 transition-transform active:scale-95">
-            <img src="/images/WhatsappLogo.png" alt="WhatsApp" className="w-[52px] h-[52px] object-contain" />
+            <img src="/images/WhatsappLogo.png" alt="WhatsApp" className="w-[60px] h-[60px] object-contain" />
           </Link>
           <Link href="#" className="hover:scale-110 transition-transform active:scale-95">
-            <img src="/images/Instagramlogo.png" alt="Instagram" className="w-[52px] h-[52px] object-contain" />
+            <img src="/images/Instagramlogo.png" alt="Instagram" className="w-[60px] h-[60px] object-contain" />
           </Link>
           <Link href="#" className="hover:scale-110 transition-transform active:scale-95">
-            <img src="/images/YoutubeLogo.png" alt="YouTube" className="w-[52px] h-[52px] object-contain" />
+            <img src="/images/YoutubeLogo.png" alt="YouTube" className="w-[60px] h-[60px] object-contain" />
           </Link>
         </div>
 
@@ -133,54 +131,7 @@ export default function Navbar() {
           {navItems.map((item) => {
             if (item === "Services") {
               return (
-                <div key={item} className="relative">
-                  <button
-                    onClick={() => setIsServicesOpen(!isServicesOpen)}
-                    onMouseEnter={() => setIsServicesOpen(true)}
-                    className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative flex items-center gap-1 group"
-                  >
-                    {item}
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className={`transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`}
-                    >
-                      <path d="m6 9 6 6 6-6" />
-                    </svg>
-                  </button>
-
-                  {isServicesOpen && (
-                    <div 
-                      onMouseLeave={() => setIsServicesOpen(false)}
-                      className="absolute top-[calc(100%+15px)] left-0 bg-white rounded-[12px] py-2 min-w-[240px] z-[120]" 
-                      style={{ boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.12)", border: "1px solid #E5E7EB" }}
-                    >
-                      {["Pet Training", "Pet Relocation", "Breed Consultation"].map((service) => (
-                        <Link
-                          key={service}
-                          href={`/services/${service.toLowerCase().replace(" ", "-")}`}
-                          onClick={() => setIsServicesOpen(false)}
-                          className="block px-5 py-3 text-[#5F6C72] text-[14px] font-medium transition-colors hover:bg-[#F2F4F5] hover:text-[#191C1F]"
-                          style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
-                        >
-                          {service}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
-            if (item === "Our Pets") {
-              return (
-                <div key={item} className="relative group/pets">
+                <div key={item} className="relative group">
                   <button
                     className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative flex items-center gap-1"
                   >
@@ -194,17 +145,61 @@ export default function Navbar() {
                       strokeWidth="3"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="transition-transform duration-200 group-hover/pets:rotate-180"
+                      className="transition-transform duration-200 group-hover:rotate-180"
                     >
                       <path d="m6 9 6 6 6-6" />
                     </svg>
                   </button>
 
-                  <div className="absolute top-full left-0 pt-[15px] hidden group-hover/pets:block z-[120]">
+                  <div className="absolute top-full left-0 pt-[15px] hidden group-hover:block z-[120]">
+                    <div 
+                      className="bg-white rounded-[12px] py-2 min-w-[240px]" 
+                      style={{ boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.12)", border: "1px solid #E5E7EB" }}
+                    >
+                      {["Pet Training", "Pet Relocation", "Breed Consultation"].map((service) => (
+                        <Link
+                          key={service}
+                          href={`/services/${service.toLowerCase().replace(" ", "-")}`}
+                          className="block px-5 py-3 text-[#5F6C72] text-[14px] font-medium transition-colors hover:bg-[#F2F4F5] hover:text-[#191C1F]"
+                          style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+                        >
+                          {service}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+
+            if (item === "Our Pets") {
+              return (
+                <div key={item} className="relative group">
+                  <button
+                    className="text-[15px] font-bold text-[#1E1E1E] hover:text-[#8B5E3C] transition-colors relative flex items-center gap-1"
+                  >
+                    {item}
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="transition-transform duration-200 group-hover:rotate-180"
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+
+                  <div className="absolute top-full left-0 pt-[15px] hidden group-hover:block z-[120]">
                     <div className="bg-white rounded-[12px] py-2 min-w-[200px]" style={{ boxShadow: "0px 8px 24px rgba(0, 0, 0, 0.12)", border: "1px solid #E5E7EB" }}>
                       {[
                         { name: "Dogs", href: "/pet-categories/dogs" },
-                        { name: "Cats", href: "/pet-categories/cats" }
+                        { name: "Cats", href: "/pet-categories/cats" },
+                        { name: "Exotic Birds", href: "/pet-categories/exotic-birds" }
                       ].map((category) => (
                         <Link
                           key={category.name}
@@ -261,7 +256,11 @@ export default function Navbar() {
                 const isServices = item === "Services";
                 const items = isServices 
                   ? ["Pet Training", "Pet Relocation", "Breed Consultation"]
-                  : [{ name: "Dogs", href: "/pet-categories/dogs" }, { name: "Cats", href: "/pet-categories/cats" }];
+                  : [
+                      { name: "Dogs", href: "/pet-categories/dogs" },
+                      { name: "Cats", href: "/pet-categories/cats" },
+                      { name: "Exotic Birds", href: "/pet-categories/exotic-birds" }
+                    ];
 
                 return (
                   <div key={item}>
@@ -328,15 +327,15 @@ export default function Navbar() {
           </nav>
 
           {/* Mobile Social */}
-          <div className="flex items-center justify-center gap-3 px-4 py-6 mt-4 border-t border-[#F0F0F0]">
+          <div className="flex items-center justify-center gap-1.5 px-4 py-6 mt-4 border-t border-[#F0F0F0]">
             <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="hover:scale-110 transition-transform">
-              <img src="/images/WhatsappLogo.png" alt="WhatsApp" className="w-[52px] h-[52px] object-contain" />
+              <img src="/images/WhatsappLogo.png" alt="WhatsApp" className="w-[60px] h-[60px] object-contain" />
             </Link>
             <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="hover:scale-110 transition-transform">
-              <img src="/images/Instagramlogo.png" alt="Instagram" className="w-[52px] h-[52px] object-contain" />
+              <img src="/images/Instagramlogo.png" alt="Instagram" className="w-[60px] h-[60px] object-contain" />
             </Link>
             <Link href="#" onClick={() => setIsMobileMenuOpen(false)} className="hover:scale-110 transition-transform">
-              <img src="/images/YoutubeLogo.png" alt="YouTube" className="w-[52px] h-[52px] object-contain" />
+              <img src="/images/YoutubeLogo.png" alt="YouTube" className="w-[60px] h-[60px] object-contain" />
             </Link>
           </div>
         </div>
@@ -345,18 +344,29 @@ export default function Navbar() {
 
     {/* Floating Social Icons - visible only when navbar is hidden */}
     <div
-      className={`fixed top-1/2 -translate-y-1/2 right-3 z-[99] flex flex-col items-center bg-gradient-to-b from-[#966b49] to-[#764e31] rounded-[24px] p-2 md:p-2.5 shadow-[0_20px_50px_rgba(118,78,49,0.35)] hover:shadow-[0_25px_60px_rgba(118,78,49,0.5)] hover:scale-105 border border-white/20 transition-all duration-300 ease-in-out gap-2 md:gap-2.5 ${
+      className={`fixed top-1/2 -translate-y-1/2 right-3 z-[99] flex flex-col items-center bg-[#FFC501] rounded-full p-1.5 md:p-2 shadow-[0_12px_36px_rgba(0,0,0,0.16)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.24)] border border-yellow-500/20 transition-all duration-300 ease-in-out gap-1 ${
         !isVisible ? 'opacity-100 translate-x-0 scale-100 pointer-events-auto' : 'opacity-0 translate-x-16 scale-95 pointer-events-none'
       }`}
     >
-      <a href="tel:+911212121211" className="hover:scale-110 transition-transform active:scale-95 flex-shrink-0">
-        <img src="/images/Phonelogo.png" alt="Phone" className="w-[52px] h-[52px] md:w-[64px] md:h-[64px] object-contain" />
+      <a
+        href="tel:+911212121211"
+        className="group w-[44px] h-[44px] md:w-[52px] md:h-[52px] bg-white rounded-full flex items-center justify-center shadow-sm active:scale-95 transition-transform flex-shrink-0"
+      >
+        <img src="/images/Phonelogo.png" alt="Phone" className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] object-contain transition-transform duration-300 group-hover:scale-115" />
       </a>
-      <a href="https://wa.me/911212121211?text=Hi,%20I'm%20interested%20in%20Petsbarn." target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform active:scale-95 flex-shrink-0">
-        <img src="/images/WhatsappLogo.png" alt="WhatsApp" className="w-[52px] h-[52px] md:w-[64px] md:h-[64px] object-contain" />
+      <a
+        href="https://wa.me/911212121211?text=Hi,%20I'm%20interested%20in%20Petsbarn."
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group w-[44px] h-[44px] md:w-[52px] md:h-[52px] bg-white rounded-full flex items-center justify-center shadow-sm active:scale-95 transition-transform flex-shrink-0"
+      >
+        <img src="/images/WhatsappLogo.png" alt="WhatsApp" className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] object-contain transition-transform duration-300 group-hover:scale-115" />
       </a>
-      <a href="#" className="hover:scale-110 transition-transform active:scale-95 flex-shrink-0">
-        <img src="/images/Instagramlogo.png" alt="Instagram" className="w-[52px] h-[52px] md:w-[64px] md:h-[64px] object-contain" />
+      <a
+        href="#"
+        className="group w-[44px] h-[44px] md:w-[52px] md:h-[52px] bg-white rounded-full flex items-center justify-center shadow-sm active:scale-95 transition-transform flex-shrink-0"
+      >
+        <img src="/images/Instagramlogo.png" alt="Instagram" className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] object-contain transition-transform duration-300 group-hover:scale-115" />
       </a>
     </div>
     </>

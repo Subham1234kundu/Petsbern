@@ -5,7 +5,7 @@ import Link from 'next/link';
 import BreedCardFull from '@/components/BreedCardFull';
 import { supabase } from '@/utils/supabase';
 
-export default function DogsCategoryPage() {
+export default function ExoticBirdsCategoryPage() {
   const [selectedBreed, setSelectedBreed] = useState("All Breeds");
   const [selectedSize, setSelectedSize] = useState("All Sizes");
   const [showFilters, setShowFilters] = useState(false);
@@ -15,33 +15,13 @@ export default function DogsCategoryPage() {
   const [pets, setPets] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-
-  const BREED_GROUPS = [
-    "Herding (Pastoral) Group",
-    "Hound Group",
-    "Sporting (Gun Dog) Group",
-    "Terrier Group",
-    "Toy Group",
-    "Working Group",
-    "Non-Sporting (Utility) Group"
-  ];
-
-  const handleGroupToggle = (groupName: string) => {
-    setSelectedGroups(prev => 
-      prev.includes(groupName)
-        ? prev.filter(g => g !== groupName)
-        : [...prev, groupName]
-    );
-  };
-
-  // Fetch initial pets and subscribe to changes
+  // Fetch exotic pets and subscribe to real-time changes
   useEffect(() => {
     const fetchPets = async () => {
       const { data } = await supabase
         .from('pets')
         .select('*')
-        .eq('category', 'Dog')
+        .eq('category', 'Exotic')
         .order('id', { ascending: false });
 
       if (data) setPets(data);
@@ -51,8 +31,8 @@ export default function DogsCategoryPage() {
     fetchPets();
 
     const channel = supabase
-      .channel('public:pets:dogs')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'pets', filter: "category=eq.Dog" }, (payload) => {
+      .channel('public:pets:exotic-birds')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'pets', filter: "category=eq.Exotic" }, (payload) => {
         if (payload.eventType === 'INSERT') {
           setPets((prev) => [payload.new, ...prev]);
         } else if (payload.eventType === 'DELETE') {
@@ -68,7 +48,7 @@ export default function DogsCategoryPage() {
     };
   }, []);
 
-  // Compute unique breeds dynamically from fetched pets
+  // Unique breed names from fetched exotic birds
   const dynamicBreeds = Array.from(new Set(pets.map(p => p.breed))).filter(Boolean) as string[];
   const filteredBreeds = dynamicBreeds.filter(breed =>
     breed.toLowerCase().includes(breedSearchQuery.toLowerCase())
@@ -86,67 +66,27 @@ export default function DogsCategoryPage() {
     return Array.from(map.values());
   }, [pets]);
 
-  // Count breeds per breed group dynamically from all fetched pets (grouped by breed)
-  const groupCounts = React.useMemo(() => {
-    const counts: Record<string, number> = {};
-    BREED_GROUPS.forEach(g => counts[g] = 0);
-
-    for (const pet of groupedPets) {
-      const petGroups = Array.isArray(pet.breed_groups)
-        ? pet.breed_groups
-        : typeof pet.breed_groups === 'string'
-          ? pet.breed_groups.startsWith('[')
-            ? JSON.parse(pet.breed_groups)
-            : pet.breed_groups.split(',').map((g: string) => g.trim())
-          : [];
-
-      petGroups.forEach((g: string) => {
-        if (g in counts) {
-          counts[g]++;
-        }
-      });
-    }
-    return counts;
-  }, [groupedPets]);
-
-  // Filter the actual displayed breeds based on Size, selected Breed, and Breed Groups
+  // Weight-based size filter for birds (in kgs)
   const displayBreeds = groupedPets.filter(pet => {
     if (selectedBreed !== "All Breeds" && pet.breed !== selectedBreed) return false;
 
-    if (selectedSize === "Toy Breed") {
-      if (!(pet.weight <= 4)) return false;
-    } else if (selectedSize === "Small") {
-      if (!(pet.weight > 4 && pet.weight <= 10)) return false;
-    } else if (selectedSize === "Medium") {
-      if (!(pet.weight > 10 && pet.weight <= 25)) return false;
-    } else if (selectedSize === "Large") {
-      if (!(pet.weight > 25 && pet.weight <= 44)) return false;
-    } else if (selectedSize === "Giant Breed") {
-      if (!(pet.weight > 44)) return false;
-    }
-
-    if (selectedGroups.length > 0) {
-      const petGroups = Array.isArray(pet.breed_groups)
-        ? pet.breed_groups
-        : typeof pet.breed_groups === 'string'
-          ? pet.breed_groups.startsWith('[')
-            ? JSON.parse(pet.breed_groups)
-            : pet.breed_groups.split(',').map((g: string) => g.trim())
-          : [];
-      const matchesAny = petGroups.some((g: string) => selectedGroups.includes(g));
-      if (!matchesAny) return false;
-    }
+    const w = pet.weight || 0;
+    if (selectedSize === "X-Small")    return w <= 0.25;
+    if (selectedSize === "Small")      return w > 0.25 && w <= 0.5;
+    if (selectedSize === "Medium")     return w > 0.5  && w <= 1.0;
+    if (selectedSize === "Large")      return w > 1.0  && w <= 2.0;
+    if (selectedSize === "X-Large")    return w > 2.0;
 
     return true; // All Sizes
   });
 
-  // The 5 size boxes (no "All Sizes" card)
+  // The 5 bird size boxes
   const sizeOptions = [
-    { name: "Toy Breed",   desc: "UPTO 4 KGS",  image: "https://images.unsplash.com/photo-1591768226451-3444216831ce?q=80&w=300&auto=format&fit=crop" },
-    { name: "Small",       desc: "5 – 10 KGS",  image: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=300&auto=format&fit=crop" },
-    { name: "Medium",      desc: "11 – 25 KGS", image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=300&auto=format&fit=crop" },
-    { name: "Large",       desc: "26 – 44 KGS", image: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=300&auto=format&fit=crop" },
-    { name: "Giant Breed", desc: "45+ KGS",     image: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=300&auto=format&fit=crop" },
+    { name: "X-Small", desc: "UPTO 0.25 KGS", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=300&auto=format&fit=crop" },
+    { name: "Small",   desc: "0.25 – 0.5 KGS", image: "https://images.unsplash.com/photo-1522850959076-58c71a3a531a?q=80&w=300&auto=format&fit=crop" },
+    { name: "Medium",  desc: "0.5 – 1.0 KGS",  image: "https://images.unsplash.com/photo-1607990283143-e81e7a2c93ab?q=80&w=300&auto=format&fit=crop" },
+    { name: "Large",   desc: "1.0 – 2.0 KGS",  image: "https://images.unsplash.com/photo-1552728089-57bdde30ebd3?q=80&w=300&auto=format&fit=crop" },
+    { name: "X-Large", desc: "ABOVE 2.0 KGS", image: "https://images.unsplash.com/photo-1452570053594-1b985d6ea890?q=80&w=300&auto=format&fit=crop" },
   ];
 
   return (
@@ -165,7 +105,7 @@ export default function DogsCategoryPage() {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           <span className="text-[#5F6C72] text-[14px]">Our Pets</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          <span className="text-black text-[14px] font-medium">Dogs</span>
+          <span className="text-black text-[14px] font-medium">Exotic Birds</span>
         </div>
       </div>
 
@@ -174,9 +114,9 @@ export default function DogsCategoryPage() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-6 pb-4">
           <div className="flex items-center justify-between gap-6">
             <div className="inline-flex p-1 bg-[#F3F4F6] rounded-full">
-              <Link href="/pet-categories/dogs" className="px-6 md:px-8 py-2 rounded-full bg-black text-white text-sm font-bold shadow-sm transition-all active:scale-95">Dogs</Link>
+              <Link href="/pet-categories/dogs" className="px-6 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95">Dogs</Link>
               <Link href="/pet-categories/cats" className="px-6 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95">Cats</Link>
-              <Link href="/pet-categories/exotic-birds" className="px-6 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95">Exotic Birds</Link>
+              <Link href="/pet-categories/exotic-birds" className="px-6 md:px-8 py-2 rounded-full bg-black text-white text-sm font-bold shadow-sm transition-all active:scale-95">Exotic Birds</Link>
             </div>
             <button
               onClick={() => setShowFilters(!showFilters)}
@@ -205,13 +145,13 @@ export default function DogsCategoryPage() {
       {/* Main Content Layout */}
       <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 py-8 flex flex-col lg:flex-row gap-8 lg:gap-10">
 
-        {/* ── Left Sidebar ── wider on desktop */}
+        {/* ── Left Sidebar – wider on desktop ── */}
         <div className={`w-full lg:w-[280px] xl:w-[320px] flex-shrink-0 transition-all duration-300 ${showFilters ? 'block' : 'hidden lg:block'}`}>
           <div className="flex flex-col gap-6 bg-[#F9FAFB] lg:bg-transparent p-6 lg:p-0 rounded-[20px] lg:rounded-none border lg:border-none border-gray-100">
 
             <h2 className="text-black font-bold text-[18px] tracking-wide uppercase">Filter with Breeds</h2>
 
-            {/* Breed Search Input */}
+            {/* Breed Search */}
             <div className="relative w-full">
               <input
                 type="text"
@@ -258,51 +198,6 @@ export default function DogsCategoryPage() {
                 <div className="text-sm text-gray-500 italic px-3">No breeds found</div>
               )}
             </div>
-
-            {/* Breed Groups Filter */}
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-black font-bold text-[16px] tracking-wide uppercase">Breed Groups</h3>
-                {selectedGroups.length > 0 && (
-                  <button
-                    onClick={() => setSelectedGroups([])}
-                    className="text-[12px] font-semibold text-gray-500 hover:text-black underline underline-offset-2 transition-colors"
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
-              <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar">
-                {BREED_GROUPS.map((group) => {
-                  const isChecked = selectedGroups.includes(group);
-                  const count = groupCounts[group] || 0;
-                  return (
-                    <div
-                      key={group}
-                      className={`flex items-center justify-between gap-3 cursor-pointer group px-3 py-2 rounded-xl transition-all select-none
-                        ${isChecked 
-                          ? 'bg-yellow-50/70 text-black border border-[#FFC501]/50 shadow-sm' 
-                          : 'hover:bg-gray-100 border border-transparent'}`}
-                      onClick={() => handleGroupToggle(group)}
-                    >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div className={`w-4 h-4 rounded flex items-center justify-center border transition-all ${isChecked ? 'bg-[#FFC501] border-[#FFC501] text-white' : 'border-[#D1D5DB] bg-white group-hover:border-gray-400'}`}>
-                          {isChecked && (
-                            <svg className="w-2.5 h-2.5 fill-current" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>
-                          )}
-                        </div>
-                        <span className={`text-[13px] leading-tight truncate ${isChecked ? 'text-black font-bold' : 'text-[#4F4F4F] group-hover:text-black'}`}>
-                          {group}
-                        </span>
-                      </div>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isChecked ? 'bg-[#FFC501] text-white' : 'bg-gray-100 text-gray-400'}`}>
-                        {count}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
         </div>
 
@@ -323,7 +218,7 @@ export default function DogsCategoryPage() {
               )}
             </div>
 
-            {/* 5-column grid on lg+, 3-col on sm/md, horizontal scroll on mobile */}
+            {/* 5-column grid — single row on lg */}
             <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-5 gap-2 sm:gap-3">
               {sizeOptions.map((size) => {
                 const isSelected = selectedSize === size.name;
@@ -332,7 +227,7 @@ export default function DogsCategoryPage() {
                     key={size.name}
                     type="button"
                     onClick={() => setSelectedSize(isSelected ? "All Sizes" : size.name)}
-                    className={`group relative flex flex-col items-center gap-1.5 p-0 overflow-hidden rounded-xl border-2 transition-all duration-200 cursor-pointer focus:outline-none
+                    className={`group relative flex flex-col items-center gap-0 p-0 overflow-hidden rounded-xl border-2 transition-all duration-200 cursor-pointer focus:outline-none
                       ${isSelected
                         ? 'border-[#FFC501] ring-2 ring-[#FFC501]/30 shadow-md'
                         : 'border-[#E4E7E9] hover:border-[#FFC501]/60 hover:shadow-sm'
@@ -347,7 +242,7 @@ export default function DogsCategoryPage() {
                       />
                     </div>
                     {/* Text */}
-                    <div className="w-full px-1.5 pb-2 flex flex-col items-center gap-0.5">
+                    <div className="w-full px-1.5 py-2 flex flex-col items-center gap-0.5">
                       <span className={`text-[11px] sm:text-[12px] font-bold leading-tight text-center ${isSelected ? 'text-[#0F172A]' : 'text-[#374151]'}`}>
                         {size.name}
                       </span>
@@ -355,7 +250,7 @@ export default function DogsCategoryPage() {
                         {size.desc}
                       </span>
                     </div>
-                    {/* Active indicator dot */}
+                    {/* Active dot */}
                     {isSelected && (
                       <div className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#FFC501] rounded-full shadow" />
                     )}
@@ -370,7 +265,7 @@ export default function DogsCategoryPage() {
             <div className="relative w-full md:w-[424px]">
               <input
                 type="text"
-                placeholder="Search for pets..."
+                placeholder="Search for exotic birds..."
                 className="w-full h-[48px] pl-4 pr-12 border border-[#E4E7E9] text-[15px] focus:outline-none focus:border-[#8B5E3C] rounded-none"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -388,31 +283,14 @@ export default function DogsCategoryPage() {
             </div>
           </div>
 
-          {/* Active filter badges */}
-          {(selectedSize !== "All Sizes" || selectedGroups.length > 0) && (
-            <div className="flex flex-wrap items-center gap-2 -mt-4">
-              <span className="text-[13px] text-gray-500 font-medium">Filtering by:</span>
-              
-              {selectedSize !== "All Sizes" && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FFF8E1] border border-[#FFC501] rounded-full text-[12px] font-bold text-[#7B5800]">
-                  Size: {selectedSize}
-                  <button onClick={() => setSelectedSize("All Sizes")} className="ml-1 text-[#7B5800] hover:text-black transition-colors font-bold text-sm">×</button>
-                </span>
-              )}
-
-              {selectedGroups.map(group => (
-                <span key={group} className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F0F7FF] border border-[#5B92BD]/60 rounded-full text-[12px] font-bold text-[#2A527A]">
-                  Group: {group.replace(' Group', '')}
-                  <button onClick={() => handleGroupToggle(group)} className="ml-1 text-[#2A527A] hover:text-black transition-colors font-bold text-sm">×</button>
-                </span>
-              ))}
-
-              <button
-                onClick={() => { setSelectedSize("All Sizes"); setSelectedGroups([]); }}
-                className="text-[11px] font-bold text-red-500 hover:text-red-700 ml-2 uppercase tracking-wider transition-all"
-              >
-                Clear All
-              </button>
+          {/* Active filter badge */}
+          {selectedSize !== "All Sizes" && (
+            <div className="flex items-center gap-2 -mt-4">
+              <span className="text-[13px] text-gray-500">Filtering by:</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FFF8E1] border border-[#FFC501] rounded-full text-[12px] font-bold text-[#7B5800]">
+                {selectedSize}
+                <button onClick={() => setSelectedSize("All Sizes")} className="ml-1 text-[#7B5800] hover:text-black transition-colors">×</button>
+              </span>
             </div>
           )}
 
@@ -421,18 +299,18 @@ export default function DogsCategoryPage() {
             {isLoading ? (
               <div className="col-span-full py-16 flex flex-col items-center gap-4">
                 <div className="w-10 h-10 border-4 border-[#FFC501] border-t-transparent rounded-full animate-spin"/>
-                <span className="text-gray-500 font-medium">Loading pets...</span>
+                <span className="text-gray-500 font-medium">Loading exotic birds...</span>
               </div>
             ) : displayBreeds.length > 0 ? (
-              displayBreeds.map((dog) => {
-                const slug = dog.breed.toLowerCase().replace(/\s+/g, '-');
+              displayBreeds.map((bird) => {
+                const slug = bird.breed.toLowerCase().replace(/\s+/g, '-');
                 return (
                   <BreedCardFull
-                    key={dog.id}
-                    name={dog.breed}
-                    image={dog.main_image || '/placeholder.png'}
-                    weight={dog.weight}
-                    href={`/pet-categories/dogs/${slug}`}
+                    key={bird.id}
+                    name={bird.breed}
+                    image={bird.main_image || '/placeholder.png'}
+                    weight={bird.weight}
+                    href={`/pet-categories/exotic-birds/${slug}`}
                   />
                 );
               })
@@ -441,8 +319,8 @@ export default function DogsCategoryPage() {
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#D1D5DB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
                 </svg>
-                <span className="text-xl font-bold text-gray-800">No pets match this criteria.</span>
-                <span className="text-gray-500">Try adjusting your filters or add a new pet from the dashboard!</span>
+                <span className="text-xl font-bold text-gray-800">No exotic birds match this criteria.</span>
+                <span className="text-gray-500">Try adjusting your filters or add a new bird from the dashboard!</span>
                 {selectedSize !== "All Sizes" && (
                   <button onClick={() => setSelectedSize("All Sizes")} className="mt-2 px-6 py-2 bg-black text-white rounded-full text-sm font-semibold hover:bg-gray-900 transition-all">
                     Clear Size Filter
@@ -458,9 +336,7 @@ export default function DogsCategoryPage() {
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
             <div className="flex items-center gap-2">
-              {["01","02","03","04","05","06"].map((num, i) => (
-                <button key={num} className={`w-12 h-12 rounded-full flex items-center justify-center text-[16px] font-bold transition-all ${i === 0 ? 'bg-black text-white' : 'bg-white text-black border border-[#E4E7E9] hover:border-gray-400'}`}>{num}</button>
-              ))}
+              <button className="w-12 h-12 rounded-full flex items-center justify-center text-[16px] font-bold bg-black text-white">01</button>
             </div>
             <button className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-50 transition-colors">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -468,10 +344,10 @@ export default function DogsCategoryPage() {
           </div>
 
           {/* Explore Cats CTA */}
-          <div className="w-full bg-[#F8FBFF] rounded-[24px] p-8 md:p-12 mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="w-full bg-[#FFFBF8] rounded-[24px] p-8 md:p-12 mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex flex-col gap-4 text-center md:text-left">
-              <h3 className="text-black text-[24px] md:text-[32px] font-normal leading-tight">Looking for a <span className="text-[#FFC501]">Feline Friend?</span></h3>
-              <p className="text-[#5F6C72] text-[16px]">Explore our beautiful collection of healthy and playful cats.</p>
+              <h3 className="text-black text-[24px] md:text-[32px] font-normal leading-tight">Want to browse <span className="text-[#FFC501]">Felines?</span></h3>
+              <p className="text-[#5F6C72] text-[16px]">Browse our collection of healthy and playful cat breeds.</p>
             </div>
             <Link href="/pet-categories/cats" className="bg-black text-white px-10 h-[56px] rounded-full flex items-center justify-center font-bold hover:bg-gray-900 transition-all active:scale-95 whitespace-nowrap">
               Browse Cats
