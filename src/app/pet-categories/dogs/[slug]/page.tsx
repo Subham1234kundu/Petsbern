@@ -110,8 +110,8 @@ export default function PetDetailsPage() {
     <div className="flex flex-col min-h-screen bg-white font-sans">
 
       {/* Breadcrumb Section */}
-      <div className="w-full bg-[#F2F4F5] h-[72px] flex items-center">
-        <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 flex items-center gap-2">
+      <div className="w-full bg-[#F2F4F5] h-auto py-4 md:h-[72px] flex items-center">
+        <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 flex flex-wrap items-center gap-2">
           <Link href="/" className="flex items-center">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 9.5L12 4L21 9.5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V9.5Z" stroke="#5F6C72" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -139,17 +139,38 @@ export default function PetDetailsPage() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 flex gap-12 pt-4">
+      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 flex flex-col lg:flex-row gap-8 lg:gap-12 pt-8">
 
         {/* Left Section: Images */}
-        <div className="relative w-[600px] h-[600px]">
-          {/* Thumbnails Overlay */}
+        <div className="w-full lg:w-[600px] flex flex-col gap-4">
+          <div className="relative w-full aspect-square overflow-hidden border border-[#E4E7E9] rounded-2xl">
+            {/* Desktop Thumbnails Overlay */}
+            {thumbnails.length > 1 && (
+              <div className="hidden lg:flex absolute top-4 left-4 z-10 flex-col gap-3">
+                {thumbnails.map((thumb, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-[80px] h-[80px] overflow-hidden border-2 cursor-pointer transition-all shadow-md rounded-xl ${activeImage.includes(thumb.split('&')[0]) ? 'border-[#8B5E3C]' : 'border-white opacity-80 hover:opacity-100'
+                      }`}
+                    onClick={() => setActiveImage(thumb)}
+                  >
+                    <img src={thumb} alt="Pet thumbnail" className="w-full h-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Main Image */}
+            <img src={activeImage} alt={petName} className="w-full h-full object-cover" />
+          </div>
+
+          {/* Mobile Thumbnails Row */}
           {thumbnails.length > 1 && (
-            <div className="absolute top-4 left-4 z-10 flex flex-col gap-3">
+            <div className="flex lg:hidden flex-row gap-3 overflow-x-auto py-1 px-1 custom-scrollbar">
               {thumbnails.map((thumb, idx) => (
                 <div
                   key={idx}
-                  className={`w-[80px] h-[80px] overflow-hidden border-2 cursor-pointer transition-all shadow-md ${activeImage.includes(thumb.split('&')[0]) ? 'border-[#8B5E3C]' : 'border-white opacity-80 hover:opacity-100'
+                  className={`w-[70px] h-[70px] flex-shrink-0 overflow-hidden border-2 cursor-pointer transition-all shadow-sm rounded-xl ${activeImage.includes(thumb.split('&')[0]) ? 'border-[#8B5E3C] ring-2 ring-[#8B5E3C]/20' : 'border-gray-200 opacity-80 hover:opacity-100'
                     }`}
                   onClick={() => setActiveImage(thumb)}
                 >
@@ -158,22 +179,17 @@ export default function PetDetailsPage() {
               ))}
             </div>
           )}
-
-          {/* Main Image */}
-          <div className="w-full h-full overflow-hidden border border-[#E4E7E9]">
-            <img src={activeImage} alt={petName} className="w-full h-full object-cover" />
-          </div>
         </div>
 
         {/* Right Section: Details */}
         <div className="flex-1 flex flex-col gap-8">
           <div className="flex flex-col gap-4">
             <div>
-              <h1 className="text-[36px] font-normal text-black leading-tight">
+              <h1 className="text-[28px] sm:text-[36px] font-normal text-black leading-tight">
                 {petName}
               </h1>
               {!isBreedPage && pet?.breed && (
-                <h2 className="text-[20px] font-medium text-[#FFC501] mt-1">
+                <h2 className="text-[18px] sm:text-[20px] font-medium text-[#FFC501] mt-1">
                   Breed: {pet.breed}
                 </h2>
               )}
@@ -200,89 +216,76 @@ export default function PetDetailsPage() {
               })()}
             </div>
 
-            <p className="text-[14px] font-normal text-[#1E1E1E] leading-[1.6]">
+            <p className="text-[14px] sm:text-[15px] font-normal text-[#1E1E1E] leading-[1.6]">
               {pet?.description || `The ${petName} is a friendly, intelligent, and devoted family dog known for its gentle nature and beautiful coat. They are highly social and love being around people, making them excellent companions for families, children, and first-time pet owners.`}
             </p>
           </div>
 
           {/* Info Grid */}
-          <div className="grid grid-cols-[1fr_1fr_1fr] gap-x-4 border-b border-[#F2F4F5] pb-10">
-            {/* Column 1 items */}
-            <div className="flex flex-col gap-8">
-              <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Gender</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.gender || "Female & Male"}</p>
-              </div>
-              <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Vaccinated</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.vaccinated || "Yes"}</p>
-              </div>
-              <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Shedding</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.shedding || "Yes"}</p>
-              </div>
-              <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Coat Length</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.coat_length || "Medium"}</p>
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-6 gap-x-4 border-b border-[#F2F4F5] pb-10">
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Gender</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.gender || "Female & Male"}</p>
             </div>
-
-            {/* Column 2 items */}
-            <div className="flex flex-col gap-8">
-              {!isBreedPage && (
-                <div>
-                  <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Age</p>
-                  <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.age || "0-18 Years"}</p>
-                </div>
-              )}
-              <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Location</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.location || "Available for Delivery"}</p>
-              </div>
-              <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Exercise</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.exercise || "30 Mins Daily"}</p>
-              </div>
-              <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Grooming</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.grooming || "Moderate"}</p>
-              </div>
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Vaccinated</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.vaccinated || "Yes"}</p>
             </div>
-
-            {/* Column 3 items */}
-            <div className="flex flex-col gap-8">
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Shedding</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.shedding || "Yes"}</p>
+            </div>
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Coat Length</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.coat_length || "Medium"}</p>
+            </div>
+            {!isBreedPage && (
               <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Color</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.color || "Golden, Black, Brown"}</p>
+                <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Age</p>
+                <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.age || "0-18 Years"}</p>
               </div>
-              {pet?.weight > 0 && (
-                <div>
-                  <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Weight</p>
-                  <p className="text-[#1E1E1E] text-[18px] font-normal">{pet.weight} kg</p>
-                </div>
-              )}
+            )}
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Location</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.location || "Available for Delivery"}</p>
+            </div>
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Exercise</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.exercise || "30 Mins Daily"}</p>
+            </div>
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Grooming</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.grooming || "Moderate"}</p>
+            </div>
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Color</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.color || "Golden, Black, Brown"}</p>
+            </div>
+            {pet?.weight > 0 && (
               <div>
-                <p className="text-[#686363] text-[14px] mb-0.5 font-normal">Apartment Size</p>
-                <p className="text-[#1E1E1E] text-[18px] font-normal">{pet?.apartment_size || "Apartment Friendly"}</p>
+                <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Weight</p>
+                <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet.weight} kg</p>
               </div>
+            )}
+            <div>
+              <p className="text-[#686363] text-[13px] sm:text-[14px] mb-0.5 font-normal">Apartment Size</p>
+              <p className="text-[#1E1E1E] text-[16px] sm:text-[18px] font-semibold">{pet?.apartment_size || "Apartment Friendly"}</p>
             </div>
           </div>
 
           {/* Action Section */}
           <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full max-w-[450px]">
               <button
-                style={{ width: '193px' }}
-                className="bg-black text-white h-[44px] rounded-full text-[15px] font-medium hover:bg-gray-900 transition-all flex items-center justify-center"
+                className="w-full sm:w-[193px] bg-black text-white h-[48px] rounded-full text-[15px] font-bold hover:bg-gray-900 transition-all flex items-center justify-center active:scale-95 shadow-sm"
               >
                 Call Us
               </button>
 
-              <div className="w-[1px] h-6 bg-black" />
+              <div className="hidden sm:block w-[1px] h-6 bg-gray-300" />
 
               <button
-                style={{ width: '225px' }}
-                className="bg-[#E4E7E9] text-black h-[44px] rounded-full text-[15px] font-medium hover:bg-gray-300 transition-all flex items-center justify-center"
+                className="w-full sm:w-[225px] bg-[#E4E7E9] text-black h-[48px] rounded-full text-[15px] font-bold hover:bg-gray-300 transition-all flex items-center justify-center active:scale-95 shadow-sm"
               >
                 WhatsApp Now
               </button>
@@ -297,10 +300,10 @@ export default function PetDetailsPage() {
       </div>
 
       {/* Features Bar Section */}
-      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pt-[7px] pb-16">
-        <div className="w-full border border-[#E4E7E9] rounded-sm flex flex-wrap md:flex-nowrap items-center justify-between bg-white py-8 px-4 sm:px-6">
+      <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pt-6 pb-16">
+        <div className="w-full border border-[#E4E7E9] rounded-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 bg-white py-4 shadow-sm divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
           {/* Delivery */}
-          <div className="flex items-center gap-4 px-4 flex-1 min-w-[250px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-4 md:py-0">
+          <div className="flex items-center gap-4 p-6 justify-center">
             <img src="/images/delivery.png" className="w-12 h-12 object-contain" alt="Delivery" />
             <div className="flex flex-col">
               <h4 className="font-bold text-[14px] text-black uppercase leading-tight whitespace-nowrap tracking-tight">
@@ -313,7 +316,7 @@ export default function PetDetailsPage() {
           </div>
 
           {/* Healthy */}
-          <div className="flex items-center gap-4 px-4 flex-1 min-w-[250px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-4 md:py-0">
+          <div className="flex items-center gap-4 p-6 justify-center">
             <img src="/images/healthy.png" className="w-12 h-12 object-contain" alt="Healthy" />
             <div className="flex flex-col">
               <h4 className="font-bold text-[14px] text-black uppercase leading-tight whitespace-nowrap tracking-tight">
@@ -326,7 +329,7 @@ export default function PetDetailsPage() {
           </div>
 
           {/* Vaccinated */}
-          <div className="flex items-center gap-4 px-4 flex-1 min-w-[250px] justify-center md:border-r border-[#E4E7E9] last:border-r-0 py-4 md:py-0">
+          <div className="flex items-center gap-4 p-6 justify-center">
             <img src="/images/vaccinated.png" className="w-12 h-12 object-contain" alt="Vaccinated" />
             <div className="flex flex-col">
               <h4 className="font-bold text-[14px] text-black uppercase leading-tight whitespace-nowrap tracking-tight">
@@ -339,7 +342,7 @@ export default function PetDetailsPage() {
           </div>
 
           {/* Ready for Home */}
-          <div className="flex items-center gap-4 px-4 flex-1 min-w-[250px] justify-center last:border-r-0 py-4 md:py-0">
+          <div className="flex items-center gap-4 p-6 justify-center">
             <img src="/images/readyForHome.png" className="w-12 h-12 object-contain" alt="Ready For Home" />
             <div className="flex flex-col">
               <h4 className="font-bold text-[14px] text-black uppercase leading-tight whitespace-nowrap tracking-tight">
@@ -402,7 +405,7 @@ export default function PetDetailsPage() {
       {relatedPets.length > 0 && (
         <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
           <h2 className="text-black text-[30px] font-semibold mb-10">
-            {isBreedPage ? `Available ${petName} Pets` : `More ${pet?.breed || 'Pets'} Like ${petName}`}
+            Available {isBreedPage ? petName : pet?.breed || 'Same Breed'} Pets
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -441,34 +444,31 @@ export default function PetDetailsPage() {
               {
                 title: "Expert Guidance",
                 description: "Offering expert guidance in post-adoption pet care to support your journey as a new pet parent from day one.",
-                image: "/images/exAbout1.png"
+                image: "/images/exabout1.png"
               },
               {
                 title: "Health Checked",
                 description: "Every puppy undergoes a thorough health check by certified veterinarians to ensure they are active and healthy.",
-                image: "/images/exAbout2.png"
+                image: "/images/exabout2.png"
               },
               {
                 title: "Verified Lineage",
                 description: "Providing a verified pedigree and lineage with an included microchip, ensuring your puppy's heritage is documented.",
-                image: "/images/exAbout3.png"
+                image: "/images/exabout3.png"
               }
             ].map((box, index) => (
               <div
                 key={index}
-                className={`p-12 flex flex-col items-center text-center gap-8 border-gray-200 ${index === 0 ? 'border-t border-r' :
-                  index === 1 ? 'border-t border-r' :
-                    'border-t'
-                  }`}
+                className="p-8 lg:p-12 flex flex-col items-center text-center gap-8 border border-gray-100 rounded-2xl bg-gray-50/50 shadow-sm"
               >
-                <div className="w-[84px] h-[84px] bg-[#E2001A1A] rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <img src={box.image} alt={box.title} className="w-[84px] h-[84px] object-contain" />
+                <div className="w-[84px] h-[84px] flex items-center justify-center flex-shrink-0">
+                  <img src={box.image} alt={box.title} className="w-full h-full object-contain" />
                 </div>
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-black font-bold text-[22px] leading-tight">
+                  <h3 className="text-black font-bold text-[20px] md:text-[22px] leading-tight">
                     {box.title}
                   </h3>
-                  <p className="text-[#6E6E6E] text-[16px] leading-relaxed">
+                  <p className="text-[#6E6E6E] text-[14px] md:text-[16px] leading-relaxed">
                     {box.description}
                   </p>
                 </div>
@@ -507,7 +507,7 @@ export default function PetDetailsPage() {
             {/* Step 1 */}
             <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
               <div className="h-[90px] flex items-center justify-center mb-6">
-                <img src="/images/choosePet.png" alt="Choose Your Pet" className="h-full object-contain" />
+                <img src="/images/choosepet.png" alt="Choose Your Pet" className="h-full object-contain" />
               </div>
               <h3 className="text-black text-[20px] font-bold mb-4">Choose Your Pet</h3>
               <p className="text-[#4A5565] text-[14px] leading-relaxed">
@@ -526,7 +526,7 @@ export default function PetDetailsPage() {
             {/* Step 2 */}
             <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
               <div className="h-[90px] flex items-center justify-center mb-6">
-                <img src="/images/healthAndVerification.png" alt="Health & Verification" className="h-full object-contain" />
+                <img src="/images/healthandverification.png" alt="Health & Verification" className="h-full object-contain" />
               </div>
               <h3 className="text-black text-[20px] font-bold mb-4">Health & Verification</h3>
               <p className="text-[#4A5565] text-[14px] leading-relaxed">
@@ -545,7 +545,7 @@ export default function PetDetailsPage() {
             {/* Step 3 */}
             <div className="w-[356px] h-[356px] border border-[#C8C8C8] rounded-xl p-8 flex flex-col items-center text-center justify-center">
               <div className="h-[90px] flex items-center justify-center mb-6">
-                <img src="/images/PetHome.png" alt="Get Your Pet Home" className="h-full object-contain" />
+                <img src="/images/pethome.png" alt="Get Your Pet Home" className="h-full object-contain" />
               </div>
               <h3 className="text-black text-[20px] font-bold mb-4">Get Your Pet Home</h3>
               <p className="text-[#4A5565] text-[14px] leading-relaxed">
@@ -577,7 +577,7 @@ export default function PetDetailsPage() {
             {[
               {
                 title: "Ethical Breeding Standards",
-                image: "/images/aboutChoose1.png"
+                image: "/images/aboutchoose1.png"
               },
               {
                 title: "Up-to-Date Vaccinations",
@@ -585,7 +585,7 @@ export default function PetDetailsPage() {
               },
               {
                 title: "Certified Lineage",
-                image: "/images/aboutChoose3.png"
+                image: "/images/aboutchoose3.png"
               },
               {
                 title: "Doorstep Joy (Home Delivery)",
@@ -626,30 +626,30 @@ export default function PetDetailsPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="lg:col-span-2 lg:row-span-2 rounded-[32px] overflow-hidden h-[624px]">
+            <div className="lg:col-span-2 lg:row-span-2 rounded-[32px] overflow-hidden h-[300px] sm:h-[400px] lg:h-[624px]">
               <img src="/images/happyfamily1.png" className="w-full h-full object-cover" alt="Happy Family with Dog" />
             </div>
-            <div className="rounded-[32px] overflow-hidden h-[300px]">
+            <div className="rounded-[32px] overflow-hidden h-[200px] sm:h-[250px] lg:h-[300px]">
               <img src="/images/happyfamily2.png" className="w-full h-full object-cover" alt="Happy Dog" />
             </div>
-            <div className="rounded-[32px] overflow-hidden h-[300px]">
+            <div className="rounded-[32px] overflow-hidden h-[200px] sm:h-[250px] lg:h-[300px]">
               <img src="/images/happyFamily3.png" className="w-full h-full object-cover" alt="Owner with Pet" />
             </div>
-            <div className="rounded-[32px] overflow-hidden h-[300px]">
+            <div className="rounded-[32px] overflow-hidden h-[200px] sm:h-[250px] lg:h-[300px]">
               <img src="/images/happyFamily4.png" className="w-full h-full object-cover" alt="Happy Pet" />
             </div>
-            <div className="rounded-[32px] overflow-hidden h-[300px]">
+            <div className="rounded-[32px] overflow-hidden h-[200px] sm:h-[250px] lg:h-[300px]">
               <img src="/images/happyFamily5.png" className="w-full h-full object-cover" alt="Happy Cat" />
             </div>
-            <div className="rounded-[32px] overflow-hidden h-[300px] relative">
+            <div className="rounded-[32px] overflow-hidden h-[200px] sm:h-[250px] lg:h-[300px] relative">
               <img src="/images/happyFamily6.png" className="w-full h-full object-cover" alt="Happy Family" />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
             </div>
-            <div className="rounded-[32px] overflow-hidden h-[300px] relative">
+            <div className="rounded-[32px] overflow-hidden h-[200px] sm:h-[250px] lg:h-[300px] relative">
               <img src="/images/happyFamily7.png" className="w-full h-full object-cover" alt="Pet Playtime" />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
             </div>
-            <div className="lg:col-span-2 rounded-[32px] overflow-hidden h-[300px] relative">
+            <div className="lg:col-span-2 rounded-[32px] overflow-hidden h-[200px] sm:h-[250px] lg:h-[300px] relative">
               <img src="/images/happyFamily8.png" className="w-full h-full object-cover" alt="Happy Corgi" />
               <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
             </div>

@@ -112,14 +112,14 @@ export default function CatsCategoryPage() {
       <div className="w-full bg-white border-b border-gray-100">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-6 pb-4">
           <div className="flex items-center justify-between gap-6">
-            <div className="inline-flex p-1 bg-[#F3F4F6] rounded-full">
-              <Link href="/pet-categories/dogs" className="px-6 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95">Dogs</Link>
-              <Link href="/pet-categories/cats" className="px-6 md:px-8 py-2 rounded-full bg-black text-white text-sm font-bold shadow-sm transition-all active:scale-95">Cats</Link>
-              <Link href="/pet-categories/exotic-birds" className="px-6 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-sm font-bold hover:text-black transition-all active:scale-95">Exotic Birds</Link>
+            <div className="inline-flex p-1 bg-[#F3F4F6] rounded-full w-full sm:w-auto overflow-x-auto whitespace-nowrap">
+              <Link href="/pet-categories/dogs" className="flex-1 sm:flex-initial text-center px-4 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-[13px] sm:text-sm font-bold hover:text-black transition-all active:scale-95">Dogs</Link>
+              <Link href="/pet-categories/cats" className="flex-1 sm:flex-initial text-center px-4 md:px-8 py-2 rounded-full bg-black text-white text-[13px] sm:text-sm font-bold shadow-sm transition-all active:scale-95">Cats</Link>
+              <Link href="/pet-categories/exotic-birds" className="flex-1 sm:flex-initial text-center px-4 md:px-8 py-2 rounded-full bg-transparent text-[#4F4F4F] text-[13px] sm:text-sm font-bold hover:text-black transition-all active:scale-95">Exotic Birds</Link>
             </div>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden flex items-center justify-center w-[48px] h-[48px] bg-white border border-[#E4E7E9] rounded-full text-black shadow-sm hover:bg-gray-50 transition-all active:scale-95"
+              className="lg:hidden flex items-center justify-center w-[48px] h-[48px] bg-white border border-[#E4E7E9] rounded-full text-black shadow-sm hover:bg-gray-50 transition-all active:scale-95 flex-shrink-0"
             >
               {showFilters ? (
                 <span className="text-xs font-bold uppercase tracking-wider">Hide</span>
@@ -203,7 +203,7 @@ export default function CatsCategoryPage() {
         {/* ── Right Content Area ── */}
         <div className="flex-1 min-w-0 flex flex-col gap-8">
 
-          {/* ── Size Filter: 5 compact boxes in ONE row on lg ── */}
+          {/* ── Size Filter ── */}
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <h2 className="text-[#191C1F] font-bold text-[16px] md:text-[18px] uppercase tracking-wide">Filter with Size</h2>
@@ -217,8 +217,8 @@ export default function CatsCategoryPage() {
               )}
             </div>
 
-            {/* 5-column grid — single row on lg */}
-            <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-5 gap-2 sm:gap-3">
+            {/* 5-column grid — single row on lg, compact rounded pills on mobile */}
+            <div className="flex flex-row gap-1.5 sm:grid sm:grid-cols-5 lg:grid-cols-5 sm:gap-3 w-full">
               {sizeOptions.map((size) => {
                 const isSelected = selectedSize === size.name;
                 return (
@@ -226,14 +226,14 @@ export default function CatsCategoryPage() {
                     key={size.name}
                     type="button"
                     onClick={() => setSelectedSize(isSelected ? "All Sizes" : size.name)}
-                    className={`group relative flex flex-col items-center gap-0 p-0 overflow-hidden rounded-xl border-2 transition-all duration-200 cursor-pointer focus:outline-none
+                    className={`group relative flex flex-row sm:flex-col items-center justify-center border-2 transition-all duration-200 cursor-pointer focus:outline-none flex-1 py-1.5 px-2 rounded-full sm:rounded-xl sm:p-0 sm:overflow-hidden
                       ${isSelected
-                        ? 'border-[#FFC501] ring-2 ring-[#FFC501]/30 shadow-md'
-                        : 'border-[#E4E7E9] hover:border-[#FFC501]/60 hover:shadow-sm'
+                        ? 'border-[#FFC501] bg-[#FFC501]/10 sm:bg-transparent ring-2 ring-[#FFC501]/30 shadow-sm'
+                        : 'border-[#E4E7E9] hover:border-[#FFC501]/60 hover:shadow-sm bg-white'
                       }`}
                   >
                     {/* Image */}
-                    <div className="w-full overflow-hidden" style={{ height: '72px' }}>
+                    <div className="hidden sm:block w-full overflow-hidden" style={{ height: '72px' }}>
                       <img
                         src={size.image}
                         alt={size.name}
@@ -241,17 +241,17 @@ export default function CatsCategoryPage() {
                       />
                     </div>
                     {/* Text */}
-                    <div className="w-full px-1.5 py-2 flex flex-col items-center gap-0.5">
-                      <span className={`text-[11px] sm:text-[12px] font-bold leading-tight text-center ${isSelected ? 'text-[#0F172A]' : 'text-[#374151]'}`}>
+                    <div className="w-full flex flex-col items-center gap-0.5 justify-center">
+                      <span className={`text-[10px] sm:text-[12px] font-bold leading-tight text-center ${isSelected ? 'text-[#0F172A]' : 'text-[#374151]'}`}>
                         {size.name}
                       </span>
-                      <span className="text-[9px] sm:text-[10px] text-[#94A3B8] uppercase tracking-wide leading-tight text-center font-medium">
+                      <span className="hidden sm:block text-[9px] sm:text-[10px] text-[#94A3B8] uppercase tracking-wide leading-tight text-center font-medium">
                         {size.desc}
                       </span>
                     </div>
                     {/* Active dot */}
                     {isSelected && (
-                      <div className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#FFC501] rounded-full shadow" />
+                      <div className="hidden sm:block absolute top-1.5 right-1.5 w-2 h-2 bg-[#FFC501] rounded-full shadow" />
                     )}
                   </button>
                 );
@@ -294,7 +294,7 @@ export default function CatsCategoryPage() {
           )}
 
           {/* Pet Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading ? (
               <div className="col-span-full py-16 flex flex-col items-center gap-4">
                 <div className="w-10 h-10 border-4 border-[#FFC501] border-t-transparent rounded-full animate-spin"/>

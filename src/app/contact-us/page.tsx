@@ -51,11 +51,11 @@ export default function ContactUsPage() {
       </section>
 
       {/* Main Content Area */}
-      <main className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-24 flex-grow flex justify-center">
-        <div className="flex flex-col lg:flex-row items-start justify-between w-full max-w-[1040px]">
+      <main className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-16 md:py-24 flex-grow flex justify-center">
+        <div className="flex flex-col lg:flex-row items-start justify-between w-full max-w-[1040px] gap-12 lg:gap-8">
           
           {/* Left Column */}
-          <div className="flex flex-col w-full max-w-[448px]">
+          <div className="flex flex-col w-full lg:max-w-[448px]">
             <h2 className="text-[#0A0A0A] leading-tight" style={{ fontSize: "36px", fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif", fontWeight: 600 }}>
               We'd love to hear <br/>
               <span className="text-[#FFC501]">from you</span>!
@@ -114,10 +114,10 @@ export default function ContactUsPage() {
           </div>
 
           {/* Right Column: Form */}
-          <div className="flex w-full max-w-[496px]">
+          <div className="flex w-full max-w-[496px] justify-center">
             <div 
-              className="bg-white rounded-lg px-[48px] py-[40px] flex flex-col w-full max-w-[496px]"
-              style={{ height: "580px", border: "1px solid #DBDBDB" }}
+              className="bg-white rounded-lg px-6 sm:px-[48px] py-8 sm:py-[40px] flex flex-col w-full max-w-[496px] shadow-sm"
+              style={{ minHeight: "580px", border: "1px solid #DBDBDB" }}
             >
               <h2 className="text-[#0A0A0A] font-semibold mb-3" style={{ fontSize: "24px" }}>
                 Get In Touch
@@ -126,15 +126,15 @@ export default function ContactUsPage() {
                 Have a question or looking for a specific pet? Fill out the form below and our team will get back to you shortly.
               </p>
 
-              <form className="flex flex-col gap-4 flex-grow">
-                <div className="flex flex-col gap-1.5">
+              <form className="flex flex-col gap-4 flex-grow w-full">
+                <div className="flex flex-col gap-1.5 w-full">
                   <label className="text-[#4A5565] font-medium text-[14px]">Full Name</label>
-                  <input type="text" placeholder="Full name" className="border border-[#E5E7EB] rounded-md px-4 outline-none focus:border-black placeholder:text-[#0A0A0A80] placeholder:text-[16px] text-[16px]" style={{ width: "400px", height: "41px" }} />
+                  <input type="text" placeholder="Full name" className="w-full border border-[#E5E7EB] rounded-md px-4 outline-none focus:border-black placeholder:text-[#0A0A0A80] placeholder:text-[16px] text-[16px]" style={{ height: "41px" }} />
                 </div>
                 
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-1.5 w-full">
                   <label className="text-[#4A5565] font-medium text-[14px]">Phone Number</label>
-                  <div className="flex gap-2" style={{ width: "400px", height: "41px" }}>
+                  <div className="flex gap-2 w-full" style={{ height: "41px" }}>
                     <div className="border border-[#E5E7EB] rounded-md flex items-center justify-center text-[#0A0A0A80] text-[16px]" style={{ width: "64px", height: "100%" }}>
                       +91
                     </div>
@@ -142,17 +142,17 @@ export default function ContactUsPage() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-1.5 w-full">
                   <label className="text-[#4A5565] font-medium text-[14px]">Breed</label>
-                  <input type="text" placeholder="Breed" className="border border-[#E5E7EB] rounded-md px-4 outline-none focus:border-black placeholder:text-[#0A0A0A80] placeholder:text-[16px] text-[16px]" style={{ width: "400px", height: "41px" }} />
+                  <input type="text" placeholder="Breed" className="w-full border border-[#E5E7EB] rounded-md px-4 outline-none focus:border-black placeholder:text-[#0A0A0A80] placeholder:text-[16px] text-[16px]" style={{ height: "41px" }} />
                 </div>
 
-                <div className="flex flex-col gap-1.5">
+                <div className="flex flex-col gap-1.5 w-full">
                   <label className="text-[#4A5565] font-medium text-[14px]">Location</label>
-                  <input type="text" placeholder="Location" className="border border-[#E5E7EB] rounded-md px-4 outline-none focus:border-black placeholder:text-[#0A0A0A80] placeholder:text-[16px] text-[16px]" style={{ width: "400px", height: "41px" }} />
+                  <input type="text" placeholder="Location" className="w-full border border-[#E5E7EB] rounded-md px-4 outline-none focus:border-black placeholder:text-[#0A0A0A80] placeholder:text-[16px] text-[16px]" style={{ height: "41px" }} />
                 </div>
 
-                <button type="button" className="mt-5 bg-black text-white rounded-md font-medium text-[14px] flex items-center justify-center hover:bg-gray-800 transition-colors" style={{ width: "160px", height: "41px" }}>
+                <button type="button" className="mt-5 bg-black text-white rounded-md font-medium text-[14px] flex items-center justify-center hover:bg-gray-800 transition-colors w-full sm:w-[160px]" style={{ height: "41px" }}>
                   Send a message
                 </button>
               </form>
@@ -163,7 +163,7 @@ export default function ContactUsPage() {
       </main>
 
       {/* Map Section */}
-      <section className="mx-[30px] mb-12" style={{ height: "398px" }}>
+      <section className="mx-4 sm:mx-[30px] mb-12 h-[280px] sm:h-[398px]">
         <iframe 
           src="https://maps.google.com/maps?q=City%20Mall,%20Mavoor%20Road,%20Kozhikode,%20Kerala&t=&z=13&ie=UTF8&iwloc=&output=embed"
           width="100%" 
