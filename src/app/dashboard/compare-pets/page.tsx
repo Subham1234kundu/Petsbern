@@ -133,7 +133,11 @@ export default function DashboardComparePets() {
       .from("compare_pets")
       .delete()
       .eq("id", id);
-    if (error) setErrorMsg("Failed to delete.");
+    if (error) {
+      setErrorMsg("Failed to delete.");
+    } else {
+      setPets((prev) => prev.filter((p) => p.id !== id));
+    }
   };
 
   const filteredPets =

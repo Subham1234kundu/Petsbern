@@ -104,7 +104,11 @@ export default function AddBlogsPage() {
 
   const handleDelete = async (id: number) => {
     const { error } = await supabase.from("blogs").delete().eq("id", id);
-    if (error) setErrorMsg("Failed to delete blog.");
+    if (error) {
+      setErrorMsg("Failed to delete blog.");
+    } else {
+      setBlogs((prev) => prev.filter((b) => b.id !== id));
+    }
   };
 
   // Simple toolbar actions for the content editor

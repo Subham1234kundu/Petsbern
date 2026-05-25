@@ -113,7 +113,7 @@ export default function DogsCategoryPage() {
   const displayBreeds = groupedPets.filter(pet => {
     if (selectedBreed !== "All Breeds" && pet.breed !== selectedBreed) return false;
 
-    if (selectedSize === "Toy Breed") {
+    if (selectedSize === "X-Small") {
       if (!(pet.weight <= 4)) return false;
     } else if (selectedSize === "Small") {
       if (!(pet.weight > 4 && pet.weight <= 10)) return false;
@@ -142,11 +142,11 @@ export default function DogsCategoryPage() {
 
   // The 5 size boxes (no "All Sizes" card)
   const sizeOptions = [
-    { name: "Toy Breed",   desc: "UPTO 4 KGS",  image: "https://images.unsplash.com/photo-1591768226451-3444216831ce?q=80&w=300&auto=format&fit=crop" },
-    { name: "Small",       desc: "5 – 10 KGS",  image: "https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=300&auto=format&fit=crop" },
-    { name: "Medium",      desc: "11 – 25 KGS", image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=300&auto=format&fit=crop" },
-    { name: "Large",       desc: "26 – 44 KGS", image: "https://images.unsplash.com/photo-1534361960057-19889db9621e?q=80&w=300&auto=format&fit=crop" },
-    { name: "Giant Breed", desc: "45+ KGS",     image: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=300&auto=format&fit=crop" },
+    { name: "X-Small",     desc: "UPTO 4 KGS",  image: "/images/chihuahua_puppy.png",       position: "object-[center_20%]" },
+    { name: "Small",       desc: "5 – 10 KGS",  image: "/images/french_bulldog_small.png",   position: "object-[center_25%]" },
+    { name: "Medium",      desc: "11 – 25 KGS", image: "/images/shiba_inu_medium.png",      position: "object-[center_20%]" },
+    { name: "Large",       desc: "26 – 44 KGS", image: "/images/golden_retriever_large.png",    position: "object-[center_35%]" },
+    { name: "Giant Breed", desc: "45+ KGS",     image: "/images/saint_bernard_giant.png",    position: "object-[center_20%]" },
   ];
 
   return (
@@ -343,7 +343,7 @@ export default function DogsCategoryPage() {
                       <img
                         src={size.image}
                         alt={size.name}
-                        className={`w-full h-full object-cover transition-all duration-500 ${isSelected ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0 group-hover:scale-105'}`}
+                        className={`w-full h-full object-cover ${size.position || 'object-center'} transition-all duration-500 ${isSelected ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0 group-hover:scale-105'}`}
                       />
                     </div>
                     {/* Text */}

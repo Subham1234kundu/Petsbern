@@ -81,11 +81,11 @@ export default function CatsCategoryPage() {
 
   // The 5 cat size boxes
   const sizeOptions = [
-    { name: "X-Small", desc: "UPTO 2 KGS",  image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=300&auto=format&fit=crop" },
-    { name: "Small",   desc: "2 – 4 KGS",   image: "https://images.unsplash.com/photo-1573865526739-10659fef78a5?q=80&w=300&auto=format&fit=crop" },
-    { name: "Medium",  desc: "4 – 6 KGS",   image: "https://images.unsplash.com/photo-1533738363-b7f9aef128ce?q=80&w=300&auto=format&fit=crop" },
-    { name: "Large",   desc: "6 – 8 KGS",   image: "https://images.unsplash.com/photo-1513245538863-174d31210021?q=80&w=300&auto=format&fit=crop" },
-    { name: "X-Large", desc: "ABOVE 8 KGS", image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?q=80&w=300&auto=format&fit=crop" },
+    { name: "X-Small", desc: "UPTO 2 KGS",  image: "/images/munchkin_cat_xsmall.png",     position: "object-[center_20%]" },
+    { name: "Small",   desc: "2 – 4 KGS",   image: "/images/siamese_cat_small.png",       position: "object-[center_25%]" },
+    { name: "Medium",  desc: "4 – 6 KGS",   image: "/images/british_shorthair_medium.png", position: "object-[center_20%]" },
+    { name: "Large",   desc: "6 – 8 KGS",   image: "/images/ragdoll_cat_large.png",       position: "object-[center_30%]" },
+    { name: "X-Large", desc: "ABOVE 8 KGS", image: "/images/maine_coon_cat_xlarge.png",    position: "object-[center_30%]" },
   ];
 
   return (
@@ -237,7 +237,7 @@ export default function CatsCategoryPage() {
                       <img
                         src={size.image}
                         alt={size.name}
-                        className={`w-full h-full object-cover transition-all duration-500 ${isSelected ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0 group-hover:scale-105'}`}
+                        className={`w-full h-full object-cover ${size.position || 'object-center'} transition-all duration-500 ${isSelected ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0 group-hover:scale-105'}`}
                       />
                     </div>
                     {/* Text */}

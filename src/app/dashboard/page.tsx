@@ -109,7 +109,12 @@ export default function SellerDashboard() {
 
   const handleDelete = async (id: number) => {
     const { error } = await supabase.from('pets').delete().eq('id', id);
-    if (error) console.error('Delete error:', error);
+    if (error) {
+      console.error('Delete error:', error);
+    } else {
+      setPets((prev) => prev.filter((p) => p.id !== id));
+      setCounts((prev) => ({ ...prev, [activeCategory]: Math.max(0, prev[activeCategory] - 1) }));
+    }
   };
 
   const cfg = CATEGORY_CONFIG[activeCategory];

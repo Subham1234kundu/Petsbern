@@ -82,11 +82,11 @@ export default function ExoticBirdsCategoryPage() {
 
   // The 5 bird size boxes
   const sizeOptions = [
-    { name: "X-Small", desc: "UPTO 0.25 KGS", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=300&auto=format&fit=crop" },
-    { name: "Small",   desc: "0.25 – 0.5 KGS", image: "https://images.unsplash.com/photo-1522850959076-58c71a3a531a?q=80&w=300&auto=format&fit=crop" },
-    { name: "Medium",  desc: "0.5 – 1.0 KGS",  image: "https://images.unsplash.com/photo-1607990283143-e81e7a2c93ab?q=80&w=300&auto=format&fit=crop" },
-    { name: "Large",   desc: "1.0 – 2.0 KGS",  image: "https://images.unsplash.com/photo-1552728089-57bdde30ebd3?q=80&w=300&auto=format&fit=crop" },
-    { name: "X-Large", desc: "ABOVE 2.0 KGS", image: "https://images.unsplash.com/photo-1452570053594-1b985d6ea890?q=80&w=300&auto=format&fit=crop" },
+    { name: "X-Small", desc: "UPTO 0.25 KGS", image: "/images/lovebird_xsmall.png",    position: "object-[center_25%]" },
+    { name: "Small",   desc: "0.25 – 0.5 KGS", image: "/images/cockatiel_small.png",      position: "object-[center_20%]" },
+    { name: "Medium",  desc: "0.5 – 1.0 KGS",  image: "/images/lorikeet_medium.png",     position: "object-[center_30%]" },
+    { name: "Large",   desc: "1.0 – 2.0 KGS",  image: "/images/toucan_large.png",        position: "object-[center_20%]" },
+    { name: "X-Large", desc: "ABOVE 2.0 KGS", image: "/images/macaw_xlarge.png",       position: "object-[center_20%]" },
   ];
 
   return (
@@ -238,7 +238,7 @@ export default function ExoticBirdsCategoryPage() {
                       <img
                         src={size.image}
                         alt={size.name}
-                        className={`w-full h-full object-cover transition-all duration-500 ${isSelected ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0 group-hover:scale-105'}`}
+                        className={`w-full h-full object-cover ${size.position || 'object-center'} transition-all duration-500 ${isSelected ? 'grayscale-0 scale-105' : 'grayscale group-hover:grayscale-0 group-hover:scale-105'}`}
                       />
                     </div>
                     {/* Text */}
