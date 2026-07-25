@@ -23,9 +23,9 @@ const BreedCard2 = ({
   const linkHref = href || `/pet-categories/dogs/${slug}`;
   
   return (
-    <div className="w-[288px] h-[481px] bg-white rounded-[20px] border border-[#E2E8F0] p-3 flex flex-col transition-all overflow-hidden">
-      {/* Image Container */}
-      <div className="relative w-[256px] h-[341px] mx-auto rounded-[16px] overflow-hidden mb-4 bg-[#F6F6F6]">
+    <div className="w-full max-w-[288px] h-[481px] bg-white rounded-[20px] border border-[#E2E8F0] flex flex-col transition-all overflow-hidden">
+      {/* Image — full area, no margin/padding */}
+      <div className="relative w-full h-[341px] overflow-hidden bg-[#F6F6F6] shrink-0">
         <SafeImage 
           src={image} 
           alt={name} 
@@ -41,7 +41,7 @@ const BreedCard2 = ({
       </div>
 
       {/* Info Section */}
-      <div className="px-2 flex flex-col flex-1">
+      <div className="px-3 pt-3 flex flex-col flex-1">
         <p className="text-[#94A3B8] text-[11px] font-medium tracking-widest uppercase mb-1">
           {age}
         </p>
@@ -56,15 +56,15 @@ const BreedCard2 = ({
         </div>
 
         {/* Action Section */}
-        <div className="mt-auto flex items-center justify-between gap-2 pb-1">
+        <div className="mt-auto flex items-center justify-between gap-2 pb-3">
           <Link 
             href={linkHref}
-            className="w-[176px] h-[42px] bg-[#D9D9D9] hover:bg-[#CCCCCC] text-black text-[14px] font-medium rounded-[12px] flex items-center justify-center transition-colors"
+            className="flex-1 h-[42px] bg-[#D9D9D9] hover:bg-[#CCCCCC] text-black text-[14px] font-medium rounded-[12px] flex items-center justify-center transition-colors"
           >
             View Details
           </Link>
           
-          <button className="w-[44px] h-[44px] flex items-center justify-center">
+          <button className="w-[44px] h-[44px] flex items-center justify-center shrink-0">
             <img 
                 src="/images/whatsapp.png" 
                 alt="WhatsApp" 

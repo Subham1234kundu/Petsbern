@@ -326,8 +326,8 @@ export default function DogsCategoryPage() {
               )}
             </div>
 
-            {/* 5-column grid — single row on lg, compact rounded pills on mobile */}
-            <div className="flex flex-row gap-1.5 sm:grid sm:grid-cols-5 lg:grid-cols-5 sm:gap-3 w-full">
+            {/* Size filter — image fills the card area (same full-bleed look as breed cards) */}
+            <div className="flex flex-row gap-1.5 overflow-x-auto scrollbar-hide sm:overflow-visible sm:grid sm:grid-cols-5 lg:grid-cols-5 sm:gap-3 w-full pb-1 sm:pb-0">
               {sizeOptions.map((size) => {
                 const isSelected = selectedSize === size.name;
                 return (
@@ -335,14 +335,14 @@ export default function DogsCategoryPage() {
                     key={size.name}
                     type="button"
                     onClick={() => setSelectedSize(isSelected ? "All Sizes" : size.name)}
-                    className={`group relative flex flex-row sm:flex-col items-center justify-center border-2 transition-all duration-200 cursor-pointer focus:outline-none flex-1 py-1.5 px-2 rounded-full sm:rounded-xl sm:p-0 sm:overflow-hidden
+                    className={`group relative flex flex-col items-stretch border-2 transition-all duration-200 cursor-pointer focus:outline-none flex-1 min-w-[72px] sm:min-w-0 rounded-xl overflow-hidden p-0
                       ${isSelected
-                        ? 'border-[#FFC501] bg-[#FFC501]/10 sm:bg-transparent ring-2 ring-[#FFC501]/30 shadow-md'
+                        ? 'border-[#FFC501] ring-2 ring-[#FFC501]/30 shadow-md'
                         : 'border-[#E4E7E9] hover:border-[#FFC501]/60 hover:shadow-sm bg-white'
                       }`}
                   >
-                    {/* Image */}
-                    <div className="hidden sm:block w-full overflow-hidden" style={{ height: '72px' }}>
+                    {/* Image fills full width — no margin/padding */}
+                    <div className="w-full overflow-hidden bg-[#F6F6F6] h-14 sm:h-[72px]">
                       <img
                         src={size.image}
                         alt={size.name}
@@ -350,7 +350,7 @@ export default function DogsCategoryPage() {
                       />
                     </div>
                     {/* Text */}
-                    <div className="w-full flex flex-col items-center gap-0.5 justify-center">
+                    <div className="w-full flex flex-col items-center gap-0.5 justify-center py-1.5 sm:py-2 px-1">
                       <span className={`text-[10px] sm:text-[12px] font-bold leading-tight text-center ${isSelected ? 'text-[#0F172A]' : 'text-[#374151]'}`}>
                         {size.name === "Giant Breed" ? "Giant" : size.name}
                       </span>
@@ -360,7 +360,7 @@ export default function DogsCategoryPage() {
                     </div>
                     {/* Active indicator dot */}
                     {isSelected && (
-                      <div className="hidden sm:block absolute top-1.5 right-1.5 w-2 h-2 bg-[#FFC501] rounded-full shadow" />
+                      <div className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#FFC501] rounded-full shadow" />
                     )}
                   </button>
                 );

@@ -420,7 +420,7 @@ export default function ExoticBirdDetailsPage() {
             Available Pets
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 justify-items-center lg:justify-items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {(showAllAvailable ? availablePets : availablePets.slice(0, 8)).map((p) => (
               <BreedCard2
                 key={p.id}

@@ -469,7 +469,7 @@ export default function PetDetailsPage() {
               <BreedCard2
                 key={p.id}
                 name={p.name}
-                image={p.main_image || '/placeholder.png'}
+                image={p.main_image || '/images/labrador.png'}
                 age={p.age || undefined}
                 gender={p.gender === 'Female' ? 'Female' : 'Male'}
                 href={`/pet-categories/dogs/${p.id}`}

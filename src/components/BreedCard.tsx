@@ -15,11 +15,11 @@ const BreedCard = ({ name, image, imageClassName, href }: BreedCardProps) => {
 
   return (
     <div className="w-full h-[360px] sm:h-[400px] lg:h-[463px] bg-white rounded-xl border border-[#E6E6E6] flex flex-col p-3 sm:p-4 transition-all hover:shadow-md">
-      <div className="w-full h-[240px] sm:h-[280px] lg:h-[341px] overflow-hidden rounded-xl flex-shrink-0 bg-[#F6F6F6] p-2 sm:p-3 lg:p-4 flex items-end justify-center">
+      <div className="w-full h-[240px] sm:h-[280px] lg:h-[341px] overflow-hidden rounded-xl flex-shrink-0 bg-[#F6F6F6]">
         <SafeImage
           src={image}
           alt={name}
-          className={`w-full h-full object-contain object-bottom transition-transform duration-500 hover:scale-105 ${imageClassName || ''}`}
+          className={`w-full h-full object-cover transition-transform duration-500 hover:scale-105 ${imageClassName || ''}`}
         />
       </div>
       <div className="flex-grow flex items-center justify-center w-full">

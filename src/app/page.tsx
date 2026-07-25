@@ -219,12 +219,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bottom Image — same height footprint as previous whypets image */}
-            <div data-animate="why-image" className="w-full mt-auto overflow-hidden aspect-[2782/1008]">
+            {/* Bottom Image — full-bleed, no margin/padding */}
+            <div data-animate="why-image" className="w-full mt-auto overflow-hidden leading-none">
               <img
                 src="/images/all breed puppies.png"
                 alt="All breed puppies"
-                className="w-full h-full object-cover object-[center_30%]"
+                className="block w-full h-auto object-cover object-bottom"
               />
             </div>
           </section>
