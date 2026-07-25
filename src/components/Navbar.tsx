@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -9,24 +9,27 @@ export default function Navbar() {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 30);
+      const scrollDelta = currentScrollY - lastScrollY.current;
 
       if (currentScrollY < 10) {
         setIsVisible(true);
-      } else {
+      } else if (scrollDelta > 5) {
         setIsVisible(false);
+      } else if (scrollDelta < -5) {
+        setIsVisible(true);
       }
-      setLastScrollY(currentScrollY);
+
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     "Home",
@@ -231,7 +234,7 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-[#DFDFDF] shadow-xl max-h-[calc(100vh-60px)] overflow-y-auto">
+        <div className="lg:hidden bg-white border-t border-[#DFDFDF] shadow-xl max-h-[calc(100vh-60px)] overflow-y-auto scrollbar-hide">
           {/* Mobile Search */}
           <div className="px-4 py-3 border-b border-[#F0F0F0]">
             <div className="relative">

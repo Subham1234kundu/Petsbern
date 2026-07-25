@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/utils/supabase';
+import { apiGet } from '@/utils/api';
 
 type Pet = {
-  id: number;
+  id: string;
   name: string;
   category: string;
   description?: string;
@@ -41,79 +41,45 @@ export default function SellerDashboard() {
     setErrorMsg('');
 
     const fetchPets = async () => {
-      const { data, error } = await supabase
-        .from('pets')
-        .select('*')
-        .eq('category', activeCategory)
-        .order('id', { ascending: false });
-
-      if (error) {
-        console.error('Fetch pets error:', error);
-        setErrorMsg(error.message || String(error));
-      } else if (data) {
+      try {
+        const data = await apiGet<Pet[]>(`/api/pets?category=${encodeURIComponent(activeCategory)}&sort=desc`);
         setPets(data);
+      } catch (err: any) {
+        console.error('Fetch pets error:', err);
+        setErrorMsg(err.message || String(err));
       }
       setIsLoading(false);
     };
 
     fetchPets();
-
-    // Real-time subscription filtered by category
-    const channel = supabase
-      .channel(`pets-${activeCategory}`)
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'pets', filter: `category=eq.${activeCategory}` },
-        (payload) => {
-          if (payload.eventType === 'INSERT') {
-            setPets((prev) => [payload.new as Pet, ...prev]);
-            setCounts((prev) => ({ ...prev, [activeCategory]: prev[activeCategory] + 1 }));
-          } else if (payload.eventType === 'DELETE') {
-            setPets((prev) => prev.filter((p) => p.id !== payload.old.id));
-            setCounts((prev) => ({ ...prev, [activeCategory]: Math.max(0, prev[activeCategory] - 1) }));
-          } else if (payload.eventType === 'UPDATE') {
-            setPets((prev) => prev.map((p) => (p.id === (payload.new as Pet).id ? (payload.new as Pet) : p)));
-          }
-        }
-      )
-      .subscribe();
-
-    return () => { supabase.removeChannel(channel); };
   }, [activeCategory]);
 
   // Fetch counts for all categories
   useEffect(() => {
     const fetchCounts = async () => {
-      const results: Record<string, number> = {};
-      let hasError = false;
-      let errorObj: any = null;
-
-      for (const cat of CATEGORIES) {
-        const { count, error } = await supabase.from('pets').select('*', { count: 'exact', head: true }).eq('category', cat);
-        if (error) {
-          hasError = true;
-          errorObj = error;
+      try {
+        const results: Record<string, number> = {};
+        for (const cat of CATEGORIES) {
+          const { count } = await apiGet<{ count: number }>(`/api/pets?category=${encodeURIComponent(cat)}&count=1`);
+          results[cat] = count ?? 0;
         }
-        results[cat] = count ?? 0;
-      }
-      
-      if (!hasError) {
         setCounts(results as Record<Category, number>);
-      } else {
-        console.error('Fetch counts error:', errorObj);
-        setErrorMsg(errorObj.message || String(errorObj));
+      } catch (err: any) {
+        console.error('Fetch counts error:', err);
+        setErrorMsg(err.message || String(err));
       }
     };
     fetchCounts();
   }, []);
 
-  const handleDelete = async (id: number) => {
-    const { error } = await supabase.from('pets').delete().eq('id', id);
-    if (error) {
-      console.error('Delete error:', error);
-    } else {
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await fetch(`/api/pets/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Delete failed');
       setPets((prev) => prev.filter((p) => p.id !== id));
       setCounts((prev) => ({ ...prev, [activeCategory]: Math.max(0, prev[activeCategory] - 1) }));
+    } catch (err) {
+      console.error('Delete error:', err);
     }
   };
 

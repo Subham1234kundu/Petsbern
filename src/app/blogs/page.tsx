@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import BlogCard from "@/components/BlogCard";
-import { supabase } from "@/utils/supabase";
+import { apiGet } from "@/utils/api";
 
 type Blog = {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   category: string;
@@ -21,25 +21,15 @@ export default function BlogsPage() {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const { data } = await supabase
-        .from("blogs")
-        .select("id, title, slug, category, author, date, image_url")
-        .order("id", { ascending: false });
-      if (data) setBlogs(data);
+      try {
+        const data = await apiGet<Blog[]>("/api/blogs");
+        setBlogs(data);
+      } catch (err) {
+        console.error("Fetch blogs error:", err);
+      }
       setLoading(false);
     };
     fetchBlogs();
-
-    const channel = supabase
-      .channel("blogs-public")
-      .on("postgres_changes", { event: "*", schema: "public", table: "blogs" }, (payload) => {
-        if (payload.eventType === "INSERT") setBlogs((p) => [payload.new as Blog, ...p]);
-        else if (payload.eventType === "DELETE") setBlogs((p) => p.filter((b) => b.id !== payload.old.id));
-        else if (payload.eventType === "UPDATE") setBlogs((p) => p.map((b) => (b.id === (payload.new as Blog).id ? (payload.new as Blog) : b)));
-      })
-      .subscribe();
-
-    return () => { supabase.removeChannel(channel); };
   }, []);
 
   return (

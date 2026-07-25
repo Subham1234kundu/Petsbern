@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import FAQSection from "@/components/FAQSection";
 import ServiceAnimations from "@/components/ServiceAnimations";
 
@@ -29,241 +28,288 @@ export default function PetRelocationPage() {
     }
   ];
 
+  const sectionShell =
+    "max-w-[1200px] xl:max-w-[1440px] 2xl:max-w-[1680px] 3xl:max-w-[1840px] mx-auto w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-14 3xl:px-16";
+
   return (
     <ServiceAnimations>
     <div className="flex flex-col min-h-screen bg-white font-sans overflow-x-hidden">
-      {/* Header Section */}
-      <section
-        className="w-full min-h-[220px] md:h-[268px] relative flex flex-col items-center justify-center overflow-hidden text-center py-10 md:py-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/petrelocation.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <h1
-          data-animate="service-title"
-          className="text-white font-semibold tracking-tight z-10 text-[28px] md:text-[32px]"
+      {/* Header + overlapping stats bar */}
+      <div className="relative mb-[72px] sm:mb-[80px] md:mb-[70px] lg:mb-[66.5px]">
+        <section
+          className="w-full min-h-[380px] h-[52vw] max-h-[420px] sm:min-h-[460px] sm:h-[520px] sm:max-h-none md:h-[600px] lg:h-[680px] 2xl:h-[760px] 3xl:h-[840px] relative flex items-center overflow-hidden"
           style={{
-            fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif",
+            backgroundImage: "url('/images/petRelocationHeader.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
-          Pet Relocation
-        </h1>
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 mt-4 text-white/80 z-10 text-[13px] md:text-[14px]">
-          <Link href="/" className="hover:text-white transition-colors">
-            Home
-          </Link>
-          <span className="text-white/60 font-light">
-            <svg
-              width="10"
-              height="10"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          </span>
-          <span data-animate="service-desc" className="text-white font-medium">Pet Relocation</span>
-        </div>
-      </section>
+          <div className={`relative z-10 ${sectionShell} pb-20 sm:pb-24 md:pb-20`}>
+            <div className="max-w-[560px] sm:max-w-[640px] lg:max-w-[700px] 2xl:max-w-[780px] 3xl:max-w-[860px] text-left">
+              <h1
+                data-animate="service-title"
+                className="text-white tracking-tight leading-[1.15]"
+              >
+                <span
+                  className="block font-semibold text-[28px] sm:text-[40px] md:text-[48px] lg:text-[52px] 2xl:text-[58px] 3xl:text-[64px]"
+                  style={{
+                    fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif",
+                  }}
+                >
+                  Safe, Stress-Free Travel
+                </span>
+                <span className="block text-[28px] sm:text-[40px] md:text-[48px] lg:text-[52px] 2xl:text-[58px] 3xl:text-[64px]">
+                  <span
+                    className="font-semibold"
+                    style={{
+                      fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif",
+                    }}
+                  >
+                    for Your{" "}
+                  </span>
+                  <span
+                    className="font-normal text-[34px] sm:text-[52px] md:text-[64px] 2xl:text-[72px] 3xl:text-[80px] leading-none"
+                    style={{
+                      fontFamily: "var(--font-schoolbell), 'Schoolbell', cursive",
+                    }}
+                  >
+                    Furry Family
+                  </span>
+                </span>
+              </h1>
 
-      {/* Main Content Area */}
-      <main className="w-full max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 py-12 md:py-16 lg:py-20 2xl:py-28 flex-grow">
-
-        {/* Why Choose Section (Relocation) */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-12 lg:gap-16 2xl:gap-24">
-
-          {/* Left Column: Image */}
-          <div data-animate="service-image" className="w-full lg:w-1/2 flex justify-center">
-            <img
-              src="/images/handled.png"
-              alt="Your Pet's Journey Handled With Care"
-              className="rounded-[24px] lg:rounded-[32px] object-cover w-full max-w-[581px] 2xl:max-w-[700px] h-auto aspect-[1/1.05]"
-            />
-          </div>
-
-          {/* Right Column: Text Content */}
-          <div data-animate="service-text" className="w-full lg:w-1/2 max-w-[580px] 2xl:max-w-[700px] text-center lg:text-left">
-            <h2 className="text-[26px] md:text-[32px] lg:text-[36px] 2xl:text-[44px] font-normal text-[#0A0A0A] leading-tight" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
-              Your Pet’s Journey, <br className="hidden lg:block" />
-              <span style={{ color: "#FFC501" }}>Handled With Care</span>
-            </h2>
-
-            <p className="mt-4 text-[15px] lg:text-[16px] 2xl:text-[18px] text-[#4A5565] leading-relaxed">
-              Relocating with pets can be complicated — paperwork, travel arrangements, safety, and comfort. Our relocation experts handle everything so you can focus on settling into your new home while we take care of your furry family member.
-            </p>
-
-            {/* Feature Grid */}
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-x-8 lg:gap-x-10 2xl:gap-x-16 gap-y-10 2xl:gap-y-14 items-start text-left">
-
-              {/* Feature 1 */}
-              <div data-animate="feature-item" className="flex flex-col gap-3 2xl:gap-4">
-                <div className="w-[40px] lg:w-[44px] 2xl:w-[52px] h-[40px] lg:h-[44px] 2xl:h-[52px] rounded-full flex items-center justify-center shadow-sm" style={{ backgroundColor: "#FFC501" }}>
-                  <svg width="20" height="20" className="2xl:w-6 2xl:h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-0.5-3 0-4.5 1.5L13 8 4.8 6.2c-0.5-0.1-1.1 0.1-1.5 0.5l-0.3 0.3c-0.4 0.4-0.6 1.1-0.3 1.7l7.1 3.5-3.5 3.5-2.2-0.5c-0.4-0.1-0.9 0-1.2 0.3l-0.3 0.3c-0.4 0.4-0.5 1.1-0.1 1.5l2.2 2.2 2.2 2.2c0.4 0.4 1.1 0.3 1.5-0.1l0.3-0.3c0.3-0.3 0.4-0.8 0.3-1.2l-0.5-2.2 3.5-3.5 3.5 7.1c0.6 0.3 1.3 0.1 1.7-0.3l0.3-0.3c0.4-0.4 0.6-1 0.5-1.5z" /></svg>
-                </div>
-                <h3 className="text-[17px] lg:text-[18px] 2xl:text-[22px] font-semibold text-[#0A0A0A]" style={{ fontFamily: "var(--font-public-sans), sans-serif" }}>Domestic & International Relocation</h3>
-                <p className="text-[13px] lg:text-[14px] 2xl:text-[16px] text-[#6E6E6E] leading-relaxed">Seamless moves across cities or countries with expert planning.</p>
-              </div>
-
-              {/* Feature 2 */}
-              <div data-animate="feature-item" className="flex flex-col gap-3 2xl:gap-4">
-                <div className="w-[40px] lg:w-[44px] 2xl:w-[52px] h-[40px] lg:h-[44px] 2xl:h-[52px] rounded-full flex items-center justify-center shadow-sm" style={{ backgroundColor: "#FFC501" }}>
-                  <svg width="20" height="20" className="2xl:w-6 2xl:h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" /></svg>
-                </div>
-                <h3 className="text-[17px] lg:text-[18px] 2xl:text-[22px] font-semibold text-[#0A0A0A]" style={{ fontFamily: "var(--font-public-sans), sans-serif" }}>Vet-Approved Travel Preparation</h3>
-                <p className="text-[13px] lg:text-[14px] 2xl:text-[16px] text-[#6E6E6E] leading-relaxed">Health checks and clearances to ensure safe travel readiness.</p>
-              </div>
-
-              {/* Feature 3 */}
-              <div data-animate="feature-item" className="flex flex-col gap-3 2xl:gap-4">
-                <div className="w-[40px] lg:w-[44px] 2xl:w-[52px] h-[40px] lg:h-[44px] 2xl:h-[52px] rounded-full flex items-center justify-center shadow-sm" style={{ backgroundColor: "#FFC501" }}>
-                  <svg width="20" height="20" className="2xl:w-6 2xl:h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13" /><polyline points="16 8 20 8 23 11 23 16 16 16" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" /></svg>
-                </div>
-                <h3 className="text-[17px] lg:text-[18px] 2xl:text-[22px] font-semibold text-[#0A0A0A]" style={{ fontFamily: "var(--font-public-sans), sans-serif" }}>Door-To-Door Pickup & Delivery</h3>
-                <p className="text-[13px] lg:text-[14px] 2xl:text-[16px] text-[#6E6E6E] leading-relaxed">Safe pickup from your home and delivery to your new doorstep.</p>
-              </div>
-
-              {/* Feature 4 */}
-              <div data-animate="feature-item" className="flex flex-col gap-3 2xl:gap-4">
-                <div className="w-[40px] lg:w-[44px] 2xl:w-[52px] h-[40px] lg:h-[44px] 2xl:h-[52px] rounded-full flex items-center justify-center shadow-sm" style={{ backgroundColor: "#FFC501" }}>
-                  <svg width="20" height="20" className="2xl:w-6 2xl:h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
-                </div>
-                <h3 className="text-[17px] lg:text-[18px] 2xl:text-[22px] font-semibold text-[#0A0A0A]" style={{ fontFamily: "var(--font-public-sans), sans-serif" }}>Documentation & Compliance Support</h3>
-                <p className="text-[13px] lg:text-[14px] 2xl:text-[16px] text-[#6E6E6E] leading-relaxed">Complete help with permits, certificates, and regulations.</p>
-              </div>
-
+              <p
+                data-animate="service-desc"
+                className="mt-4 sm:mt-5 md:mt-6 text-white/90 font-normal text-[14px] sm:text-[16px] md:text-[18px] 2xl:text-[20px] 3xl:text-[22px] leading-relaxed max-w-[520px] 2xl:max-w-[600px]"
+                style={{
+                  fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif",
+                }}
+              >
+                Whether you&apos;re moving across the city or to another country, PetsBARN handles every detail — from vet clearances and IATA-approved crates to airline coordination and door-to-door delivery.
+              </p>
             </div>
           </div>
+        </section>
 
+        {/* Stats bar — half on image, half below */}
+        <div
+          className="absolute left-1/2 top-full z-20 flex w-[94%] sm:w-[90%] md:w-[85%] lg:w-[80%] max-w-[1200px] xl:max-w-[1320px] 2xl:max-w-[1440px] h-auto min-h-[96px] sm:min-h-[120px] md:h-[133px] 2xl:h-[148px] 3xl:h-[160px] -translate-x-1/2 -translate-y-1/2 bg-white"
+          style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+        >
+          {[
+            {
+              img: "/images/10000+.png",
+              value: "10,000+",
+              label: "Pets Relocated",
+            },
+            {
+              img: "/images/25+.png",
+              value: "25+",
+              label: "Countries Served",
+            },
+            {
+              img: "/images/100%25.png",
+              value: "100%",
+              label: "Safe Arrivals",
+            },
+          ].map((stat, index) => (
+            <div
+              key={stat.label}
+              className="relative flex flex-1 flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-3 md:gap-5 px-1.5 sm:px-3 md:px-4 py-3 sm:py-0"
+            >
+              {index < 2 && (
+                <span
+                  className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-[36px] sm:h-[48px] md:h-[56px] 2xl:h-[64px] bg-[#7E7E7E]"
+                  aria-hidden="true"
+                />
+              )}
+              <img
+                src={stat.img}
+                alt={stat.label}
+                className="w-[36px] h-[36px] sm:w-[56px] sm:h-[56px] md:w-[72px] md:h-[72px] 2xl:w-[80px] 2xl:h-[80px] object-contain flex-shrink-0"
+              />
+              <div className="flex flex-col text-center sm:text-left">
+                <span className="text-[15px] sm:text-[22px] md:text-[32px] 2xl:text-[36px] 3xl:text-[40px] font-bold text-black leading-none">
+                  {stat.value}
+                </span>
+                <span className="mt-0.5 sm:mt-1 text-[9px] sm:text-[12px] md:text-[15px] 2xl:text-[16px] font-normal text-black leading-tight">
+                  {stat.label}
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
-      </main>
+      </div>
 
       {/* How It Works Section */}
-      <section className="bg-white w-full py-16 md:py-20 2xl:py-28 border-t border-gray-100">
-        <div className="max-w-[1440px] 2xl:max-w-[1600px] mx-auto w-full px-4 sm:px-6 lg:px-12">
-          <h2 data-animate="service-title" className="text-black text-[26px] md:text-[32px] lg:text-[36px] 2xl:text-[46px] font-normal text-center mb-12 md:mb-16">
-            How It <span className="text-[#FFC501]">Works?</span>
+      <section className="bg-white w-full pt-10 sm:pt-14 md:pt-20 2xl:pt-28 3xl:pt-32">
+        <div className={sectionShell}>
+          <h2
+            data-animate="service-title"
+            className="text-center mb-8 sm:mb-10 md:mb-14 text-[26px] sm:text-[34px] md:text-[42px] 2xl:text-[48px] 3xl:text-[52px] font-semibold px-2"
+            style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+          >
+            <span className="text-black">How Pet Relocation </span>
+            <span className="text-[#FFC501]">Works?</span>
           </h2>
 
-          <div className="flex flex-col lg:flex-row items-stretch justify-center gap-8 lg:gap-6 2xl:gap-10 relative">
-            {/* Step 1 */}
-            <div data-animate="service-card" className="w-full max-w-[380px] 2xl:max-w-[430px] border border-[#C8C8C8] rounded-2xl p-6 lg:p-8 2xl:p-10 pt-10 2xl:pt-12 flex flex-col items-center text-center mx-auto lg:mx-0 transition-all hover:border-[#FFC501] group shadow-sm">
-              <div className="h-[90px] lg:h-[110px] 2xl:h-[130px] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <img src="/images/consultation&assessment.png" alt="Consultation & Assessment" className="h-full object-contain" />
-              </div>
-              <h3 className="text-black text-[18px] lg:text-[20px] 2xl:text-[24px] font-bold mb-4">Consultation & Assessment</h3>
-              <p className="text-[#4A5565] text-[13px] lg:text-[14px] 2xl:text-[16px] leading-relaxed">
-                We understand your pet’s needs, travel details, and relocation requirements. Comprehensive health examination to ensure your pet is fit to travel.
-              </p>
-            </div>
-
-            {/* Arrow 1 */}
-            <div className="flex lg:hidden items-center justify-center -my-4 z-10">
-              <div className="w-8 h-8 rounded-full bg-[#FFC501] flex items-center justify-center shadow-sm">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 5v14M5 12l7 7 7-7"></path>
-                </svg>
-              </div>
-            </div>
-
-            <div className="hidden lg:flex items-center justify-center z-10 -mx-4 flex-shrink-0">
-              <div className="w-10 h-10 2xl:w-12 2xl:h-12 rounded-full bg-[#FFC501] flex items-center justify-center shadow-md">
-                <svg width="20" height="20" className="2xl:w-6 2xl:h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div data-animate="service-card" className="w-full max-w-[380px] 2xl:max-w-[430px] border border-[#C8C8C8] rounded-2xl p-6 lg:p-8 2xl:p-10 pt-10 2xl:pt-12 flex flex-col items-center text-center mx-auto lg:mx-0 transition-all hover:border-[#FFC501] group shadow-sm">
-              <div className="h-[90px] lg:h-[110px] 2xl:h-[130px] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <img src="/images/travel.png" alt="Travel Plan & Documentation" className="h-full object-contain" />
-              </div>
-              <h3 className="text-black text-[18px] lg:text-[20px] 2xl:text-[24px] font-bold mb-4">Travel Plan & Documentation</h3>
-              <p className="text-[#4A5565] text-[13px] lg:text-[14px] 2xl:text-[16px] leading-relaxed">
-                A customized travel plan with complete paperwork and compliance handled.
-              </p>
-            </div>
-
-            {/* Arrow 2 */}
-            <div className="flex lg:hidden items-center justify-center -my-4 z-10">
-              <div className="w-8 h-8 rounded-full bg-[#FFC501] flex items-center justify-center shadow-sm">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 5v14M5 12l7 7 7-7"></path>
-                </svg>
-              </div>
-            </div>
-
-            <div className="hidden lg:flex items-center justify-center z-10 -mx-4 flex-shrink-0">
-              <div className="w-10 h-10 2xl:w-12 2xl:h-12 rounded-full bg-[#FFC501] flex items-center justify-center shadow-md">
-                <svg width="20" height="20" className="2xl:w-6 2xl:h-6" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div data-animate="service-card" className="w-full max-w-[380px] 2xl:max-w-[430px] border border-[#C8C8C8] rounded-2xl p-6 lg:p-8 2xl:p-10 pt-10 2xl:pt-12 flex flex-col items-center text-center mx-auto lg:mx-0 transition-all hover:border-[#FFC501] group shadow-sm">
-              <div className="h-[90px] lg:h-[110px] 2xl:h-[130px] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
-                <img src="/images/arival.png" alt="Arrival & Delivery" className="h-full object-contain" />
-              </div>
-              <h3 className="text-black text-[18px] lg:text-[20px] 2xl:text-[24px] font-bold mb-4">Arrival & Delivery</h3>
-              <p className="text-[#4A5565] text-[13px] lg:text-[14px] 2xl:text-[16px] leading-relaxed">
-                Comfortable, secure transit with trained handlers and regular monitoring. Smooth arrival coordination and safe handover at your destination.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What we Offer Section */}
-      <section
-        className="w-full py-16 md:py-20 2xl:py-28 flex flex-col items-center"
-        style={{
-          background: "linear-gradient(to bottom, #F6F5F2, #FFFFFF)"
-        }}
-      >
-        <div className="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-12 w-full">
-          {/* Section Heading */}
-          <h2 data-animate="service-title" className="text-center mb-12 md:mb-16 text-[26px] md:text-[32px] lg:text-[36px] 2xl:text-[46px] font-normal text-[#0A0A0A]" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
-            What we <span style={{ color: "#FFC501" }}>Offer</span>?
-          </h2>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 2xl:gap-10 justify-items-center w-full">
+          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5 md:gap-6">
             {[
-              { title: "Travel Planning", desc: "We plan the safest and fastest route tailored to your pet’s breed, age, and comfort needs.", img: "/images/offer1.png" },
-              { title: "Documentation", desc: "Complete assistance with health certificates, permits, and airline requirements.", img: "/images/offer2.png" },
-              { title: "Pickup & Delivery", desc: "Safe transport from your home to the destination.", img: "/images/offer3.png" },
-              { title: "Comfort & Safety", desc: "Trained handlers ensure your pet is relaxed and safe throughout the journey.", img: "/images/offer4.png" }
-            ].map((card, index) => (
+              {
+                step: "Step 1",
+                title: "Free Consultation",
+                img: "/images/freeconsultation.png",
+                desc: "We assess your pet's breed, age, health status, and destination requirements to create a custom travel plan.",
+              },
+              {
+                step: "Step 2",
+                title: "Vet & Documentation",
+                img: "/images/vet%26doc.png",
+                desc: "Health certificate, vaccination records, import permits, microchipping, and NOC from government vet.",
+              },
+              {
+                step: "Step 3",
+                title: "Crate & Prep",
+                img: "/images/crate%26prop.png",
+                desc: "IATA-approved crate sizing, crate training support, and comfort bedding — keeping anxiety low.",
+              },
+              {
+                step: "Step 4",
+                title: "Travel & Escort",
+                img: "/images/travel%26escort.png",
+                desc: "Airline coordination, live tracking updates, and optional in-cabin or cargo escort by our handlers.",
+              },
+              {
+                step: "Step 5",
+                title: "Arrival & Clearance",
+                img: "/images/arrival%26clearance.png",
+                desc: "Customs & quarantine coordination at destination, plus door-to-door final delivery to your new home.",
+              },
+            ].map((card) => (
               <div
-                key={index}
+                key={card.step}
                 data-animate="service-card"
-                className="flex flex-col bg-[#F6F5F2] rounded-[32px] overflow-hidden shadow-sm w-full max-w-[300px] 2xl:max-w-[350px] min-h-[500px] 2xl:min-h-[580px] h-full group hover:shadow-md transition-all"
+                className="w-full h-auto min-h-0 xl:min-h-[407px] bg-white border border-[#B8B9BD] rounded-lg flex flex-col items-center text-center px-4 py-6 sm:py-7 2xl:px-5 2xl:py-8"
+                style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
               >
-                {/* Image Section */}
-                <div className="w-full aspect-[4/5] overflow-hidden">
+                <span
+                  className="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-white text-[12px] sm:text-[13px] font-semibold"
+                  style={{
+                    background: "linear-gradient(to right, #FFC501, #DC2626)",
+                  }}
+                >
+                  {card.step}
+                </span>
+
+                <div className="mt-5 mb-4 h-[90px] sm:h-[100px] md:h-[110px] 2xl:h-[120px] w-full flex items-center justify-center">
                   <img
                     src={card.img}
                     alt={card.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="max-h-full max-w-[120px] 2xl:max-w-[140px] object-contain"
                   />
                 </div>
 
-                {/* Text Content */}
-                <div className="p-6 md:p-8 2xl:p-10 flex flex-col gap-3">
-                  <h3 className="text-[18px] lg:text-[20px] 2xl:text-[24px] font-bold text-[#0A0A0A]" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
+                <h3 className="text-[18px] sm:text-[20px] 2xl:text-[22px] font-semibold text-[#0A0A0A] leading-tight mb-3">
+                  {card.title}
+                </h3>
+
+                <p className="text-[13px] sm:text-[14px] 2xl:text-[15px] text-[#4A5565] leading-relaxed">
+                  {card.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Full-height image under the boxes */}
+        <div className="relative w-full mt-[-40px] sm:mt-[-60px] md:mt-[-80px] lg:mt-[-100px]">
+          <img
+            src="/images/petRelocationgradient.jpg"
+            alt="Pet relocation journey"
+            className="w-full h-auto block"
+          />
+          <div
+            className="absolute inset-x-0 top-0 h-[80px] sm:h-[120px] md:h-[160px] lg:h-[180px] pointer-events-none"
+            style={{
+              background: "linear-gradient(to bottom, #FFFFFF 0%, rgba(255,255,255,0) 100%)",
+            }}
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-[120px] sm:h-[180px] md:h-[240px] lg:h-[320px] pointer-events-none"
+            style={{
+              background: "linear-gradient(to top, #FFFFFF 0%, #FFFFFF 25%, rgba(255,255,255,0.9) 45%, rgba(255,255,255,0.55) 70%, rgba(255,255,255,0) 100%)",
+            }}
+            aria-hidden="true"
+          />
+        </div>
+      </section>
+
+      {/* Relocation Packages Section */}
+      <section className="w-full py-12 sm:py-16 md:py-20 2xl:py-28 3xl:py-32 flex flex-col items-center bg-white">
+        <div className={sectionShell}>
+          <div className="text-center mb-8 md:mb-10">
+            <h2
+              data-animate="service-title"
+              className="text-[26px] sm:text-[34px] md:text-[42px] 2xl:text-[48px] 3xl:text-[52px] font-semibold text-[#0A0A0A]"
+              style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+            >
+              Relocation Packages
+            </h2>
+            <p
+              className="mt-1 md:mt-2 text-[16px] sm:text-[20px] md:text-[24px] 2xl:text-[26px] font-normal text-[#0A0A0A]"
+              style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+            >
+              Tailored solutions for every move
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 md:gap-6 w-full">
+            {[
+              {
+                title: "City-to-City Move",
+                img: "/images/CitytoCityMove.png",
+                desc: "Road transport in climate-controlled vehicles, vet check on dispatch, real-time updates, and home delivery. Covers all major Indian cities.",
+              },
+              {
+                title: "International Relocation",
+                img: "/images/internationalRelocation.png",
+                desc: "End-to-end management — IATA crates, export NOC, import permits, airline booking, quarantine stay, and customs clearance at destination.",
+              },
+              {
+                title: "Birds & Exotic Pets",
+                img: "/images/Birds%26ExoticPets.png",
+                desc: "CITES permits, specialized carriers, and expert handlers for parakeets, cockatiels, and other aviary birds — domestic and international.",
+              },
+              {
+                title: "Pet Travel Insurance",
+                img: "/images/PetTravelInsurance.png",
+                desc: "Coverage for injury, illness, and loss during transit. We coordinate with partner insurers to provide comprehensive protection.",
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                data-animate="service-card"
+                className="flex flex-col items-center text-center gap-3 md:gap-4 bg-[#F0F2F5] rounded-lg px-4 sm:px-6 md:px-8 pt-4 md:pt-5 pb-5 md:pb-6 w-full min-h-0 md:min-h-[420px] xl:min-h-[466px] 2xl:min-h-[500px]"
+              >
+                <div className="flex-1 w-full min-h-[180px] sm:min-h-[220px] md:min-h-0 flex items-center justify-center">
+                  <img
+                    src={card.img}
+                    alt={card.title}
+                    className="w-[88%] sm:w-[90%] max-w-[360px] xl:max-w-[400px] 2xl:max-w-[440px] h-auto max-h-[220px] sm:max-h-[260px] md:max-h-[280px] xl:max-h-[300px] 2xl:max-h-[320px] object-contain"
+                  />
+                </div>
+                <div className="flex flex-col w-full shrink-0">
+                  <h3
+                    className="text-[18px] sm:text-[20px] 2xl:text-[22px] font-semibold text-[#0A0A0A] leading-tight"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  >
                     {card.title}
                   </h3>
-                  <p className="text-[13px] lg:text-[14px] 2xl:text-[16px] text-[#4A5565] leading-relaxed">
+                  <p
+                    className="mt-2 text-[14px] sm:text-[15px] md:text-[16px] 2xl:text-[17px] font-normal text-[#1F2937] leading-relaxed"
+                    style={{ fontFamily: "var(--font-inter), Inter, sans-serif" }}
+                  >
                     {card.desc}
                   </p>
                 </div>
@@ -273,115 +319,347 @@ export default function PetRelocationPage() {
         </div>
       </section>
 
-      {/* Expert Tips & Guides Section */}
-      <section className="py-16 md:py-20 2xl:py-28 bg-white flex flex-col items-center w-full">
-        <div className="w-full max-w-[1240px] 2xl:max-w-[1536px] px-4">
-          <h2 className="text-black text-center mb-4 font-normal text-[26px] md:text-[32px] lg:text-[36px] 2xl:text-[46px]" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
-            Expert Tips, <span className="text-[#FFC501]">Pet Care Guides</span>
-          </h2>
-          <p className="text-center mb-12 lg:mb-16 2xl:mb-20 mx-auto max-w-[800px] 2xl:max-w-[950px] text-[15px] lg:text-[16px] 2xl:text-[18px] text-[#000000CC] leading-relaxed">
-            Discover helpful articles on pet care, training, nutrition, travel, and everything you need to give your furry and feathered companions the best life possible.
-          </p>
+      {/* Popular Relocation Routes */}
+      <section className="w-full py-12 sm:py-16 md:py-20 2xl:py-28 3xl:py-32 bg-white">
+        <div className={sectionShell}>
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <h2
+              data-animate="service-title"
+              className="text-[26px] sm:text-[34px] md:text-[42px] 2xl:text-[48px] 3xl:text-[52px] font-semibold text-[#0A0A0A]"
+              style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+            >
+              Popular Relocation Routes
+            </h2>
+            <p
+              className="mt-2 text-[14px] sm:text-[16px] md:text-[18px] 2xl:text-[20px] font-normal text-[#6B7280]"
+              style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+            >
+              Frequently handled destinations from India
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 2xl:gap-10">
-            {/* Tip Card 1 */}
-            <div className="bg-[#F6F6F6] rounded-[32px] lg:rounded-[40px] 2xl:rounded-[48px] p-6 2xl:p-8 flex flex-col md:flex-row items-center gap-6 group cursor-pointer transition-all hover:shadow-lg relative overflow-hidden h-full 2xl:h-[390px]">
-              <div className="w-full md:w-[45%] 2xl:w-[40%] aspect-square md:aspect-auto md:h-full overflow-hidden rounded-[24px] lg:rounded-[28px] 2xl:rounded-[32px] relative z-10 shadow-sm">
-                <img src="/images/guide1.png" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Expert Tip 1" />
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
+            {[
+              {
+                from: "Mumbai",
+                to: "Delhi / Bangalore / Chennai",
+                duration: "1-2 days (road) / 4-6 hrs (air)",
+                docs: "Health cert, vaccination record",
+                toColor: "#7C3AED",
+              },
+              {
+                from: "India",
+                to: "UAE / Dubai",
+                duration: "8-12 hrs flight",
+                docs: "Import permit, microchip, rabies titer test",
+                toColor: "#DC2626",
+              },
+              {
+                from: "India",
+                to: "USA / Canada",
+                duration: "14-22 hrs flight",
+                docs: "USDA/CFIA health cert, rabies vaccine, microchip",
+                toColor: "#0F766E",
+              },
+              {
+                from: "India",
+                to: "UK / Europe",
+                duration: "10-15 hrs flight",
+                docs: "EU health cert, tapeworm treatment, pet passport",
+                toColor: "#2563EB",
+              },
+              {
+                from: "India",
+                to: "Singapore / Australia",
+                duration: "12-24 hrs",
+                docs: "Quarantine stay required (10-30 days), titer test",
+                toColor: "#65A30D",
+                className: "xl:col-start-2",
+              },
+              {
+                from: "India",
+                to: "Middle East",
+                duration: "5-10 hrs flight",
+                docs: "MOFAIC permit, health cert, microchip",
+                toColor: "#A78BFA",
+              },
+            ].map((route) => (
+              <div
+                key={`${route.from}-${route.to}`}
+                data-animate="service-card"
+                className={`bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] p-4 sm:p-5 md:p-6 flex flex-col gap-3 ${route.className || ""}`}
+                style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="w-6 h-6 rounded-full bg-[#22C55E] flex items-center justify-center flex-shrink-0">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  </span>
+                  <span className="text-[15px] md:text-[16px] 2xl:text-[17px] font-semibold text-[#0A0A0A]">{route.from}</span>
+                </div>
 
-              <div className="w-full md:w-[55%] 2xl:w-[60%] flex flex-col justify-between h-auto md:h-full py-2 2xl:py-4 relative z-10">
-                <div>
-                  <span className="text-[10px] lg:text-[11px] 2xl:text-[12px] text-[#FFC501] font-bold uppercase tracking-widest mb-4 block">PET TRAVEL</span>
-                  <h3 className="text-[18px] lg:text-[20px] 2xl:text-[24px] text-black font-semibold leading-tight pr-4 2xl:pr-8">
-                    10 Things Every New Pet Owner Should Know Before Traveling With Pets
-                  </h3>
-                </div>
-                <div className="self-end mt-6">
-                  <div className="w-10 h-10 2xl:w-12 2xl:h-12 rounded-full bg-white flex items-center justify-center shadow-sm transition-all text-[#FFC501] group-hover:bg-[#FFC501] group-hover:text-white">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17" /></svg>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <p className="text-[12px] md:text-[13px] font-normal text-[#9CA3AF] pl-8">
+                  {route.duration}
+                </p>
 
-            {/* Tip Card 2 */}
-            <div className="bg-[#F6F6F6] rounded-[32px] lg:rounded-[40px] 2xl:rounded-[48px] p-6 2xl:p-8 flex flex-col md:flex-row items-center gap-6 group cursor-pointer transition-all hover:shadow-lg relative overflow-hidden h-full 2xl:h-[390px]">
-              <div className="w-full md:w-[45%] 2xl:w-[40%] aspect-square md:aspect-auto md:h-full overflow-hidden rounded-[24px] lg:rounded-[28px] 2xl:rounded-[32px] relative z-10 shadow-sm">
-                <img src="/images/guide2.png" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Expert Tip 2" />
-              </div>
+                <div className="flex items-center gap-2.5">
+                  <span
+                    className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{ backgroundColor: route.toColor }}
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  </span>
+                  <span className="text-[15px] md:text-[16px] 2xl:text-[17px] font-semibold text-[#0A0A0A]">{route.to}</span>
+                </div>
 
-              <div className="w-full md:w-[55%] 2xl:w-[60%] flex flex-col justify-between h-auto md:h-full py-2 2xl:py-4 relative z-10">
-                <div>
-                  <span className="text-[10px] lg:text-[11px] 2xl:text-[12px] text-[#FFC501] font-bold uppercase tracking-widest mb-4 block">PET RELOCATION</span>
-                  <h3 className="text-[18px] lg:text-[20px] 2xl:text-[24px] text-black font-semibold leading-tight pr-4 2xl:pr-8">
-                    Moving Abroad with Your Furry Friend: A Comprehensive Step-by-Step Guide
-                  </h3>
-                </div>
-                <div className="self-end mt-6">
-                  <div className="w-10 h-10 2xl:w-12 2xl:h-12 rounded-full bg-white flex items-center justify-center shadow-sm transition-all text-[#FFC501] group-hover:bg-[#FFC501] group-hover:text-white">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7V17" /></svg>
-                  </div>
+                <div className="mt-1 pt-1">
+                  <p className="text-[12px] md:text-[13px] font-semibold text-[#0A0A0A]">
+                    Document Required:
+                  </p>
+                  <p className="mt-1 text-[12px] md:text-[13px] font-normal text-[#4B5563] leading-relaxed">
+                    {route.docs}
+                  </p>
                 </div>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative w-full mt-8 sm:mt-10 md:mt-14 overflow-hidden">
+          <img
+            src="/images/map.png"
+            alt="Popular relocation routes map"
+            className="w-full h-auto block"
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-[80px] sm:h-[120px] md:h-[160px] lg:h-[180px] pointer-events-none"
+            style={{
+              background: "linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0) 100%)",
+            }}
+            aria-hidden="true"
+          />
+        </div>
+      </section>
+
+      {/* Image row — under Popular Relocation Routes */}
+      <section className="w-full bg-white pt-6 sm:pt-8 md:pt-12 lg:pt-16 pb-8 sm:pb-10 md:pb-16 flex flex-col items-center">
+        <div className={sectionShell}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5 lg:gap-6">
+            {[
+              "/images/hp1.png",
+              "/images/huskeyji.png",
+              "/images/guide1.png",
+              "/images/Birds%26ExoticPets.png",
+            ].map((src, index) => (
+              <div
+                key={src}
+                className="relative w-full aspect-[3/4] rounded-lg sm:rounded-xl overflow-hidden bg-[#F6F6F6]"
+              >
+                <img
+                  src={src}
+                  alt={`Pet relocation highlight ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                <div
+                  className="absolute inset-x-0 bottom-0 h-[50%] pointer-events-none"
+                  style={{
+                    background:
+                      "linear-gradient(to top, #FFFFFF 0%, rgba(255,255,255,0.9) 30%, rgba(255,255,255,0) 100%)",
+                  }}
+                  aria-hidden="true"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Happy Families Gallery Section */}
-      <section className="w-full bg-white py-12 md:py-16 lg:py-20 flex flex-col items-center">
-        <div className="w-full max-w-[1240px] 2xl:max-w-[1536px] px-4 relative overflow-hidden h-auto lg:h-[1350px] 2xl:h-[1550px]">
+      {/* Documentation We Handle */}
+      <section className="w-full py-12 sm:py-16 md:py-20 2xl:py-28 3xl:py-32 bg-white">
+        <div className="max-w-[1100px] 2xl:max-w-[1240px] 3xl:max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-12 w-full">
+          <div className="text-center mb-8 sm:mb-10 md:mb-14">
+            <h2
+              data-animate="service-title"
+              className="text-[26px] sm:text-[34px] md:text-[42px] 2xl:text-[48px] 3xl:text-[52px] font-semibold text-[#0A0A0A]"
+              style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+            >
+              Documentation We Handle
+            </h2>
+            <p
+              className="mt-2 md:mt-3 text-[14px] sm:text-[16px] md:text-[18px] 2xl:text-[20px] font-normal text-[#4B5563] px-2"
+              style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+            >
+              Every paper, permit, and certificate — prepared by our team
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 2xl:gap-8">
-            {[1, 2, 3, 4].map((col) => (
-              <div key={col} className="flex flex-col gap-4 lg:gap-6 2xl:gap-8">
-                <img src={`/images/hp${(col-1)*4 + 1}.png`} className="w-full object-cover rounded-xl h-auto aspect-[1/1.2] shadow-sm" alt="Happy Family" />
-                <img src={`/images/hp${(col-1)*4 + 2}.png`} className="w-full object-cover rounded-xl h-auto aspect-[1/0.8] shadow-sm" alt="Happy Family" />
-                <img src={`/images/hp${(col-1)*4 + 3}.png`} className="w-full object-cover rounded-xl h-auto aspect-[1/1] shadow-sm" alt="Happy Family" />
-                <img src={`/images/hp${(col-1)*4 + 4}.png`} className="w-full object-cover rounded-xl h-auto aspect-[1/1.1] shadow-sm" alt="Happy Family" />
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 xl:gap-x-20 gap-y-4 sm:gap-y-5 md:gap-y-6"
+            style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+          >
+            {[
+              "Veterinary Health Certificate (government endorsed)",
+              "Vaccination records (rabies, DHPP, bordetella)",
+              "Rabies antibody titer test (RNATT)",
+              "Export NOC from DGFT / State Veterinary Dept",
+              "CITES permit (for birds and exotic animals)",
+              "Airline-specific pet travel forms",
+              "Pet passport (EU / UK / Australia)",
+              "Microchip certificate (ISO 11784/11785)",
+              "Destination country import permit",
+              "Customs declaration & airway bill",
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-3">
+                <span className="mt-0.5 w-5 h-5 rounded-full bg-[#22C55E] flex items-center justify-center flex-shrink-0">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                </span>
+                <span className="text-[14px] sm:text-[15px] md:text-[16px] 2xl:text-[17px] font-normal text-[#1F2937] leading-snug">
+                  {item}
+                </span>
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Bottom Fade & Title Overlay */}
-          <div className="relative lg:absolute bottom-0 left-0 w-full lg:h-[400px] 2xl:h-[450px] flex items-end justify-center py-6 md:py-8 lg:pb-12 bg-gradient-to-t from-white via-white/95 to-transparent z-20 mt-8 lg:mt-0">
-            <h2 className="text-black text-center text-[26px] md:text-[36px] lg:text-[42px] 2xl:text-[52px] font-normal leading-tight px-4" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
-              <span className="text-[#FFC501]">10,000+</span> Happy Families Served
+      {/* IATA-Approved Travel Crates */}
+      <section className="w-full py-12 sm:py-16 md:py-20 2xl:py-28 3xl:py-32 bg-white">
+        <div className={sectionShell}>
+          <div className="text-center mb-8 sm:mb-10 md:mb-14">
+            <h2
+              data-animate="service-title"
+              className="text-[26px] sm:text-[34px] md:text-[42px] 2xl:text-[48px] 3xl:text-[52px] font-semibold text-[#0A0A0A] px-2"
+              style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+            >
+              IATA-Approved Travel Crates
             </h2>
+            <p
+              className="mt-2 md:mt-3 text-[14px] sm:text-[16px] md:text-[18px] 2xl:text-[20px] font-normal text-[#4B5563] px-2"
+              style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+            >
+              Proper crate sizing ensures safety and airline compliance.
+            </p>
+          </div>
+
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-start gap-8 md:gap-10 lg:gap-12 xl:gap-16">
+            <div className="w-full lg:w-[55%] grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5">
+              {[
+                {
+                  title: "XS — Toy Breeds",
+                  breeds: "Chihuahua, Pomeranian, small Shih Tzu",
+                  badge: "IATA 100 Series · 40×27×30 cm",
+                  badgeBg: "#FEE2E2",
+                  badgeText: "#DC2626",
+                },
+                {
+                  title: "S — Small Dogs",
+                  breeds: "Cocker Spaniel, Shih Tzu, Beagle",
+                  badge: "IATA 200 Series · 53×35×38 cm",
+                  badgeBg: "#FEF3C7",
+                  badgeText: "#D97706",
+                },
+                {
+                  title: "M — Medium Dogs",
+                  breeds: "Labrador, Husky, Golden Retriever",
+                  badge: "IATA 400 Series · 73×49×55 cm",
+                  badgeBg: "#DCFCE7",
+                  badgeText: "#15803D",
+                },
+                {
+                  title: "L — Large Dogs",
+                  breeds: "German Shepherd, Rottweiler, Mastiff",
+                  badge: "IATA 500 Series · 92×61×69 cm",
+                  badgeBg: "#EDE9FE",
+                  badgeText: "#6D28D9",
+                },
+                {
+                  title: "XL — Giant Breeds",
+                  breeds: "Saint Bernard, Great Dane",
+                  badge: "IATA 700 Series · 122×81×89 cm",
+                  badgeBg: "#DBEAFE",
+                  badgeText: "#1D4ED8",
+                },
+              ].map((crate) => (
+                <div
+                  key={crate.title}
+                  data-animate="service-card"
+                  className="bg-white rounded-2xl shadow-[0_8px_28px_rgba(0,0,0,0.08)] px-4 py-4 sm:px-5 sm:py-5 md:px-6 md:py-6 flex flex-col"
+                  style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+                >
+                  <h3 className="text-[15px] sm:text-[16px] md:text-[17px] 2xl:text-[18px] font-semibold text-[#0A0A0A] leading-tight">
+                    {crate.title}
+                  </h3>
+                  <p className="mt-1.5 text-[12px] sm:text-[13px] md:text-[14px] font-normal text-[#6B7280] leading-snug">
+                    {crate.breeds}
+                  </p>
+                  <span
+                    className="inline-flex self-start mt-3 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] md:text-[12px] font-medium whitespace-normal sm:whitespace-nowrap"
+                    style={{ backgroundColor: crate.badgeBg, color: crate.badgeText }}
+                  >
+                    {crate.badge}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="w-full lg:w-[45%] flex flex-col items-center lg:items-end gap-5 sm:gap-6 md:gap-8 lg:sticky lg:top-28">
+              <img
+                src="/images/itta.png"
+                alt="IATA"
+                className="w-[100px] sm:w-[120px] md:w-[140px] xl:w-[160px] 2xl:w-[180px] h-auto object-contain"
+              />
+              <img
+                src="/images/dogcage.png"
+                alt="IATA-approved travel crate with pet"
+                className="w-full max-w-[320px] sm:max-w-[400px] md:max-w-[440px] xl:max-w-[480px] 2xl:max-w-[520px] h-auto object-contain"
+              />
+            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <FAQSection items={relocationFAQs} />
+      <FAQSection
+        items={relocationFAQs}
+        subtitle="Common relocation queries answered"
+      />
 
-      {/* Relocation CTA Section */}
-      <section className="w-full bg-[#F5F9FE] py-16 md:py-20 lg:py-0 lg:min-h-[591px] 2xl:min-h-[700px] flex flex-col overflow-hidden justify-center">
-        <div className="max-w-[1240px] 2xl:max-w-[1536px] mx-auto w-full px-4 flex flex-col lg:flex-row items-center justify-between gap-10 2xl:gap-16 text-center lg:text-left">
-          <div className="max-w-[800px] 2xl:max-w-[950px]">
-            <h2 className="text-[26px] md:text-[34px] lg:text-[40px] 2xl:text-[48px] font-normal text-[#0A0A0A] leading-tight" style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}>
-              Relocating made easy for you and your pet — let <span style={{ color: "#FFC501" }}>our specialists</span> manage every step of the move.
-            </h2>
-            <p className="mt-6 text-[15px] lg:text-[18px] 2xl:text-[20px] text-[#4A5565] leading-relaxed">
-              From paperwork to pickup, we handle the logistics so you can focus on your new adventure.
-            </p>
-            <button
-              className="mt-8 bg-black text-white rounded-full px-10 2xl:px-12 h-[50px] lg:h-[56px] 2xl:h-[64px] text-[16px] lg:text-[18px] 2xl:text-[20px] font-medium hover:bg-gray-900 transition-all shadow-lg active:scale-95"
-            >
-              Connect Now!
-            </button>
-          </div>
-
-          <div className="w-full lg:w-[40%] flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[400px] 2xl:max-w-[500px] aspect-square rounded-full bg-[#FFC501]/10 flex items-center justify-center p-4">
-               <img
-                src="/images/relocation0.png"
-                alt="Pet Relocation Specialists"
-                className="w-full h-full object-contain relative z-10"
-              />
+      {/* Relocation footer CTA */}
+      <section className="w-full">
+        <div className="w-full bg-[#F7F8FA]">
+          <div className="max-w-[1200px] xl:max-w-[1440px] 2xl:max-w-[1680px] 3xl:max-w-[1840px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-8 sm:py-10 md:py-14 lg:py-16 2xl:py-20">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 sm:gap-6 md:gap-10">
+              <div className="max-w-[720px] 2xl:max-w-[820px]">
+                <h2
+                  className="text-[24px] sm:text-[28px] md:text-[36px] lg:text-[42px] 2xl:text-[48px] 3xl:text-[52px] font-semibold text-black leading-tight tracking-tight"
+                  style={{ fontFamily: "var(--font-public-sans), 'Public Sans', sans-serif" }}
+                >
+                  Ready to plan your pet&apos;s journey?
+                </h2>
+                <p className="mt-2 md:mt-3 text-[14px] sm:text-[15px] md:text-[17px] lg:text-[18px] 2xl:text-[20px] text-[#6B7280] leading-relaxed">
+                  Get a free relocation quote in 24 hours — no commitment needed.
+                </p>
+              </div>
+              <button
+                type="button"
+                className="shrink-0 w-full sm:w-auto self-stretch sm:self-center bg-black text-white rounded-full px-8 md:px-10 h-[48px] md:h-[52px] 2xl:h-[56px] text-[15px] md:text-[16px] 2xl:text-[18px] font-medium hover:bg-gray-900 transition-colors"
+              >
+                Get Free Quote
+              </button>
             </div>
           </div>
+        </div>
+        <div className="w-full">
+          <img
+            src="/images/pets-relocationfooter.png"
+            alt="Pet ready for travel in car cargo"
+            className="w-full h-auto block object-cover max-h-[220px] sm:max-h-[280px] md:max-h-[360px] lg:max-h-none"
+          />
         </div>
       </section>
 

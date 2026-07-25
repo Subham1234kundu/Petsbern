@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/utils/supabase";
+import { uploadImage, apiGet } from "@/utils/api";
 
 type ComparePet = {
-  id: number;
+  id: string;
   name: string;
   category: string;
   image_url: string;
@@ -41,41 +41,14 @@ export default function DashboardComparePets() {
   // Fetch all compare pets
   useEffect(() => {
     const fetchPets = async () => {
-      const { data } = await supabase
-        .from("compare_pets")
-        .select("*")
-        .order("id", { ascending: false });
-      if (data) setPets(data);
+      try {
+        const data = await apiGet<ComparePet[]>("/api/compare-pets");
+        setPets(data);
+      } catch (err) {
+        console.error("Fetch compare pets error:", err);
+      }
     };
     fetchPets();
-
-    // Real-time
-    const channel = supabase
-      .channel("compare-pets-admin")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "compare_pets" },
-        (payload) => {
-          if (payload.eventType === "INSERT") {
-            setPets((prev) => [payload.new as ComparePet, ...prev]);
-          } else if (payload.eventType === "DELETE") {
-            setPets((prev) => prev.filter((p) => p.id !== payload.old.id));
-          } else if (payload.eventType === "UPDATE") {
-            setPets((prev) =>
-              prev.map((p) =>
-                p.id === (payload.new as ComparePet).id
-                  ? (payload.new as ComparePet)
-                  : p
-              )
-            );
-          }
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, []);
 
   const handleChange = (
@@ -97,26 +70,22 @@ export default function DashboardComparePets() {
 
       // Upload image if file selected
       if (imageFile) {
-        const fileExt = imageFile.name.split(".").pop();
-        const fileName = `compare-${Date.now()}.${fileExt}`;
-        const { error: uploadError } = await supabase.storage
-          .from("pet-images")
-          .upload(fileName, imageFile);
-
-        if (uploadError) throw uploadError;
-
-        const {
-          data: { publicUrl },
-        } = supabase.storage.from("pet-images").getPublicUrl(fileName);
-        imageUrl = publicUrl;
+        imageUrl = await uploadImage(imageFile);
       }
 
       const payload = { ...formData, image_url: imageUrl };
 
-      const { error } = await supabase
-        .from("compare_pets")
-        .insert([payload]);
-      if (error) throw error;
+      const res = await fetch("/api/compare-pets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Failed to add pet.");
+      }
+      const created = await res.json();
+      setPets((prev) => [created as ComparePet, ...prev]);
 
       setSuccessMsg(`Added "${formData.name}" to compare list!`);
       setFormData(EMPTY_FORM);
@@ -128,15 +97,13 @@ export default function DashboardComparePets() {
     setIsLoading(false);
   };
 
-  const handleDelete = async (id: number) => {
-    const { error } = await supabase
-      .from("compare_pets")
-      .delete()
-      .eq("id", id);
-    if (error) {
-      setErrorMsg("Failed to delete.");
-    } else {
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await fetch(`/api/compare-pets/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Delete failed");
       setPets((prev) => prev.filter((p) => p.id !== id));
+    } catch {
+      setErrorMsg("Failed to delete.");
     }
   };
 

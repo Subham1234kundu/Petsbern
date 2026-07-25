@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BreedCardFull from '@/components/BreedCardFull';
-import { supabase } from '@/utils/supabase';
+import { apiGet } from '@/utils/api';
 
 export default function CatsCategoryPage() {
   const [selectedBreed, setSelectedBreed] = useState("All Breeds");
@@ -18,34 +18,16 @@ export default function CatsCategoryPage() {
   // Fetch cats and subscribe to real-time changes
   useEffect(() => {
     const fetchPets = async () => {
-      const { data } = await supabase
-        .from('pets')
-        .select('*')
-        .eq('category', 'Cat')
-        .order('id', { ascending: false });
-
-      if (data) setPets(data);
+      try {
+        const data = await apiGet<any[]>('/api/pets?category=Cat&sort=desc');
+        setPets(data);
+      } catch (err) {
+        console.error('Fetch pets error:', err);
+      }
       setIsLoading(false);
     };
 
     fetchPets();
-
-    const channel = supabase
-      .channel('public:pets:cats')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'pets', filter: "category=eq.Cat" }, (payload) => {
-        if (payload.eventType === 'INSERT') {
-          setPets((prev) => [payload.new, ...prev]);
-        } else if (payload.eventType === 'DELETE') {
-          setPets((prev) => prev.filter(p => p.id !== payload.old.id));
-        } else if (payload.eventType === 'UPDATE') {
-          setPets((prev) => prev.map(p => p.id === payload.new.id ? payload.new : p));
-        }
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
   }, []);
 
   // Unique breed names from fetched cats

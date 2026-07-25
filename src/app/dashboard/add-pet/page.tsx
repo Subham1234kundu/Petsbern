@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { supabase } from '@/utils/supabase';
+import { uploadImage, apiGet } from '@/utils/api';
 
 export default function AddPetPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -71,26 +71,6 @@ export default function AddPetPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const uploadImage = async (file: File) => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `${fileName}`;
-
-    const { error: uploadError, data } = await supabase.storage
-      .from('pet-images')
-      .upload(filePath, file);
-
-    if (uploadError) {
-      throw uploadError;
-    }
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('pet-images')
-      .getPublicUrl(filePath);
-
-    return publicUrl;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -106,13 +86,9 @@ export default function AddPetPage() {
     try {
       // UNIQUE VALIDATION: Check if same name AND same breed exists
       const nameValue = listingType === 'breed' ? (formData.name.trim() || '') : formData.name.trim();
-      const { data: existingPets, error: checkError } = await supabase
-        .from('pets')
-        .select('id')
-        .ilike('name', nameValue)
-        .ilike('breed', formData.breed);
-
-      if (checkError) throw checkError;
+      const existingPets = await apiGet<any[]>(
+        `/api/pets?nameExact=${encodeURIComponent(nameValue)}&breedExact=${encodeURIComponent(formData.breed)}`
+      );
 
       if (existingPets && existingPets.length > 0) {
         setErrorMsg(`Cannot add listing: A listing with breed "${formData.breed}" and name "${nameValue || '(No Name)'}" already exists!`);
@@ -164,10 +140,16 @@ export default function AddPetPage() {
         breed_groups: formData.category === 'Dog' ? formData.breed_groups : [],
       };
 
-      // Insert into Supabase
-      const { error } = await supabase.from('pets').insert([payload]);
-
-      if (error) throw error;
+      // Insert into MongoDB via API route
+      const res = await fetch('/api/pets', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Failed to add pet.');
+      }
 
       setSuccessMsg(`Successfully added ${nameValue || formData.breed} to the ${formData.category} category!`);
       setFormData({

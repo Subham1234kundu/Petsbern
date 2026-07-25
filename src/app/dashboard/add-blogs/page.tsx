@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/utils/supabase";
+import { uploadImage, apiGet } from "@/utils/api";
 
 type Blog = {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   category: string;
@@ -35,21 +35,14 @@ export default function AddBlogsPage() {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-      const { data } = await supabase.from("blogs").select("*").order("id", { ascending: false });
-      if (data) setBlogs(data);
+      try {
+        const data = await apiGet<Blog[]>("/api/blogs");
+        setBlogs(data);
+      } catch (err) {
+        console.error("Fetch blogs error:", err);
+      }
     };
     fetchBlogs();
-
-    const channel = supabase
-      .channel("blogs-admin")
-      .on("postgres_changes", { event: "*", schema: "public", table: "blogs" }, (payload) => {
-        if (payload.eventType === "INSERT") setBlogs((p) => [payload.new as Blog, ...p]);
-        else if (payload.eventType === "DELETE") setBlogs((p) => p.filter((b) => b.id !== payload.old.id));
-        else if (payload.eventType === "UPDATE") setBlogs((p) => p.map((b) => (b.id === (payload.new as Blog).id ? (payload.new as Blog) : b)));
-      })
-      .subscribe();
-
-    return () => { supabase.removeChannel(channel); };
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -69,18 +62,13 @@ export default function AddBlogsPage() {
       let imageUrl = formData.image_url;
 
       if (imageFile) {
-        const fileExt = imageFile.name.split(".").pop();
-        const fileName = `blog-${Date.now()}.${fileExt}`;
-        const { error: uploadError } = await supabase.storage.from("pet-images").upload(fileName, imageFile);
-        if (uploadError) throw uploadError;
-        const { data: { publicUrl } } = supabase.storage.from("pet-images").getPublicUrl(fileName);
-        imageUrl = publicUrl;
+        imageUrl = await uploadImage(imageFile);
       }
 
       const slug = generateSlug(formData.title);
       const dateFormatted = new Date(formData.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
-      const { error } = await supabase.from("blogs").insert([{
+      const newBlog = {
         title: formData.title,
         slug,
         category: formData.category,
@@ -88,9 +76,19 @@ export default function AddBlogsPage() {
         date: dateFormatted,
         image_url: imageUrl,
         content: formData.content,
-      }]);
+      };
 
-      if (error) throw error;
+      const res = await fetch("/api/blogs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newBlog),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Failed to publish blog.");
+      }
+      const created = await res.json();
+      setBlogs((prev) => [created as Blog, ...prev]);
 
       setSuccessMsg(`Blog "${formData.title}" published!`);
       setFormData(EMPTY_FORM);
@@ -102,12 +100,13 @@ export default function AddBlogsPage() {
     setIsLoading(false);
   };
 
-  const handleDelete = async (id: number) => {
-    const { error } = await supabase.from("blogs").delete().eq("id", id);
-    if (error) {
-      setErrorMsg("Failed to delete blog.");
-    } else {
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await fetch(`/api/blogs/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Delete failed");
       setBlogs((prev) => prev.filter((b) => b.id !== id));
+    } catch {
+      setErrorMsg("Failed to delete blog.");
     }
   };
 

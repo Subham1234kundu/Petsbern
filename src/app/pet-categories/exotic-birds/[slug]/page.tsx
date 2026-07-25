@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import BreedCard2 from '@/components/BreedCard2';
 import { TestimonialSlider } from "@/components/TestimonialSlider";
-import { supabase } from '@/utils/supabase';
+import { apiGet } from '@/utils/api';
 
 export default function ExoticBirdDetailsPage() {
   const params = useParams();
@@ -21,28 +21,20 @@ export default function ExoticBirdDetailsPage() {
 
   useEffect(() => {
     async function fetchPet() {
-      const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(slug);
+      const isObjectId = /^[0-9a-f]{24}$/i.test(slug);
       
       let petData = null;
       let localIsBreedPage = false;
 
-      if (isUUID) {
-        const { data } = await supabase
-          .from('pets')
-          .select('*')
-          .eq('id', slug)
-          .eq('category', 'Exotic')
-          .single();
-        petData = data;
+      if (isObjectId) {
+        petData = await apiGet<any>(`/api/pets?id=${slug}&category=Exotic`);
       } else {
         const formattedName = slug.split('-').join(' ');
         
         // Try searching by breed first
-        const { data: breedData } = await supabase
-          .from('pets')
-          .select('*')
-          .eq('category', 'Exotic')
-          .ilike('breed', `%${formattedName}%`);
+        const breedData = await apiGet<any[]>(
+          `/api/pets?category=Exotic&breed=${encodeURIComponent(formattedName)}`
+        );
         
         if (breedData && breedData.length > 0) {
           localIsBreedPage = true;
@@ -57,13 +49,10 @@ export default function ExoticBirdDetailsPage() {
           setRelatedPets(individualPets.slice(0, 4));
         } else {
           // Fallback: try searching by specific pet name
-          const { data } = await supabase
-            .from('pets')
-            .select('*')
-            .eq('category', 'Exotic')
-            .ilike('name', `%${formattedName}%`)
-            .single();
-          petData = data;
+          const nameData = await apiGet<any[]>(
+            `/api/pets?category=Exotic&name=${encodeURIComponent(formattedName)}`
+          );
+          petData = nameData && nameData.length > 0 ? nameData[0] : null;
         }
       }
       
@@ -80,13 +69,9 @@ export default function ExoticBirdDetailsPage() {
 
         // Fetch related pets based on breed, if not already fetched
         if (!localIsBreedPage && petData.breed) {
-          const { data: relatedData } = await supabase
-            .from('pets')
-            .select('*')
-            .eq('breed', petData.breed)
-            .eq('category', 'Exotic')
-            .neq('id', petData.id)
-            .limit(10);
+          const relatedData = await apiGet<any[]>(
+            `/api/pets?category=Exotic&breedExact=${encodeURIComponent(petData.breed)}&excludeId=${petData.id}&limit=10`
+          );
           if (relatedData) {
             const individualRelated = relatedData.filter(p => p.name && p.name !== p.breed);
             setRelatedPets(individualRelated.slice(0, 4));
@@ -95,11 +80,7 @@ export default function ExoticBirdDetailsPage() {
       }
 
       // Fetch general available exotic birds
-      const { data: generalData } = await supabase
-        .from('pets')
-        .select('*')
-        .eq('category', 'Exotic')
-        .limit(8);
+      const generalData = await apiGet<any[]>('/api/pets?category=Exotic&limit=8');
       if (generalData) {
         setGeneralPets(generalData);
       }

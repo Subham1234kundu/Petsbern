@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { supabase } from "@/utils/supabase";
+import { apiGet } from "@/utils/api";
 
 interface Pet {
-  id: number;
+  id: string;
   name: string;
   breed: string;
   category: string;
@@ -217,8 +217,8 @@ export default function ComparePetsPage() {
   const [category, setCategory] = useState<Category>("Dog");
   const [allPets, setAllPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pet1Id, setPet1Id] = useState<number | null>(null);
-  const [pet2Id, setPet2Id] = useState<number | null>(null);
+  const [pet1Id, setPet1Id] = useState<string | null>(null);
+  const [pet2Id, setPet2Id] = useState<string | null>(null);
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [search1, setSearch1] = useState("");
@@ -227,32 +227,15 @@ export default function ComparePetsPage() {
   useEffect(() => {
     setLoading(true);
     const fetchPets = async () => {
-      const { data } = await supabase
-        .from("pets")
-        .select("*")
-        .eq("category", category)
-        .order("id", { ascending: true });
-      if (data) {
+      try {
+        const data = await apiGet<Pet[]>(`/api/pets?category=${encodeURIComponent(category)}&sort=asc`);
         setAllPets(data);
+      } catch (err) {
+        console.error("Fetch pets error:", err);
       }
       setLoading(false);
     };
     fetchPets();
-
-    const channel = supabase
-      .channel(`compare-pets-${category}`)
-      .on("postgres_changes", { event: "*", schema: "public", table: "pets", filter: `category=eq.${category}` }, (payload) => {
-        if (payload.eventType === "INSERT") {
-          setAllPets((prev) => [...prev, payload.new as Pet]);
-        } else if (payload.eventType === "DELETE") {
-          setAllPets((prev) => prev.filter((p) => p.id !== payload.old.id));
-        } else if (payload.eventType === "UPDATE") {
-          setAllPets((prev) => prev.map((p) => (p.id === (payload.new as Pet).id ? (payload.new as Pet) : p)));
-        }
-      })
-      .subscribe();
-
-    return () => { supabase.removeChannel(channel); };
   }, [category]);
 
   const groupedBreeds = React.useMemo(() => {
@@ -264,7 +247,7 @@ export default function ComparePetsPage() {
       if (aIsProfile !== bIsProfile) {
         return bIsProfile - aIsProfile;
       }
-      return a.id - b.id; // oldest first
+      return (a.id || "").localeCompare(b.id || ""); // oldest first
     });
 
     for (const pet of sorted) {
