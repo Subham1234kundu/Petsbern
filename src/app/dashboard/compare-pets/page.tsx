@@ -296,11 +296,29 @@ export default function DashboardComparePets() {
                     }}
                   />
                   {imagePreview ? (
-                    <img
-                      src={imagePreview}
-                      alt="Preview"
-                      className="h-28 mx-auto object-contain rounded-lg"
-                    />
+                    <div className="relative inline-block mx-auto">
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="h-28 mx-auto object-contain rounded-lg"
+                      />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setImageFile(null);
+                          setImagePreview("");
+                          const input = document.getElementById(
+                            "compareImageInput"
+                          ) as HTMLInputElement | null;
+                          if (input) input.value = "";
+                        }}
+                        className="absolute -top-2 -right-2 z-10 w-7 h-7 rounded-full bg-red-500 hover:bg-red-600 text-white text-lg leading-none flex items-center justify-center shadow-md"
+                        aria-label="Remove image"
+                      >
+                        &times;
+                      </button>
+                    </div>
                   ) : (
                     <p className="text-sm text-gray-400">
                       Click or drag an image here

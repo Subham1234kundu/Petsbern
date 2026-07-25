@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import BreedCard2 from '@/components/BreedCard2';
 import { TestimonialSlider } from "@/components/TestimonialSlider";
+import BreedFeaturesDiagram from '@/components/BreedFeaturesDiagram';
 import { apiGet } from '@/utils/api';
+import type { BreedFeatures } from '@/types/breedFeatures';
 
 export default function ExoticBirdDetailsPage() {
   const params = useParams();
@@ -18,6 +20,7 @@ export default function ExoticBirdDetailsPage() {
   const [relatedPets, setRelatedPets] = useState<any[]>([]);
   const [generalPets, setGeneralPets] = useState<any[]>([]);
   const [isBreedPage, setIsBreedPage] = useState(false);
+  const [breedFeatures, setBreedFeatures] = useState<BreedFeatures | null>(null);
 
   useEffect(() => {
     async function fetchPet() {
@@ -76,6 +79,18 @@ export default function ExoticBirdDetailsPage() {
             const individualRelated = relatedData.filter(p => p.name && p.name !== p.breed);
             setRelatedPets(individualRelated.slice(0, 4));
           }
+        }
+
+        // Breed features: from breed profile; individual pets inherit the same diagram
+        const isProfile = !petData.name || petData.name === petData.breed;
+        if (isProfile || localIsBreedPage) {
+          setBreedFeatures(petData.breed_features || null);
+        } else if (petData.breed) {
+          const breedList = await apiGet<any[]>(
+            `/api/pets?category=Exotic&breedExact=${encodeURIComponent(petData.breed)}`
+          );
+          const profile = (breedList || []).find((p) => !p.name || p.name === p.breed);
+          setBreedFeatures(profile?.breed_features || null);
         }
       }
 
@@ -368,6 +383,8 @@ export default function ExoticBirdDetailsPage() {
             })}
           </div>
         </div>
+
+        <BreedFeaturesDiagram features={breedFeatures} breedName={pet?.breed} />
       </div>
 
       {/* Available Pets Section */}

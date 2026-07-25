@@ -56,13 +56,21 @@ export default function DogsCategoryPage() {
     breed.toLowerCase().includes(breedSearchQuery.toLowerCase())
   );
 
-  // Group pets by breed to show one card per breed
+  // Group pets by breed — prefer Breed Profile image over individual pets
   const groupedPets = React.useMemo(() => {
     const map = new Map<string, any>();
+    const isBreedProfile = (p: any) => !p.name || p.name === p.breed;
+
     for (const pet of pets) {
       if (!pet.breed) continue;
-      if (!map.has(pet.breed)) {
-        map.set(pet.breed, pet); // keep first pet as representative
+      const existing = map.get(pet.breed);
+      if (!existing) {
+        map.set(pet.breed, pet);
+        continue;
+      }
+      // Always prefer the breed profile as the card representative
+      if (isBreedProfile(pet) && !isBreedProfile(existing)) {
+        map.set(pet.breed, pet);
       }
     }
     return Array.from(map.values());

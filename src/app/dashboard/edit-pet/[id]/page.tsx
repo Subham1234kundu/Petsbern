@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { uploadImage, apiGet } from "@/utils/api";
+import BreedFeaturesEditor from "@/components/BreedFeaturesEditor";
+import { EMPTY_BREED_FEATURES, type BreedFeatures } from "@/types/breedFeatures";
 
 const BREED_GROUPS = [
   "Herding (Pastoral) Group",
@@ -60,9 +62,27 @@ export default function EditPetPage() {
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [mainImagePreview, setMainImagePreview] = useState("");
   const [existingMainImage, setExistingMainImage] = useState("");
+
+  // Individual pets only: up to 4 extra images (5 total with main)
+  const MAX_PET_GALLERY = 4;
   const [galleryImageFiles, setGalleryImageFiles] = useState<File[]>([]);
   const [galleryImagePreviews, setGalleryImagePreviews] = useState<string[]>([]);
   const [existingGallery, setExistingGallery] = useState<string[]>([]);
+
+  const [breedFeatures, setBreedFeatures] = useState<BreedFeatures>(EMPTY_BREED_FEATURES);
+  const [breedFeaturesImageFile, setBreedFeaturesImageFile] = useState<File | null>(null);
+  const [breedFeaturesImagePreview, setBreedFeaturesImagePreview] = useState("");
+
+  const addGalleryFiles = (files: File[]) => {
+    const remaining = MAX_PET_GALLERY - galleryImagePreviews.length;
+    if (remaining <= 0) return;
+    const next = files.slice(0, remaining);
+    setGalleryImageFiles((prev) => [...prev, ...next]);
+    setGalleryImagePreviews((prev) => [
+      ...prev,
+      ...next.map((f) => URL.createObjectURL(f)),
+    ]);
+  };
 
   useEffect(() => {
     const loadPet = async () => {
@@ -111,9 +131,25 @@ export default function EditPetPage() {
           setExistingMainImage(pet.main_image);
           setMainImagePreview(pet.main_image);
         }
-        if (Array.isArray(pet.gallery) && pet.gallery.length > 0) {
-          setExistingGallery(pet.gallery);
-          setGalleryImagePreviews(pet.gallery);
+
+        if (
+          !isBreedProfile &&
+          Array.isArray(pet.gallery) &&
+          pet.gallery.length > 0
+        ) {
+          const limited = pet.gallery.slice(0, MAX_PET_GALLERY);
+          setExistingGallery(limited);
+          setGalleryImagePreviews(limited);
+        }
+
+        if (pet.breed_features?.image || pet.breed_features?.points?.length) {
+          setBreedFeatures({
+            image: pet.breed_features.image || "",
+            points: Array.isArray(pet.breed_features.points) ? pet.breed_features.points : [],
+          });
+          if (pet.breed_features.image) {
+            setBreedFeaturesImagePreview(pet.breed_features.image);
+          }
         }
       } catch (err: any) {
         setErrorMsg(err.message || "Failed to load pet.");
@@ -176,16 +212,38 @@ export default function EditPetPage() {
         mainImageUrl = await uploadImage(mainImageFile);
       }
 
-      // Keep existing gallery URLs that weren't removed, plus new uploads
-      const keptExisting = existingGallery.filter((url) =>
-        galleryImagePreviews.includes(url)
-      );
-      const newGalleryUrls: string[] = [];
-      for (const file of galleryImageFiles) {
-        newGalleryUrls.push(await uploadImage(file));
+      // Individual pets: up to 4 extra gallery images. Breeds: none.
+      let galleryUrls: string[] = [];
+      if (listingType === "pet") {
+        const keptExisting = existingGallery.filter((url) =>
+          galleryImagePreviews.includes(url)
+        );
+        const newGalleryUrls: string[] = [];
+        for (const file of galleryImageFiles) {
+          newGalleryUrls.push(await uploadImage(file));
+        }
+        galleryUrls = [...keptExisting, ...newGalleryUrls].slice(
+          0,
+          MAX_PET_GALLERY
+        );
       }
-      const galleryUrls =
-        listingType === "breed" ? [...keptExisting, ...newGalleryUrls] : [];
+
+      let breedFeaturesPayload = null;
+      if (listingType === "breed") {
+        let featuresImageUrl = breedFeatures.image || "";
+        if (breedFeaturesImageFile) {
+          featuresImageUrl = await uploadImage(
+            breedFeaturesImageFile,
+            "petsbarn/breed-features"
+          );
+        }
+        if (featuresImageUrl && breedFeatures.points.length > 0) {
+          breedFeaturesPayload = {
+            image: featuresImageUrl,
+            points: breedFeatures.points.filter((p) => p.title.trim()),
+          };
+        }
+      }
 
       const payload = {
         name: nameValue,
@@ -217,6 +275,7 @@ export default function EditPetPage() {
         main_image: mainImageUrl,
         gallery: galleryUrls,
         breed_groups: formData.category === "Dog" ? formData.breed_groups : [],
+        breed_features: breedFeaturesPayload,
       };
 
       const res = await fetch(`/api/pets/${petId}`, {
@@ -235,6 +294,11 @@ export default function EditPetPage() {
       setExistingGallery(galleryUrls);
       setGalleryImageFiles([]);
       setGalleryImagePreviews(galleryUrls);
+      if (breedFeaturesPayload) {
+        setBreedFeatures(breedFeaturesPayload);
+        setBreedFeaturesImagePreview(breedFeaturesPayload.image);
+        setBreedFeaturesImageFile(null);
+      }
 
       setTimeout(() => {
         router.push("/dashboard");
@@ -308,6 +372,9 @@ export default function EditPetPage() {
               onClick={() => {
                 setListingType("breed");
                 setFormData((prev) => ({ ...prev, name: "" }));
+                setGalleryImageFiles([]);
+                setGalleryImagePreviews([]);
+                setExistingGallery([]);
               }}
               className={`flex-1 py-3 px-4 text-center rounded-lg font-bold text-xs uppercase tracking-wider transition-all ${
                 listingType === "breed"
@@ -669,11 +736,30 @@ export default function EditPetPage() {
                   />
                   {mainImagePreview ? (
                     <div className="flex flex-col items-center">
-                      <img
-                        src={mainImagePreview}
-                        alt="Main Preview"
-                        className="h-40 w-auto object-contain rounded-lg shadow-sm"
-                      />
+                      <div className="relative inline-block">
+                        <img
+                          src={mainImagePreview}
+                          alt="Main Preview"
+                          className="h-40 w-auto object-contain rounded-lg shadow-sm"
+                        />
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setMainImageFile(null);
+                            setMainImagePreview("");
+                            setExistingMainImage("");
+                            const input = document.getElementById(
+                              "editMainImageInput"
+                            ) as HTMLInputElement | null;
+                            if (input) input.value = "";
+                          }}
+                          className="absolute -top-2 -right-2 z-10 w-7 h-7 rounded-full bg-red-500 hover:bg-red-600 text-white text-lg leading-none flex items-center justify-center shadow-md"
+                          aria-label="Remove image"
+                        >
+                          &times;
+                        </button>
+                      </div>
                       <p className="mt-4 text-sm text-gray-500">
                         Click or drag to replace image
                       </p>
@@ -684,48 +770,46 @@ export default function EditPetPage() {
                 </div>
               </div>
 
-              {listingType === "breed" && (
+              {listingType === "pet" && (
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Gallery Images
+                    Additional Images ({galleryImagePreviews.length}/{MAX_PET_GALLERY})
                   </label>
-                  <div
-                    className="relative border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer"
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      if (e.dataTransfer.files?.length) {
-                        const files = Array.from(e.dataTransfer.files);
-                        setGalleryImageFiles((prev) => [...prev, ...files]);
-                        setGalleryImagePreviews((prev) => [
-                          ...prev,
-                          ...files.map((f) => URL.createObjectURL(f)),
-                        ]);
-                      }
-                    }}
-                    onClick={() => document.getElementById("editGalleryInput")?.click()}
-                  >
-                    <input
-                      id="editGalleryInput"
-                      type="file"
-                      accept="image/*"
-                      multiple
-                      className="hidden"
-                      onChange={(e) => {
-                        if (e.target.files?.length) {
-                          const files = Array.from(e.target.files);
-                          setGalleryImageFiles((prev) => [...prev, ...files]);
-                          setGalleryImagePreviews((prev) => [
-                            ...prev,
-                            ...files.map((f) => URL.createObjectURL(f)),
-                          ]);
+                  <p className="text-xs text-gray-500 mb-3">
+                    Optional — up to {MAX_PET_GALLERY} more photos (5 total with main image).
+                  </p>
+                  {galleryImagePreviews.length < MAX_PET_GALLERY && (
+                    <div
+                      className="relative border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer"
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        if (e.dataTransfer.files?.length) {
+                          addGalleryFiles(Array.from(e.dataTransfer.files));
                         }
                       }}
-                    />
-                    <p className="text-sm text-gray-400">
-                      Click or drag to add more gallery images
-                    </p>
-                  </div>
+                      onClick={() =>
+                        document.getElementById("editGalleryInput")?.click()
+                      }
+                    >
+                      <input
+                        id="editGalleryInput"
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        className="hidden"
+                        onChange={(e) => {
+                          if (e.target.files?.length) {
+                            addGalleryFiles(Array.from(e.target.files));
+                            e.target.value = "";
+                          }
+                        }}
+                      />
+                      <p className="text-sm text-gray-400">
+                        Click or drag to add more images
+                      </p>
+                    </div>
+                  )}
 
                   {galleryImagePreviews.length > 0 && (
                     <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
@@ -733,7 +817,7 @@ export default function EditPetPage() {
                         <div key={`${preview}-${index}`} className="relative group">
                           <img
                             src={preview}
-                            alt={`Gallery ${index}`}
+                            alt={`Gallery ${index + 1}`}
                             className="h-24 w-full object-cover rounded-lg shadow-sm"
                           />
                           <button
@@ -747,7 +831,8 @@ export default function EditPetPage() {
                               if (removed.startsWith("blob:")) {
                                 let blobIdx = -1;
                                 for (let i = 0; i <= index; i++) {
-                                  if (galleryImagePreviews[i]?.startsWith("blob:")) blobIdx++;
+                                  if (galleryImagePreviews[i]?.startsWith("blob:"))
+                                    blobIdx++;
                                 }
                                 setGalleryImageFiles((prev) =>
                                   prev.filter((_, i) => i !== blobIdx)
@@ -758,7 +843,8 @@ export default function EditPetPage() {
                                 );
                               }
                             }}
-                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
+                            className="absolute -top-2 -right-2 z-10 w-7 h-7 rounded-full bg-red-500 hover:bg-red-600 text-white text-lg leading-none flex items-center justify-center shadow-md"
+                            aria-label="Remove image"
                           >
                             &times;
                           </button>
@@ -770,6 +856,26 @@ export default function EditPetPage() {
               )}
             </div>
           </section>
+
+          {listingType === "breed" && (
+            <>
+              <hr className="border-gray-100" />
+              <BreedFeaturesEditor
+                value={breedFeatures}
+                onChange={setBreedFeatures}
+                imagePreview={breedFeaturesImagePreview}
+                onImageFileChange={(file) => {
+                  setBreedFeaturesImageFile(file);
+                  if (file) {
+                    setBreedFeaturesImagePreview(URL.createObjectURL(file));
+                  } else {
+                    setBreedFeaturesImagePreview("");
+                    setBreedFeatures((prev) => ({ ...prev, image: "" }));
+                  }
+                }}
+              />
+            </>
+          )}
 
           <div className="pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-end gap-3">
             <Link

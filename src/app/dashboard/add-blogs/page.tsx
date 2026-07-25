@@ -178,7 +178,23 @@ export default function AddBlogsPage() {
                 >
                   <input id="blogImageInput" type="file" accept="image/*" className="hidden" onChange={(e) => { if (e.target.files?.[0]) { const f = e.target.files[0]; setImageFile(f); setImagePreview(URL.createObjectURL(f)); } }} />
                   {imagePreview ? (
-                    <img src={imagePreview} alt="Preview" className="h-32 mx-auto object-contain rounded-lg" />
+                    <div className="relative inline-block mx-auto">
+                      <img src={imagePreview} alt="Preview" className="h-32 mx-auto object-contain rounded-lg" />
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setImageFile(null);
+                          setImagePreview("");
+                          const input = document.getElementById("blogImageInput") as HTMLInputElement | null;
+                          if (input) input.value = "";
+                        }}
+                        className="absolute -top-2 -right-2 z-10 w-7 h-7 rounded-full bg-red-500 hover:bg-red-600 text-white text-lg leading-none flex items-center justify-center shadow-md"
+                        aria-label="Remove image"
+                      >
+                        &times;
+                      </button>
+                    </div>
                   ) : (
                     <p className="text-sm text-gray-400 py-4">Click or drag a cover image here</p>
                   )}

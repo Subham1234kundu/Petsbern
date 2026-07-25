@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { uploadImage, apiGet } from '@/utils/api';
+import BreedFeaturesEditor from '@/components/BreedFeaturesEditor';
+import { EMPTY_BREED_FEATURES, type BreedFeatures } from '@/types/breedFeatures';
 
 export default function AddPetPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -63,8 +65,31 @@ export default function AddPetPage() {
   // Image Upload State
   const [mainImageFile, setMainImageFile] = useState<File | null>(null);
   const [mainImagePreview, setMainImagePreview] = useState<string>('');
+  // Individual pets only: up to 4 extra images (5 total with main)
+  const MAX_PET_GALLERY = 4;
   const [galleryImageFiles, setGalleryImageFiles] = useState<File[]>([]);
   const [galleryImagePreviews, setGalleryImagePreviews] = useState<string[]>([]);
+
+  // Breed features diagram (breed profiles only)
+  const [breedFeatures, setBreedFeatures] = useState<BreedFeatures>(EMPTY_BREED_FEATURES);
+  const [breedFeaturesImageFile, setBreedFeaturesImageFile] = useState<File | null>(null);
+  const [breedFeaturesImagePreview, setBreedFeaturesImagePreview] = useState('');
+
+  const addGalleryFiles = (files: File[]) => {
+    const remaining = MAX_PET_GALLERY - galleryImagePreviews.length;
+    if (remaining <= 0) return;
+    const next = files.slice(0, remaining);
+    setGalleryImageFiles((prev) => [...prev, ...next]);
+    setGalleryImagePreviews((prev) => [
+      ...prev,
+      ...next.map((f) => URL.createObjectURL(f)),
+    ]);
+  };
+
+  const removeGalleryImage = (index: number) => {
+    setGalleryImageFiles((prev) => prev.filter((_, i) => i !== index));
+    setGalleryImagePreviews((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -102,12 +127,25 @@ export default function AddPetPage() {
       // Upload main image
       const mainImageUrl = await uploadImage(mainImageFile);
 
-      // Upload gallery images (only for Breed Profile mode)
-      const galleryUrls = [];
+      // Individual pets: up to 4 extra gallery images (5 total with main). Breeds: none.
+      const galleryUrls: string[] = [];
+      if (listingType === 'pet') {
+        for (const file of galleryImageFiles.slice(0, MAX_PET_GALLERY)) {
+          galleryUrls.push(await uploadImage(file));
+        }
+      }
+
+      let breedFeaturesPayload = null;
       if (listingType === 'breed') {
-        for (const file of galleryImageFiles) {
-          const url = await uploadImage(file);
-          galleryUrls.push(url);
+        let featuresImageUrl = breedFeatures.image || '';
+        if (breedFeaturesImageFile) {
+          featuresImageUrl = await uploadImage(breedFeaturesImageFile, 'petsbarn/breed-features');
+        }
+        if (featuresImageUrl && breedFeatures.points.length > 0) {
+          breedFeaturesPayload = {
+            image: featuresImageUrl,
+            points: breedFeatures.points.filter((p) => p.title.trim()),
+          };
         }
       }
 
@@ -141,6 +179,7 @@ export default function AddPetPage() {
         main_image: mainImageUrl,
         gallery: galleryUrls,
         breed_groups: formData.category === 'Dog' ? formData.breed_groups : [],
+        breed_features: breedFeaturesPayload,
       };
 
       // Insert into MongoDB via API route
@@ -188,6 +227,9 @@ export default function AddPetPage() {
       setMainImagePreview('');
       setGalleryImageFiles([]);
       setGalleryImagePreviews([]);
+      setBreedFeatures(EMPTY_BREED_FEATURES);
+      setBreedFeaturesImageFile(null);
+      setBreedFeaturesImagePreview('');
     } catch (error: any) {
       console.error("Error adding pet:", error);
       setErrorMsg(error.message || "Failed to add pet. Please check your connection and try again.");
@@ -240,6 +282,8 @@ export default function AddPetPage() {
               onClick={() => {
                 setListingType('breed');
                 setFormData((prev) => ({ ...prev, name: '' }));
+                setGalleryImageFiles([]);
+                setGalleryImagePreviews([]);
               }}
               className={`flex-1 py-3 px-4 text-center rounded-lg font-bold text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 ${
                 listingType === 'breed'
@@ -495,7 +539,23 @@ export default function AddPetPage() {
                   />
                   {mainImagePreview ? (
                     <div className="flex flex-col items-center">
-                      <img src={mainImagePreview} alt="Main Preview" className="h-40 w-auto object-contain rounded-lg shadow-sm" />
+                      <div className="relative inline-block">
+                        <img src={mainImagePreview} alt="Main Preview" className="h-40 w-auto object-contain rounded-lg shadow-sm" />
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setMainImageFile(null);
+                            setMainImagePreview('');
+                            const input = document.getElementById('mainImageInput') as HTMLInputElement | null;
+                            if (input) input.value = '';
+                          }}
+                          className="absolute -top-2 -right-2 z-10 w-7 h-7 rounded-full bg-red-500 hover:bg-red-600 text-white text-lg leading-none flex items-center justify-center shadow-md"
+                          aria-label="Remove image"
+                        >
+                          &times;
+                        </button>
+                      </div>
                       <p className="mt-4 text-sm text-gray-500">Click or drag a different image to replace</p>
                     </div>
                   ) : (
@@ -515,67 +575,60 @@ export default function AddPetPage() {
                 </div>
               </div>
 
-              {/* Gallery Images Upload (Only for Breed Profiles) */}
-              {listingType === 'breed' && (
+              {/* Additional images — individual pets only (max 5 total with main) */}
+              {listingType === 'pet' && (
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">Gallery Images</label>
-                  <div 
-                    className="relative border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer"
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => {
-                      e.preventDefault();
-                      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-                        const files = Array.from(e.dataTransfer.files);
-                        setGalleryImageFiles(prev => [...prev, ...files]);
-                        
-                        const newPreviews = files.map(file => URL.createObjectURL(file));
-                        setGalleryImagePreviews(prev => [...prev, ...newPreviews]);
-                      }
-                    }}
-                    onClick={() => document.getElementById('galleryImageInput')?.click()}
-                  >
-                    <input 
-                      id="galleryImageInput"
-                      type="file" 
-                      accept="image/*" 
-                      multiple
-                      className="hidden" 
-                      onChange={(e) => {
-                        if (e.target.files && e.target.files.length > 0) {
-                          const files = Array.from(e.target.files);
-                          setGalleryImageFiles(prev => [...prev, ...files]);
-                          
-                          const newPreviews = files.map(file => URL.createObjectURL(file));
-                          setGalleryImagePreviews(prev => [...prev, ...newPreviews]);
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Additional Images ({galleryImagePreviews.length}/{MAX_PET_GALLERY})
+                  </label>
+                  <p className="text-xs text-gray-500 mb-3">
+                    Optional — up to {MAX_PET_GALLERY} more photos (5 total with main image).
+                  </p>
+                  {galleryImagePreviews.length < MAX_PET_GALLERY && (
+                    <div
+                      className="relative border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer"
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        if (e.dataTransfer.files?.length) {
+                          addGalleryFiles(Array.from(e.dataTransfer.files));
                         }
-                      }} 
-                    />
-                    <div>
-                      <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      <div className="mt-4 flex text-sm text-gray-600 justify-center">
-                        <span className="relative cursor-pointer bg-white rounded-md font-medium text-[#5B92BD] hover:text-blue-600 focus-within:outline-none">
-                          <span>Upload files</span>
-                        </span>
-                        <p className="pl-1">or drag and drop multiple</p>
-                      </div>
+                      }}
+                      onClick={() => document.getElementById('galleryImageInput')?.click()}
+                    >
+                      <input
+                        id="galleryImageInput"
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        className="hidden"
+                        onChange={(e) => {
+                          if (e.target.files?.length) {
+                            addGalleryFiles(Array.from(e.target.files));
+                            e.target.value = '';
+                          }
+                        }}
+                      />
+                      <p className="text-sm text-gray-400">
+                        Click or drag to add more images
+                      </p>
                     </div>
-                  </div>
+                  )}
 
                   {galleryImagePreviews.length > 0 && (
                     <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
                       {galleryImagePreviews.map((preview, index) => (
-                        <div key={index} className="relative group">
-                          <img src={preview} alt={`Gallery Preview ${index}`} className="h-24 w-full object-cover rounded-lg shadow-sm" />
+                        <div key={`${preview}-${index}`} className="relative group">
+                          <img
+                            src={preview}
+                            alt={`Gallery ${index + 1}`}
+                            className="h-24 w-full object-cover rounded-lg shadow-sm"
+                          />
                           <button
                             type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setGalleryImageFiles(prev => prev.filter((_, i) => i !== index));
-                              setGalleryImagePreviews(prev => prev.filter((_, i) => i !== index));
-                            }}
-                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-red-600"
+                            onClick={() => removeGalleryImage(index)}
+                            className="absolute -top-2 -right-2 z-10 w-7 h-7 rounded-full bg-red-500 hover:bg-red-600 text-white text-lg leading-none flex items-center justify-center shadow-md"
+                            aria-label="Remove image"
                           >
                             &times;
                           </button>
@@ -587,6 +640,25 @@ export default function AddPetPage() {
               )}
             </div>
           </section>
+
+          {listingType === 'breed' && (
+            <>
+              <hr className="border-gray-100" />
+              <BreedFeaturesEditor
+                value={breedFeatures}
+                onChange={setBreedFeatures}
+                imagePreview={breedFeaturesImagePreview}
+                onImageFileChange={(file) => {
+                  setBreedFeaturesImageFile(file);
+                  if (file) {
+                    setBreedFeaturesImagePreview(URL.createObjectURL(file));
+                  } else {
+                    setBreedFeaturesImagePreview('');
+                  }
+                }}
+              />
+            </>
+          )}
 
           <div className="pt-6 border-t border-gray-200 flex justify-end">
             <button
