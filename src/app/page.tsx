@@ -1,9 +1,9 @@
 import Link from "next/link";
-import BreedCard from "@/components/BreedCard";
 import HeroSlider from "@/components/HeroSlider";
 import BreedsSlider from "@/components/BreedsSlider";
 import HomeAnimations from "@/components/HomeAnimations";
 import FAQSection from "@/components/FAQSection";
+import HomeAvailablePets from "@/components/HomeAvailablePets";
 
 export default function Home() {
   const homeFAQs = [
@@ -449,15 +449,7 @@ export default function Home() {
               Available <span className="text-[#FFC501]">Pets</span>
             </h2>
 
-            <div className="grid pb-[280px] sm:pb-[340px] lg:pb-[120px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-6 xl:gap-6 2xl:gap-8 justify-items-center max-w-[320px] sm:max-w-none mx-auto">
-
-              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center"><BreedCard name="Labrador Retriever" image="/images/labrador.png" imageClassName="scale-[1.15] hover:scale-125" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center"><BreedCard name="Siberian Husky" image="/images/huskeyji.png" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center"><BreedCard name="German Shepherd" image="/images/germanfav.png" imageClassName="scale-170 hover:scale-190 -translate-y-25" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center"><BreedCard name="Doodle" image="/images/snowwhite.png" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center sm:block lg:block xl:block 2xl:block"><BreedCard name="Rottweiler" image="/images/rotfav.png" /></div>
-              <div className="w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[280px] xl:max-w-[300px] 2xl:max-w-[320px] flex justify-center sm:block lg:block xl:block 2xl:block"><BreedCard name="Sitzu" image="/images/pugfav.png" /></div>
-            </div>
+            <HomeAvailablePets />
 
             {/* Featured Puppy Image (Bottom Right) */}
             <div data-animate="featured-puppy" className="absolute bottom-0 right-0 w-full h-[280px] sm:h-[340px] lg:h-[900px] pointer-events-none z-20 flex justify-end items-end overflow-hidden lg:overflow-visible">
@@ -941,9 +933,12 @@ export default function Home() {
             </div>
 
             <div className="flex justify-center" suppressHydrationWarning>
-              <button className="bg-black text-white px-12 py-3 rounded-full font-medium hover:bg-gray-800 transition-all hover:scale-105">
+              <Link
+                href="/pet-categories/dogs"
+                className="bg-black text-white px-12 py-3 rounded-full font-medium hover:bg-gray-800 transition-all hover:scale-105"
+              >
                 View All Pets
-              </button>
+              </Link>
             </div>
           </div>
         </section>

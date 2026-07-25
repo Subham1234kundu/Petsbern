@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import BlogCard from "@/components/BlogCard";
 import { apiGet } from "@/utils/api";
@@ -15,9 +15,12 @@ type Blog = {
   image_url: string;
 };
 
+const PAGE_SIZE = 6;
+
 export default function BlogsPage() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -31,6 +34,22 @@ export default function BlogsPage() {
     };
     fetchBlogs();
   }, []);
+
+  const totalPages = Math.max(1, Math.ceil(blogs.length / PAGE_SIZE));
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const pageBlogs = useMemo(() => {
+    const start = (page - 1) * PAGE_SIZE;
+    return blogs.slice(start, start + PAGE_SIZE);
+  }, [blogs, page]);
+
+  const pageNumbers = useMemo(
+    () => Array.from({ length: totalPages }, (_, i) => String(i + 1).padStart(2, "0")),
+    [totalPages]
+  );
 
   return (
     <div className="flex flex-col min-h-screen bg-white font-sans">
@@ -73,19 +92,64 @@ export default function BlogsPage() {
             <p className="text-sm mt-1">Check back soon for new content!</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
-            {blogs.map((blog) => (
-              <BlogCard
-                key={blog.id}
-                image={blog.image_url || "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=600&auto=format&fit=crop"}
-                category={blog.category}
-                title={blog.title}
-                date={blog.date}
-                author={blog.author}
-                slug={blog.slug}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 place-items-center">
+              {pageBlogs.map((blog) => (
+                <BlogCard
+                  key={blog.id}
+                  image={blog.image_url || "/images/blogs.jpg"}
+                  category={blog.category}
+                  title={blog.title}
+                  date={blog.date}
+                  author={blog.author}
+                  slug={blog.slug}
+                />
+              ))}
+            </div>
+
+            {/* Pagination — same numbering style as pet-categories */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-4 mt-12 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  aria-label="Previous page"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+                <div className="flex items-center gap-2 flex-wrap justify-center">
+                  {pageNumbers.map((num, i) => (
+                    <button
+                      key={num}
+                      type="button"
+                      onClick={() => {
+                        setPage(i + 1);
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      className={`w-12 h-12 rounded-full flex items-center justify-center text-[16px] font-bold transition-all ${
+                        page === i + 1
+                          ? "bg-black text-white"
+                          : "bg-white text-black border border-[#E4E7E9] hover:border-gray-400"
+                      }`}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                  className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  aria-label="Next page"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </button>
+              </div>
+            )}
+          </>
         )}
       </main>
     </div>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import cloudinary from "@/lib/cloudinary";
+import cloudinary, { assertCloudinaryConfigured } from "@/lib/cloudinary";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,6 +8,8 @@ const MAX_SIZE = 8 * 1024 * 1024;
 
 export async function POST(request: NextRequest) {
   try {
+    assertCloudinaryConfigured();
+
     const formData = await request.formData();
     const file = formData.get("file");
 
@@ -21,7 +23,9 @@ export async function POST(request: NextRequest) {
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    const folder = (formData.get("folder") as string) || "petsbarn";
+    const folder =
+      ((formData.get("folder") as string) || "petsbarn").replace(/^["']|["']$/g, "") ||
+      "petsbarn";
 
     const result = await new Promise<{
       secure_url: string;
@@ -38,12 +42,12 @@ export async function POST(request: NextRequest) {
             overwrite: false,
           },
           (error, uploadResult) => {
-            if (error || !uploadResult) {
+            if (error || !uploadResult?.secure_url) {
               reject(error || new Error("Cloudinary upload failed"));
               return;
             }
             resolve({
-              secure_url: uploadResult.secure_url!,
+              secure_url: uploadResult.secure_url,
               public_id: uploadResult.public_id!,
               width: uploadResult.width!,
               height: uploadResult.height!,
@@ -66,6 +70,9 @@ export async function POST(request: NextRequest) {
     );
   } catch (err) {
     console.error("POST /api/upload error:", err);
-    return NextResponse.json({ error: "Failed to upload image to Cloudinary" }, { status: 500 });
+    const message =
+      err instanceof Error ? err.message : "Failed to upload image to Cloudinary";
+    const status = message.includes("not configured") ? 503 : 500;
+    return NextResponse.json({ error: message }, { status });
   }
 }

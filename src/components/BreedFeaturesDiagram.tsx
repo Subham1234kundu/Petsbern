@@ -31,6 +31,7 @@ export default function BreedFeaturesDiagram({ features, breedName }: Props) {
             src={features.image}
             alt={breedName ? `${breedName} features` : "Breed features"}
             className="block max-w-full w-auto h-auto max-h-[min(70vh,560px)]"
+            referrerPolicy="no-referrer"
           />
         </div>
       </div>

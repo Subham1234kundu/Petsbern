@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import SafeImage from '@/components/SafeImage';
 
 interface BreedCard2Props {
   name: string;
@@ -24,8 +25,8 @@ const BreedCard2 = ({
   return (
     <div className="w-[288px] h-[481px] bg-white rounded-[20px] border border-[#E2E8F0] p-3 flex flex-col transition-all overflow-hidden">
       {/* Image Container */}
-      <div className="relative w-[256px] h-[341px] mx-auto rounded-[16px] overflow-hidden mb-4">
-        <img 
+      <div className="relative w-[256px] h-[341px] mx-auto rounded-[16px] overflow-hidden mb-4 bg-[#F6F6F6]">
+        <SafeImage 
           src={image} 
           alt={name} 
           className="w-full h-full object-cover"

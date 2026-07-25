@@ -4,9 +4,19 @@ import { getDb, serialize } from "@/lib/mongodb";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const db = await getDb();
+    const slug = request.nextUrl.searchParams.get("slug");
+
+    if (slug) {
+      const doc = await db.collection("blogs").findOne({ slug });
+      if (!doc) {
+        return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+      }
+      return NextResponse.json(serialize(doc));
+    }
+
     const docs = await db
       .collection("blogs")
       .find({})

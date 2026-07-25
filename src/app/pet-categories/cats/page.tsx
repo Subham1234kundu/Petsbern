@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BreedCardFull from '@/components/BreedCardFull';
+import CharacteristicsFilter from '@/components/CharacteristicsFilter';
+import { CAT_CHARACTERISTICS, matchesCharacteristics } from '@/lib/breedCharacteristics';
 import { apiGet } from '@/utils/api';
 
 export default function CatsCategoryPage() {
@@ -10,10 +12,19 @@ export default function CatsCategoryPage() {
   const [selectedSize, setSelectedSize] = useState("All Sizes");
   const [showFilters, setShowFilters] = useState(false);
   const [breedSearchQuery, setBreedSearchQuery] = useState("");
+  const [selectedCharacteristics, setSelectedCharacteristics] = useState<string[]>([]);
 
   // Real-time state
   const [pets, setPets] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const handleCharacteristicToggle = (label: string) => {
+    setSelectedCharacteristics(prev =>
+      prev.includes(label)
+        ? prev.filter(c => c !== label)
+        : [...prev, label]
+    );
+  };
 
   // Fetch cats and subscribe to real-time changes
   useEffect(() => {
@@ -60,11 +71,13 @@ export default function CatsCategoryPage() {
   const displayBreeds = groupedPets.filter(pet => {
     if (selectedBreed !== "All Breeds" && pet.breed !== selectedBreed) return false;
 
-    if (selectedSize === "X-Small")    return pet.weight <= 2;
-    if (selectedSize === "Small")      return pet.weight > 2  && pet.weight <= 4;
-    if (selectedSize === "Medium")     return pet.weight > 4  && pet.weight <= 6;
-    if (selectedSize === "Large")      return pet.weight > 6  && pet.weight <= 8;
-    if (selectedSize === "X-Large")    return pet.weight > 8;
+    if (selectedSize === "X-Small" && !(pet.weight <= 2)) return false;
+    if (selectedSize === "Small"   && !(pet.weight > 2 && pet.weight <= 4)) return false;
+    if (selectedSize === "Medium"  && !(pet.weight > 4 && pet.weight <= 6)) return false;
+    if (selectedSize === "Large"   && !(pet.weight > 6 && pet.weight <= 8)) return false;
+    if (selectedSize === "X-Large" && !(pet.weight > 8)) return false;
+
+    if (!matchesCharacteristics(pet, selectedCharacteristics, CAT_CHARACTERISTICS)) return false;
 
     return true; // All Sizes
   });
@@ -263,23 +276,32 @@ export default function CatsCategoryPage() {
                 </svg>
               </div>
             </div>
-            <div className="flex items-center gap-4 w-full md:w-auto">
-              <span className="text-[#4F4F4F] text-[15px] hidden sm:block">Sort by:</span>
-              <div className="h-[48px] px-4 border border-[#E4E7E9] flex items-center justify-between gap-4 cursor-pointer text-[15px] font-medium text-black rounded-none w-full md:w-[180px]">
-                Most Popular
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </div>
-            </div>
+            <CharacteristicsFilter
+              characteristics={CAT_CHARACTERISTICS}
+              selected={selectedCharacteristics}
+              onToggle={handleCharacteristicToggle}
+              onClear={() => setSelectedCharacteristics([])}
+            />
           </div>
 
-          {/* Active filter badge */}
-          {selectedSize !== "All Sizes" && (
-            <div className="flex items-center gap-2 -mt-4">
+          {/* Active filter badges */}
+          {(selectedSize !== "All Sizes" || selectedCharacteristics.length > 0) && (
+            <div className="flex flex-wrap items-center gap-2 -mt-4">
               <span className="text-[13px] text-gray-500">Filtering by:</span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FFF8E1] border border-[#FFC501] rounded-full text-[12px] font-bold text-[#7B5800]">
-                {selectedSize}
-                <button onClick={() => setSelectedSize("All Sizes")} className="ml-1 text-[#7B5800] hover:text-black transition-colors">×</button>
-              </span>
+
+              {selectedSize !== "All Sizes" && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FFF8E1] border border-[#FFC501] rounded-full text-[12px] font-bold text-[#7B5800]">
+                  {selectedSize}
+                  <button onClick={() => setSelectedSize("All Sizes")} className="ml-1 text-[#7B5800] hover:text-black transition-colors">×</button>
+                </span>
+              )}
+
+              {selectedCharacteristics.map(label => (
+                <span key={label} className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F3F7F0] border border-[#7BA05B]/60 rounded-full text-[12px] font-bold text-[#3E5C2A]">
+                  {label}
+                  <button onClick={() => handleCharacteristicToggle(label)} className="ml-1 text-[#3E5C2A] hover:text-black transition-colors font-bold text-sm">×</button>
+                </span>
+              ))}
             </div>
           )}
 
@@ -297,7 +319,7 @@ export default function CatsCategoryPage() {
                   <BreedCardFull
                     key={cat.id}
                     name={cat.breed}
-                    image={cat.main_image || '/placeholder.png'}
+                    image={cat.main_image || '/images/labrador.png'}
                     weight={cat.weight}
                     href={`/pet-categories/cats/${slug}`}
                   />
@@ -310,9 +332,12 @@ export default function CatsCategoryPage() {
                 </svg>
                 <span className="text-xl font-bold text-gray-800">No cats match this criteria.</span>
                 <span className="text-gray-500">Try adjusting your filters or add a new pet from the dashboard!</span>
-                {selectedSize !== "All Sizes" && (
-                  <button onClick={() => setSelectedSize("All Sizes")} className="mt-2 px-6 py-2 bg-black text-white rounded-full text-sm font-semibold hover:bg-gray-900 transition-all">
-                    Clear Size Filter
+                {(selectedSize !== "All Sizes" || selectedCharacteristics.length > 0) && (
+                  <button
+                    onClick={() => { setSelectedSize("All Sizes"); setSelectedCharacteristics([]); }}
+                    className="mt-2 px-6 py-2 bg-black text-white rounded-full text-sm font-semibold hover:bg-gray-900 transition-all"
+                  >
+                    Clear Filters
                   </button>
                 )}
               </div>
