@@ -1049,7 +1049,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <p className="text-[#4A4A4A] text-[12px] leading-[1.4] font-medium" suppressHydrationWarning>
-                    Call us at <a href="tel:+911212121211" className="font-bold hover:underline">+91-1212121211</a> or fill out our form, and we&apos;ll
+                    Call us at <a href="tel:+918422050505" className="font-bold hover:underline">+91 84220 50505</a> or fill out our form, and we&apos;ll
                     contact you within one business day.
                   </p>
                 </div>

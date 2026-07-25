@@ -352,13 +352,13 @@ export default function Navbar() {
       }`}
     >
       <a
-        href="tel:+911212121211"
+        href="tel:+918422050505"
         className="group w-[44px] h-[44px] md:w-[52px] md:h-[52px] bg-white rounded-full flex items-center justify-center shadow-sm active:scale-95 transition-transform flex-shrink-0"
       >
         <img src="/images/Phonelogo.png" alt="Phone" className="w-[40px] h-[40px] md:w-[48px] md:h-[48px] object-contain transition-transform duration-300 group-hover:scale-115" />
       </a>
       <a
-        href="https://wa.me/911212121211?text=Hi,%20I'm%20interested%20in%20Petsbarn."
+        href="https://wa.me/918422050505?text=Hi,%20I'm%20interested%20in%20Petsbarn."
         target="_blank"
         rel="noopener noreferrer"
         className="group w-[44px] h-[44px] md:w-[52px] md:h-[52px] bg-white rounded-full flex items-center justify-center shadow-sm active:scale-95 transition-transform flex-shrink-0"

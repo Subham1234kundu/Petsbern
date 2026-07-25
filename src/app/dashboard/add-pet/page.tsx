@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { uploadImage, apiGet } from '@/utils/api';
 import BreedFeaturesEditor from '@/components/BreedFeaturesEditor';
+import { PERSONALITY_HIGHLIGHTS } from '@/lib/personalityHighlights';
 import { EMPTY_BREED_FEATURES, type BreedFeatures } from '@/types/breedFeatures';
 
 export default function AddPetPage() {
@@ -469,19 +470,7 @@ export default function AddPetPage() {
             <h2 className="text-sm font-bold uppercase tracking-wider text-[#91C79B] mb-4">4. Personality Highlights</h2>
             <p className="text-xs text-gray-500 mb-4">Set the personality traits from 0 (Low) to 100 (High).</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                { label: 'Apartment Friendly', name: 'apartment_friendly' },
-                { label: 'Family Friendly', name: 'family_friendly' },
-                { label: 'Kid Friendly', name: 'kid_friendly' },
-                { label: 'Guard Dog', name: 'guard_dog' },
-                { label: 'Intelligent', name: 'intelligent' },
-                { label: 'Easy to Train', name: 'easy_to_train' },
-                { label: 'Active / Energetic', name: 'active_energetic' },
-                { label: 'Calm', name: 'calm' },
-                { label: 'Sociable', name: 'sociable' },
-                { label: 'Hypoallergenic', name: 'hypoallergenic' },
-                { label: 'Low Shedding', name: 'low_shedding' },
-              ].map((trait) => (
+              {PERSONALITY_HIGHLIGHTS.map((trait) => (
                 <div key={trait.name}>
                   <div className="flex justify-between items-center mb-2">
                     <label className="block text-sm font-bold text-gray-700">{trait.label}</label>

@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import BreedCard2 from '@/components/BreedCard2';
 import { TestimonialSlider } from "@/components/TestimonialSlider";
 import BreedFeaturesDiagram from '@/components/BreedFeaturesDiagram';
+import PersonalityHighlights from '@/components/PersonalityHighlights';
 import { apiGet } from '@/utils/api';
 import type { BreedFeatures } from '@/types/breedFeatures';
 
@@ -21,6 +22,7 @@ export default function PetDetailsPage() {
   const [showAllAvailable, setShowAllAvailable] = useState(false);
   const [isBreedPage, setIsBreedPage] = useState(false);
   const [breedFeatures, setBreedFeatures] = useState<BreedFeatures | null>(null);
+  const [breedProfile, setBreedProfile] = useState<any>(null);
 
   const isIndividualPet = (p: any) => Boolean(p?.name && p.name !== p.breed);
 
@@ -80,16 +82,21 @@ export default function PetDetailsPage() {
           );
         }
 
-        // Breed features: from breed profile; individual pets inherit the same diagram
+        // Breed features + personality: from breed profile; individual pets inherit both
         const isProfile = !petData.name || petData.name === petData.breed;
         if (isProfile || localIsBreedPage) {
           setBreedFeatures(petData.breed_features || null);
+          setBreedProfile(petData);
         } else if (petData.breed) {
           const breedList = await apiGet<any[]>(
             `/api/pets?breedExact=${encodeURIComponent(petData.breed)}`
           );
-          const profile = (breedList || []).find((p) => !p.name || p.name === p.breed);
+          const profile = (breedList || []).find((p) => !p.name || p.name === p.breed) || null;
           setBreedFeatures(profile?.breed_features || null);
+          setBreedProfile(profile);
+        } else {
+          setBreedFeatures(null);
+          setBreedProfile(null);
         }
       }
       setLoading(false);
@@ -272,19 +279,23 @@ export default function PetDetailsPage() {
           {/* Action Section */}
           <div className="flex flex-col gap-4">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 w-full max-w-[450px]">
-              <button
+              <a
+                href="tel:+918422050505"
                 className="w-full sm:w-[193px] bg-black text-white h-[48px] rounded-full text-[15px] font-bold hover:bg-gray-900 transition-all flex items-center justify-center active:scale-95 shadow-sm"
               >
                 Call Us
-              </button>
+              </a>
 
               <div className="hidden sm:block w-[1px] h-6 bg-gray-300" />
 
-              <button
+              <a
+                href={`https://wa.me/918422050505?text=Hi,%20I'm%20interested%20in%20learning%20more%20about%20${displayTitle}%20from%20Petsbarn.`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full sm:w-[225px] bg-[#E4E7E9] text-black h-[48px] rounded-full text-[15px] font-bold hover:bg-gray-300 transition-all flex items-center justify-center active:scale-95 shadow-sm"
               >
                 WhatsApp Now
-              </button>
+              </a>
             </div>
 
             <div className="flex items-center gap-1 mt-2">
@@ -352,49 +363,13 @@ export default function PetDetailsPage() {
         </div>
       </div>
 
-      {/* Personality Highlights */}
+      {/* Personality Highlights — same names/traits as dashboard */}
       <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
-        <div className="flex flex-col gap-6 max-w-[1024px] mx-auto">
-          <h3 className="text-center text-[36px] font-normal text-black mb-6">
-            Personality <span className="text-[#D63B3B]">Highlights</span>
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-            {[
-              { label: "Apartment Friendly", value: pet?.apartment_friendly ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Family Friendly", value: pet?.family_friendly ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Kid Friendly", value: pet?.kid_friendly ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Guard Dog", value: pet?.guard_dog ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Intelligent", value: pet?.intelligent ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Easy to Train", value: pet?.easy_to_train ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Active / Energetic", value: pet?.active_energetic ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Calm", value: pet?.calm ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Sociable", value: pet?.sociable ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Hypoallergenic", value: pet?.hypoallergenic ?? 60, color: "bg-[#FCC83C]" },
-              { label: "Low Shedding", value: pet?.low_shedding ?? 60, color: "bg-[#FCC83C]" }
-            ].map((item, idx) => {
-              const totalBars = 30;
-              const activeBars = Math.floor((item.value / 100) * totalBars);
-              return (
-                <div key={idx} className="flex flex-col gap-2">
-                  <div className="flex justify-between items-center px-1">
-                    <span className="text-[12px] font-semibold text-[#5F6C72]">Low</span>
-                    <span className="text-[16px] font-bold text-black">{item.label}</span>
-                    <span className="text-[12px] font-semibold text-[#D63B3B]">High</span>
-                  </div>
-                  <div className="flex gap-[3px]">
-                    {[...Array(totalBars)].map((_, i) => (
-                      <div
-                        key={i}
-                        className={`h-5 flex-1 rounded-sm ${i < activeBars ? item.color : 'bg-[#E6E6E6]'}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <PersonalityHighlights
+          pet={pet}
+          breedProfile={breedProfile}
+          titleClassName="text-center text-[36px] font-normal text-black mb-6"
+        />
 
         <BreedFeaturesDiagram features={breedFeatures} breedName={pet?.breed} />
       </div>

@@ -73,8 +73,15 @@ export default function ContactUsPage() {
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                   </div>
                   <div className="flex flex-col text-[#0A0A0A]" style={{ fontSize: "14px", fontWeight: 400, gap: "4px" }}>
-                    <span>+91 98765 43210</span>
-                    <span>+91 98765 43210</span>
+                    <a href="tel:+918422050505" className="hover:underline">+91 84220 50505</a>
+                    <a
+                      href="https://wa.me/918422050505?text=Hi,%20I'm%20interested%20in%20Petsbarn."
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      WhatsApp: +91 84220 50505
+                    </a>
                   </div>
                 </div>
               </div>
@@ -89,9 +96,10 @@ export default function ContactUsPage() {
                   <div style={{ fontSize: "14px", fontWeight: 400, lineHeight: "1.6" }}>
                     <span className="text-[#0A0A0A] font-medium">Pets Barn</span><br/>
                     <span className="text-[#4A5565]">
-                      2nd Floor, City Mall, Mavoor Road<br/>
-                      Kozhikode, Kerala — 673004<br/>
-                      India
+                      Shop No 2, Swiss Corner Apartments,<br/>
+                      Near Lokhandwala Circle, Lane Number 2,<br/>
+                      Shastri Nagar, Andheri West,<br/>
+                      Mumbai, Maharashtra — 400053
                     </span>
                   </div>
                 </div>
@@ -165,7 +173,7 @@ export default function ContactUsPage() {
       {/* Map Section */}
       <section className="mx-4 sm:mx-[30px] mb-12 h-[280px] sm:h-[398px]">
         <iframe 
-          src="https://maps.google.com/maps?q=City%20Mall,%20Mavoor%20Road,%20Kozhikode,%20Kerala&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          src="https://maps.google.com/maps?q=Shop%20No%202%2C%20Swiss%20Corner%20Apartments%2C%20Lokhandwala%20Circle%2C%20Lane%20Number%202%2C%20Shastri%20Nagar%2C%20Andheri%20West%2C%20Mumbai%2C%20Maharashtra%20400053&t=&z=16&ie=UTF8&iwloc=&output=embed"
           width="100%" 
           height="100%" 
           style={{ border: 0 }} 

@@ -25,7 +25,6 @@ const FLAT_FACE_CATS = [
 const HAIRY_COATS = ["long", "medium", "curly/wire"];
 
 export const DOG_CHARACTERISTICS: BreedCharacteristic[] = [
-  { label: "First Time Dog Owner", matches: p => score(p.easy_to_train) >= 70 && score(p.calm) >= 60 },
   { label: "Guard Dog", matches: p => score(p.guard_dog) >= 70 },
   { label: "Hyper Energy", matches: p => score(p.active_energetic) >= 70 },
   { label: "Apartment Dog", matches: p => score(p.apartment_friendly) >= 70 },

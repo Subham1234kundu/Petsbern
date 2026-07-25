@@ -142,13 +142,13 @@ export default function BlogDetailedPage() {
               </p>
             </div>
 
-            {/* Blog Main Image */}
+            {/* Blog Main Image — natural height based on width */}
             {blog.image_url && (
-              <div className="mt-8 w-full rounded-xl overflow-hidden" style={{ height: "462px" }}>
+              <div className="mt-8 w-full rounded-xl overflow-hidden">
                 <img
                   src={blog.image_url}
                   alt={blog.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto block"
                   referrerPolicy="no-referrer"
                 />
               </div>

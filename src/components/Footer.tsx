@@ -25,14 +25,32 @@ export default function Footer() {
             <div suppressHydrationWarning>
               <p className="text-[#5F6C72] text-[14px]">Customer Supports:</p>
               <p className="text-[#1E1E1E] text-[16px] font-semibold mt-1">
-                <a href="tel:+16295550129" className="hover:underline">(629) 555-0129</a>
+                <a href="tel:+918422050505" className="hover:underline">+91 84220 50505</a>
+              </p>
+              <p className="text-[#1E1E1E] text-[14px] font-medium mt-1">
+                <a
+                  href="https://wa.me/918422050505?text=Hi,%20I'm%20interested%20in%20Petsbarn."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  WhatsApp: +91 84220 50505
+                </a>
               </p>
             </div>
             
-            <div className="text-[#1E1E1E] text-[14px] leading-relaxed mt-1" suppressHydrationWarning>
-              4517 Washington Ave. Manchester,<br />
-              Kentucky 39495
-            </div>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Shop%20No%202%2C%20Swiss%20Corner%20Apartments%2C%20Lokhandwala%20Circle%2C%20Lane%20Number%202%2C%20Shastri%20Nagar%2C%20Andheri%20West%2C%20Mumbai%2C%20Maharashtra%20400053"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#1E1E1E] text-[14px] leading-relaxed mt-1 hover:underline"
+              suppressHydrationWarning
+            >
+              Shop No 2, Swiss Corner Apartments,<br />
+              Near Lokhandwala Circle, Lane Number 2,<br />
+              Shastri Nagar, Andheri West,<br />
+              Mumbai, Maharashtra 400053
+            </a>
             
             <div className="font-medium text-[#1E1E1E] text-[14px] mt-1" suppressHydrationWarning>
               <a href="mailto:support@petsbarn.in" className="hover:underline">support@petsbarn.in</a>

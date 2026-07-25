@@ -48,7 +48,7 @@ export default function BreedFeaturesDiagram({ features, breedName }: Props) {
             </span>
             <div className="min-w-0">
               <h4 className="text-[16px] sm:text-[18px] md:text-[20px] font-bold text-black leading-tight">
-                {point.title}
+                {point.title?.trim() || `Feature ${index + 1}`}
               </h4>
               {point.description ? (
                 <p className="mt-1 sm:mt-1.5 text-[13px] sm:text-[14px] md:text-[15px] text-[#4A5565] leading-relaxed">
