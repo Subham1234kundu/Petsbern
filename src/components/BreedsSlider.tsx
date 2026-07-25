@@ -53,10 +53,19 @@ export default function BreedsSlider() {
     }));
 
     const setCardSpotlight = () => {
+      const isMobile = window.innerWidth < 768;
       const containerRect = container.getBoundingClientRect();
       const containerCenter = containerRect.left + containerRect.width / 2;
 
       cards.forEach((card, index) => {
+        // Mobile: keep every card crisp (no faded / off-white look)
+        if (isMobile) {
+          cardSetters[index].scale(1);
+          cardSetters[index].opacity(1);
+          cardSetters[index].imgY(0);
+          return;
+        }
+
         const cardRect = card.getBoundingClientRect();
         const cardCenter = cardRect.left + cardRect.width / 2;
         const distance = Math.abs(containerCenter - cardCenter);
@@ -84,21 +93,26 @@ export default function BreedsSlider() {
         },
       });
 
+      const isMobile = window.innerWidth < 768;
+
       enterTl.to(cards, {
-        opacity: 0.45,
+        opacity: isMobile ? 1 : 0.45,
         y: 0,
-        scale: 0.9,
+        scale: isMobile ? 1 : 0.9,
         duration: 0.7,
         stagger: 0.06,
         ease: "power3.out",
       });
 
-      if (fadeLeft && fadeRight) {
+      // Edge fades only on desktop — they wash out cards on mobile
+      if (fadeLeft && fadeRight && !isMobile) {
         enterTl.to(
           [fadeLeft, fadeRight],
           { opacity: 1, duration: 0.6, ease: "power2.out" },
           "-=0.4"
         );
+      } else if (fadeLeft && fadeRight) {
+        gsap.set([fadeLeft, fadeRight], { opacity: 0 });
       }
 
       const scrollTl = gsap.timeline({
@@ -197,11 +211,11 @@ export default function BreedsSlider() {
 
           <div
             data-fade-left
-            className="absolute left-0 top-0 bottom-0 w-12 sm:w-16 md:w-20 lg:w-16 xl:w-20 2xl:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"
+            className="hidden md:block absolute left-0 top-0 bottom-0 w-16 md:w-20 lg:w-16 xl:w-20 2xl:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"
           />
           <div
             data-fade-right
-            className="absolute right-0 top-0 bottom-0 w-12 sm:w-16 md:w-20 lg:w-16 xl:w-20 2xl:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"
+            className="hidden md:block absolute right-0 top-0 bottom-0 w-16 md:w-20 lg:w-16 xl:w-20 2xl:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"
           />
         </div>
       </div>
