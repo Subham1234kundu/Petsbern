@@ -17,13 +17,16 @@ export default function ExoticBirdDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState("");
   const [thumbnails, setThumbnails] = useState<string[]>([]);
-  const [relatedPets, setRelatedPets] = useState<any[]>([]);
-  const [generalPets, setGeneralPets] = useState<any[]>([]);
+  const [availablePets, setAvailablePets] = useState<any[]>([]);
+  const [showAllAvailable, setShowAllAvailable] = useState(false);
   const [isBreedPage, setIsBreedPage] = useState(false);
   const [breedFeatures, setBreedFeatures] = useState<BreedFeatures | null>(null);
 
+  const isIndividualPet = (p: any) => Boolean(p?.name && p.name !== p.breed);
+
   useEffect(() => {
     async function fetchPet() {
+      setShowAllAvailable(false);
       const isObjectId = /^[0-9a-f]{24}$/i.test(slug);
       
       let petData = null;
@@ -47,9 +50,8 @@ export default function ExoticBirdDetailsPage() {
           const representative = breedData.find(p => !p.name || p.name === p.breed) || breedData[0];
           petData = representative;
           
-          // The related pets should be the individual pets of this breed (where name is not null, empty, or same as breed)
-          const individualPets = breedData.filter(p => p.name && p.name !== p.breed);
-          setRelatedPets(individualPets.slice(0, 4));
+          // All individual pets under this breed (never breed profiles)
+          setAvailablePets(breedData.filter(isIndividualPet));
         } else {
           // Fallback: try searching by specific pet name
           const nameData = await apiGet<any[]>(
@@ -70,15 +72,16 @@ export default function ExoticBirdDetailsPage() {
         }
         setThumbnails(allImages);
 
-        // Fetch related pets based on breed, if not already fetched
+        // Load every individual pet under this breed (exclude current listing)
         if (!localIsBreedPage && petData.breed) {
-          const relatedData = await apiGet<any[]>(
-            `/api/pets?category=Exotic&breedExact=${encodeURIComponent(petData.breed)}&excludeId=${petData.id}&limit=10`
+          const breedList = await apiGet<any[]>(
+            `/api/pets?category=Exotic&breedExact=${encodeURIComponent(petData.breed)}`
           );
-          if (relatedData) {
-            const individualRelated = relatedData.filter(p => p.name && p.name !== p.breed);
-            setRelatedPets(individualRelated.slice(0, 4));
-          }
+          setAvailablePets(
+            (breedList || []).filter(
+              (p) => isIndividualPet(p) && p.id !== petData.id
+            )
+          );
         }
 
         // Breed features: from breed profile; individual pets inherit the same diagram
@@ -92,12 +95,6 @@ export default function ExoticBirdDetailsPage() {
           const profile = (breedList || []).find((p) => !p.name || p.name === p.breed);
           setBreedFeatures(profile?.breed_features || null);
         }
-      }
-
-      // Fetch general available exotic birds
-      const generalData = await apiGet<any[]>('/api/pets?category=Exotic&limit=8');
-      if (generalData) {
-        setGeneralPets(generalData);
       }
 
       setLoading(false);
@@ -387,26 +384,6 @@ export default function ExoticBirdDetailsPage() {
         <BreedFeaturesDiagram features={breedFeatures} breedName={pet?.breed} />
       </div>
 
-      {/* Available Pets Section */}
-      {relatedPets.length > 0 && (
-        <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
-          <h2 className="text-black text-[24px] sm:text-[30px] font-semibold mb-10">
-            Available {isBreedPage ? displayTitle : pet?.breed || 'Same Breed'} Birds
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {relatedPets.map((p) => (
-              <BreedCard2 
-                key={p.id} 
-                name={p.name} 
-                image={p.main_image || "https://images.unsplash.com/photo-1452570053594-1b985d6ea890?q=80&w=300&auto=format&fit=crop"} 
-                href={`/pet-categories/exotic-birds/${p.id}`} 
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Promise Section */}
       <section className="py-20 md:py-32 bg-white w-full border-t border-gray-100">
         <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12">
@@ -465,26 +442,40 @@ export default function ExoticBirdDetailsPage() {
         </div>
       </section>
 
-      {/* Available Pets (General) Section */}
-      {generalPets.length > 0 && (
+      {/* Available Pets — individual birds under this breed only */}
+      {availablePets.length > 0 && (
         <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
           <h2 className="text-black text-[24px] sm:text-[30px] font-semibold mb-10">
-            Available Exotic Birds
+            Available Pets
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
-            {generalPets.slice(0, 8).map((p) => {
-              const slug = p.breed.toLowerCase().replace(/\s+/g, '-');
-              return (
-                <BreedCard2 
-                  key={p.id} 
-                  name={p.breed} 
-                  image={p.main_image || "https://images.unsplash.com/photo-1452570053594-1b985d6ea890?q=80&w=300&auto=format&fit=crop"} 
-                  href={`/pet-categories/exotic-birds/${slug}`}
-                />
-              );
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 justify-items-center lg:justify-items-start">
+            {(showAllAvailable ? availablePets : availablePets.slice(0, 8)).map((p) => (
+              <BreedCard2
+                key={p.id}
+                name={p.name}
+                image={
+                  p.main_image ||
+                  'https://images.unsplash.com/photo-1452570053594-1b985d6ea890?q=80&w=300&auto=format&fit=crop'
+                }
+                age={p.age || undefined}
+                gender={p.gender === 'Female' ? 'Female' : 'Male'}
+                href={`/pet-categories/exotic-birds/${p.id}`}
+              />
+            ))}
           </div>
+
+          {availablePets.length > 8 && (
+            <div className="flex justify-center mt-12">
+              <button
+                type="button"
+                onClick={() => setShowAllAvailable((v) => !v)}
+                className="bg-black text-white px-12 py-3 rounded-full font-medium hover:bg-gray-800 transition-all"
+              >
+                {showAllAvailable ? 'Show Less' : 'View All'}
+              </button>
+            </div>
+          )}
         </div>
       )}
 

@@ -114,48 +114,57 @@ export default function BreedFeaturesEditor({
         </div>
       </div>
 
-      {/* Click-to-place canvas */}
+      {/* Click-to-place canvas — no sky background; box hugs the photo */}
       {imagePreview && (
         <div>
           <p className="text-xs font-semibold text-gray-600 mb-2">
             Click on the image to add a numbered point
           </p>
-          <div
-            ref={imageWrapRef}
-            onClick={handleImageClick}
-            className="relative w-full max-w-[480px] mx-auto aspect-square cursor-crosshair border border-gray-200 rounded-xl overflow-hidden bg-[#E8F4FC]"
-          >
-            <img
-              src={imagePreview}
-              alt="Features preview"
-              className="w-full h-full object-contain pointer-events-none"
-            />
-            {value.points.map((point, index) => (
-              <span
-                key={index}
-                className="absolute z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#2B6CB0] text-white text-sm font-bold shadow -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-                style={{ left: `${point.x}%`, top: `${point.y}%` }}
-              >
-                {index + 1}
-              </span>
-            ))}
+          <div className="w-full flex justify-center">
+            <div
+              ref={imageWrapRef}
+              onClick={handleImageClick}
+              className="relative w-fit max-w-full cursor-crosshair rounded-xl overflow-hidden border border-gray-200 bg-transparent"
+            >
+              <img
+                src={imagePreview}
+                alt="Features preview"
+                className="block max-w-full w-auto h-auto max-h-[min(60vh,480px)] pointer-events-none"
+              />
+              {value.points.map((point, index) => (
+                <span
+                  key={index}
+                  className="absolute z-10 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#2B6CB0] text-white text-xs sm:text-sm font-bold shadow -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                  style={{ left: `${point.x}%`, top: `${point.y}%` }}
+                >
+                  {index + 1}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
       {/* Points editor */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {value.points.map((point, index) => (
           <div
             key={index}
-            className="border border-gray-200 rounded-xl p-4 bg-gray-50/80 grid grid-cols-1 md:grid-cols-12 gap-3"
+            className="border border-gray-200 rounded-xl p-3 sm:p-4 bg-gray-50/80 grid grid-cols-2 sm:grid-cols-12 gap-3"
           >
-            <div className="md:col-span-1 flex items-start">
-              <span className="w-8 h-8 rounded-full bg-[#2B6CB0] text-white text-sm font-bold flex items-center justify-center">
+            <div className="col-span-2 sm:col-span-1 flex items-center sm:items-start gap-2">
+              <span className="w-8 h-8 rounded-full bg-[#2B6CB0] text-white text-sm font-bold flex items-center justify-center shrink-0">
                 {index + 1}
               </span>
+              <button
+                type="button"
+                onClick={() => removePoint(index)}
+                className="sm:hidden ml-auto text-xs font-bold uppercase tracking-wider text-red-500"
+              >
+                Remove
+              </button>
             </div>
-            <div className="md:col-span-4">
+            <div className="col-span-2 sm:col-span-4">
               <label className="block text-xs font-bold text-gray-600 mb-1">Title</label>
               <input
                 type="text"
@@ -165,7 +174,7 @@ export default function BreedFeaturesEditor({
                 className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2B6CB0]"
               />
             </div>
-            <div className="md:col-span-2">
+            <div className="col-span-1 sm:col-span-2">
               <label className="block text-xs font-bold text-gray-600 mb-1">X %</label>
               <input
                 type="number"
@@ -177,7 +186,7 @@ export default function BreedFeaturesEditor({
                 className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2B6CB0]"
               />
             </div>
-            <div className="md:col-span-2">
+            <div className="col-span-1 sm:col-span-2">
               <label className="block text-xs font-bold text-gray-600 mb-1">Y %</label>
               <input
                 type="number"
@@ -189,7 +198,7 @@ export default function BreedFeaturesEditor({
                 className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2B6CB0]"
               />
             </div>
-            <div className="md:col-span-3 flex items-end justify-end">
+            <div className="hidden sm:flex sm:col-span-3 items-end justify-end">
               <button
                 type="button"
                 onClick={() => removePoint(index)}
@@ -198,7 +207,7 @@ export default function BreedFeaturesEditor({
                 Remove
               </button>
             </div>
-            <div className="md:col-span-12">
+            <div className="col-span-2 sm:col-span-12">
               <label className="block text-xs font-bold text-gray-600 mb-1">Description</label>
               <textarea
                 rows={2}
