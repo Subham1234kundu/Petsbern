@@ -107,11 +107,11 @@ export default function Home() {
           <BreedsSlider />
 
         {/* Why PetsBarn Section */}
-          <section data-animate="why-petsbarn" className="mt-16 bg-[#1C4B42] rounded-[32px] overflow-hidden relative flex flex-col items-center pt-16">
+          <section data-animate="why-petsbarn" className="mt-10 sm:mt-16 bg-[#1C4B42] rounded-3xl sm:rounded-[32px] overflow-hidden relative flex flex-col items-center pt-10 sm:pt-16">
             {/* Background Outline Text */}
             <div
               data-animate="why-bg-text"
-              className="absolute top-10 left-15 flex flex-col items-stretch justify-start pointer-events-none select-none z-0 overflow-visible"
+              className="absolute top-6 sm:top-10 left-15 flex flex-col items-stretch justify-start pointer-events-none select-none z-0 overflow-visible"
               style={{ width: "100%" }}
             >
               <svg
@@ -219,12 +219,12 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Bottom Image — full-bleed, no margin/padding */}
+            {/* Bottom Image — full-bleed; fixed heights on small screens so puppies stay visible */}
             <div data-animate="why-image" className="w-full mt-auto overflow-hidden leading-none">
               <img
                 src="/images/all breed puppies.png"
                 alt="All breed puppies"
-                className="block w-full h-auto object-cover object-bottom"
+                className="block w-full h-[170px] sm:h-[240px] md:h-[280px] lg:h-auto object-cover object-[center_bottom]"
               />
             </div>
           </section>
