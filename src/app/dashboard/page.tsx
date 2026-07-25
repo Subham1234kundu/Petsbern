@@ -97,42 +97,28 @@ export default function SellerDashboard() {
           </div>
         </div>
 
-        {/* Database Error Banner */}
+        {/* Error Banner */}
         {errorMsg && (
-          <div className="mb-8 p-6 bg-red-50/90 backdrop-blur-sm border-2 border-red-500/20 rounded-2xl shadow-xl flex flex-col md:flex-row gap-5 items-start justify-between relative overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
-            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-red-500 to-rose-600" />
-            <div className="flex gap-4 items-start">
-              <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-2xl border border-red-500/20 shadow-inner shrink-0">
+          <div className="mb-8 p-5 bg-red-50 border border-red-200 rounded-2xl shadow-sm flex items-start justify-between gap-4">
+            <div className="flex gap-3 items-start">
+              <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-xl border border-red-500/20 shrink-0">
                 ⚠️
               </div>
               <div>
-                <h3 className="text-lg font-black text-[#111] uppercase tracking-tight flex items-center gap-2">
-                  Database Schema Error
-                  <span className="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">
-                    PostgREST Cache
-                  </span>
+                <h3 className="text-base font-black text-[#111] uppercase tracking-tight">
+                  Something went wrong
                 </h3>
-                <p className="text-sm font-semibold text-red-600 mt-1">
+                <p className="text-sm font-semibold text-red-600 mt-1 break-words">
                   {errorMsg}
                 </p>
-                <div className="mt-4 p-4 bg-white/80 border border-red-200/50 rounded-xl text-xs text-gray-600 leading-relaxed max-w-2xl font-mono">
-                  <p className="font-bold text-red-800 mb-1">🛠️ How to fix this in your Supabase Database:</p>
-                  <ol className="list-decimal pl-4 space-y-1.5 mt-1 text-gray-700">
-                    <li>Go to your <strong className="text-gray-900">Supabase SQL Editor</strong>.</li>
-                    <li>Verify that the table <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">pets</code> contains the column <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">apartment_friendly</code> of type <code className="bg-red-50 px-1 py-0.2 rounded font-bold text-red-700">numeric</code> (or integer).</li>
-                    <li>If you recently added it, PostgREST might have a stale schema cache. Reload the schema cache by running:
-                      <pre className="bg-[#111] text-[#fff] p-2.5 rounded-md mt-2 overflow-x-auto text-[11px] font-medium leading-normal shadow-md">
-{`-- Reload the Supabase PostgREST schema cache
-NOTIFY pgrst, 'reload schema';`}
-                      </pre>
-                    </li>
-                  </ol>
-                </div>
+                <p className="mt-2 text-xs text-gray-500 leading-relaxed max-w-2xl">
+                  Please check your connection to the database and try again.
+                </p>
               </div>
             </div>
-            <button 
-              onClick={() => setErrorMsg('')} 
-              className="text-gray-400 hover:text-gray-600 font-bold uppercase text-[10px] tracking-wider px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all cursor-pointer shrink-0 mt-2 md:mt-0"
+            <button
+              onClick={() => setErrorMsg('')}
+              className="text-gray-400 hover:text-gray-600 font-bold uppercase text-[10px] tracking-wider px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-all cursor-pointer shrink-0"
             >
               Dismiss
             </button>
@@ -170,23 +156,12 @@ NOTIFY pgrst, 'reload schema';`}
           })}
         </div>
 
-        {/* Live Indicator & Dev Controls */}
-        <div className="flex items-center justify-between gap-2 mb-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: cfg.color }} />
-            <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: cfg.color }}>
-              Real-Time · {activeCategory}s
-            </span>
-          </div>
-
-          <button
-            onClick={() => setErrorMsg("Could not find the 'apartment_friendly' column of 'pets' in the schema cache")}
-            className="text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md border border-red-200 hover:bg-red-50 text-red-500 transition-all flex items-center gap-1.5 cursor-pointer shadow-sm hover:shadow active:translate-y-[0.5px]"
-            title="Simulate schema cache database error to preview the premium error handling UI"
-          >
-            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping" />
-            Simulate Schema Error
-          </button>
+        {/* Category Indicator */}
+        <div className="flex items-center gap-2 mb-4">
+          <span className="w-2 h-2 rounded-full" style={{ background: cfg.color }} />
+          <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: cfg.color }}>
+            {activeCategory}s
+          </span>
         </div>
 
         {/* Pet Grid */}
