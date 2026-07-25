@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function DashboardLayout({
   children,
@@ -9,12 +10,25 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   const navLinks = [
     { name: "Dashboard", href: "/dashboard" },
     { name: "Add Pet", href: "/dashboard/add-pet" },
     { name: "Add Blogs", href: "/dashboard/add-blogs" },
   ];
+
+  const handleLogout = async () => {
+    setLoggingOut(true);
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      router.replace("/login");
+      router.refresh();
+    } catch {
+      setLoggingOut(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col absolute top-0 left-0 w-full z-[100]">
@@ -44,9 +58,16 @@ export default function DashboardLayout({
             ))}
           </div>
 
-          <div className="md:hidden flex items-center">
-            {/* Mobile menu button could go here, keeping simple for now */}
-            <span className="text-xs text-gray-400">SELLER MODE</span>
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline text-xs text-gray-400 uppercase tracking-wider">Admin</span>
+            <button
+              type="button"
+              onClick={handleLogout}
+              disabled={loggingOut}
+              className="text-xs font-bold uppercase tracking-wider px-3 py-2 rounded-lg border border-white/20 text-gray-200 hover:bg-white/10 hover:text-white transition-all disabled:opacity-50"
+            >
+              {loggingOut ? "…" : "Logout"}
+            </button>
           </div>
         </div>
         
