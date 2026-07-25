@@ -84,14 +84,17 @@ export default function AddPetPage() {
     }
 
     try {
-      // UNIQUE VALIDATION: Check if same name AND same breed exists
-      const nameValue = listingType === 'breed' ? (formData.name.trim() || '') : formData.name.trim();
+      const nameValue = listingType === 'breed' ? '' : formData.name.trim();
       const existingPets = await apiGet<any[]>(
         `/api/pets?nameExact=${encodeURIComponent(nameValue)}&breedExact=${encodeURIComponent(formData.breed)}`
       );
 
       if (existingPets && existingPets.length > 0) {
-        setErrorMsg(`Cannot add listing: A listing with breed "${formData.breed}" and name "${nameValue || '(No Name)'}" already exists!`);
+        setErrorMsg(
+          listingType === 'breed'
+            ? `Cannot add listing: A breed profile for "${formData.breed}" already exists!`
+            : `Cannot add listing: A listing with breed "${formData.breed}" and name "${nameValue || '(No Name)'}" already exists!`
+        );
         setIsLoading(false);
         return;
       }
@@ -234,7 +237,10 @@ export default function AddPetPage() {
             </button>
             <button
               type="button"
-              onClick={() => setListingType('breed')}
+              onClick={() => {
+                setListingType('breed');
+                setFormData((prev) => ({ ...prev, name: '' }));
+              }}
               className={`flex-1 py-3 px-4 text-center rounded-lg font-bold text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 ${
                 listingType === 'breed'
                   ? 'bg-black text-white shadow-sm'
@@ -250,18 +256,31 @@ export default function AddPetPage() {
             <h2 className="text-sm font-bold uppercase tracking-wider text-[#FFC501] mb-4">1. Basic Information</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">
-                  Pet Name {listingType === 'pet' ? '*' : '(Optional)'}
-                </label>
-                <input 
-                  required={listingType === 'pet'} 
-                  type="text" 
-                  name="name" 
-                  value={formData.name} 
-                  onChange={handleChange} 
-                  placeholder={listingType === 'pet' ? 'e.g. Shiro' : 'Leave empty for Breed profile'} 
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFC501] focus:bg-white transition-all" 
-                />
+                {listingType === "pet" ? (
+                  <>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">
+                      Pet Name *
+                    </label>
+                    <input
+                      required
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="e.g. Shiro"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FFC501] focus:bg-white transition-all"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">
+                      Listing type
+                    </label>
+                    <div className="w-full px-4 py-3 bg-blue-50 border border-blue-100 rounded-lg text-sm font-semibold text-blue-700">
+                      Breed Profile (no pet name)
+                    </div>
+                  </>
+                )}
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">Breed *</label>

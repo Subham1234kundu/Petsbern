@@ -42,7 +42,7 @@ export default function ExoticBirdDetailsPage() {
           
           // Find the representative Breed Profile (where name is null, empty, or same as breed)
           const representative = breedData.find(p => !p.name || p.name === p.breed) || breedData[0];
-          petData = { ...representative, name: representative.breed };
+          petData = representative;
           
           // The related pets should be the individual pets of this breed (where name is not null, empty, or same as breed)
           const individualPets = breedData.filter(p => p.name && p.name !== p.breed);
@@ -90,8 +90,10 @@ export default function ExoticBirdDetailsPage() {
     fetchPet();
   }, [slug]);
 
-  // Fallback name if pet not found yet
-  const petName = pet ? pet.name : slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  // Breed pages show breed name only — never an individual pet name
+  const displayTitle = pet
+    ? (isBreedPage ? (pet.breed || pet.name) : (pet.name || pet.breed))
+    : slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   if (loading) {
     return (
@@ -142,7 +144,7 @@ export default function ExoticBirdDetailsPage() {
             <path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
 
-          <span className="text-black text-[14px] font-bold">{petName}</span>
+          <span className="text-black text-[14px] font-bold">{displayTitle}</span>
         </div>
       </div>
 
@@ -169,7 +171,7 @@ export default function ExoticBirdDetailsPage() {
             )}
 
             {/* Main Image */}
-            <img src={activeImage} alt={petName} className="w-full h-full object-cover" />
+            <img src={activeImage} alt={displayTitle} className="w-full h-full object-cover" />
           </div>
 
           {/* Mobile Thumbnails Row */}
@@ -194,7 +196,7 @@ export default function ExoticBirdDetailsPage() {
           <div className="flex flex-col gap-4">
             <div>
               <h1 className="text-[28px] sm:text-[36px] font-normal text-black leading-tight">
-                {petName}
+                {displayTitle}
               </h1>
               {!isBreedPage && pet?.breed && (
                 <h2 className="text-[18px] sm:text-[20px] font-medium text-[#FFC501] mt-1">
@@ -204,7 +206,7 @@ export default function ExoticBirdDetailsPage() {
             </div>
 
             <p className="text-[14px] sm:text-[15px] font-normal text-[#1E1E1E] leading-[1.6]">
-              {pet?.description || `The ${petName} is a beautiful, active, and cheerful exotic bird known for its colorful plumage, intelligence, and sociable personality. They make lively, musical additions to any pet-loving household.`}
+              {pet?.description || `The ${displayTitle} is a beautiful, active, and cheerful exotic bird known for its colorful plumage, intelligence, and sociable personality. They make lively, musical additions to any pet-loving household.`}
             </p>
           </div>
 
@@ -253,7 +255,7 @@ export default function ExoticBirdDetailsPage() {
               <span className="hidden sm:inline w-[1px] h-6 bg-gray-300" />
 
               <a
-                href={`https://wa.me/911212121211?text=Hi,%20I'm%20interested%20in%20learning%20more%20about%20${petName}%20from%20Petsbarn.`}
+                href={`https://wa.me/911212121211?text=Hi,%20I'm%20interested%20in%20learning%20more%20about%20${displayTitle}%20from%20Petsbarn.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-[225px] bg-[#E4E7E9] text-black h-[48px] rounded-full text-[15px] font-bold hover:bg-gray-300 transition-all flex items-center justify-center shadow-sm active:scale-95"
@@ -372,7 +374,7 @@ export default function ExoticBirdDetailsPage() {
       {relatedPets.length > 0 && (
         <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
           <h2 className="text-black text-[24px] sm:text-[30px] font-semibold mb-10">
-            Available {isBreedPage ? petName : pet?.breed || 'Same Breed'} Birds
+            Available {isBreedPage ? displayTitle : pet?.breed || 'Same Breed'} Birds
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

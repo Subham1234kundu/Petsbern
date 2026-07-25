@@ -39,7 +39,7 @@ export default function PetDetailsPage() {
           
           // Find the representative Breed Profile (where name is null, empty, or same as breed)
           const representative = breedData.find(p => !p.name || p.name === p.breed) || breedData[0];
-          petData = { ...representative, name: representative.breed };
+          petData = representative;
           
           // The related pets should be the individual pets of this breed (where name is not null, empty, or same as breed)
           const individualPets = breedData.filter(p => p.name && p.name !== p.breed);
@@ -78,8 +78,10 @@ export default function PetDetailsPage() {
     fetchPet();
   }, [slug]);
 
-  // Fallback name if pet not found yet
-  const petName = pet ? pet.name : slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  // Breed pages show breed name only — never an individual pet name
+  const displayTitle = pet
+    ? (isBreedPage ? (pet.breed || pet.name) : (pet.name || pet.breed))
+    : slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   if (loading) {
     return (
@@ -130,7 +132,7 @@ export default function PetDetailsPage() {
             <path d="M9 18L15 12L9 6" stroke="#77878F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
 
-          <span className="text-black text-[14px] font-bold">{petName}</span>
+          <span className="text-black text-[14px] font-bold">{displayTitle}</span>
         </div>
       </div>
 
@@ -157,7 +159,7 @@ export default function PetDetailsPage() {
             )}
 
             {/* Main Image */}
-            <img src={activeImage} alt={petName} className="w-full h-full object-cover" />
+            <img src={activeImage} alt={displayTitle} className="w-full h-full object-cover" />
           </div>
 
           {/* Mobile Thumbnails Row */}
@@ -182,7 +184,7 @@ export default function PetDetailsPage() {
           <div className="flex flex-col gap-4">
             <div>
               <h1 className="text-[28px] sm:text-[36px] font-normal text-black leading-tight">
-                {petName}
+                {displayTitle}
               </h1>
               {!isBreedPage && pet?.breed && (
                 <h2 className="text-[18px] sm:text-[20px] font-medium text-[#FFC501] mt-1">
@@ -213,7 +215,7 @@ export default function PetDetailsPage() {
             </div>
 
             <p className="text-[14px] sm:text-[15px] font-normal text-[#1E1E1E] leading-[1.6]">
-              {pet?.description || `The ${petName} is a friendly, intelligent, and devoted family dog known for its gentle nature and beautiful coat. They are highly social and love being around people, making them excellent companions for families, children, and first-time pet owners.`}
+              {pet?.description || `The ${displayTitle} is a friendly, intelligent, and devoted family dog known for its gentle nature and beautiful coat. They are highly social and love being around people, making them excellent companions for families, children, and first-time pet owners.`}
             </p>
           </div>
 
@@ -401,7 +403,7 @@ export default function PetDetailsPage() {
       {relatedPets.length > 0 && (
         <div className="max-w-[1440px] mx-auto w-full px-4 sm:px-6 lg:px-12 pb-16">
           <h2 className="text-black text-[30px] font-semibold mb-10">
-            Available {isBreedPage ? petName : pet?.breed || 'Same Breed'} Pets
+            Available {isBreedPage ? displayTitle : pet?.breed || 'Same Breed'} Pets
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

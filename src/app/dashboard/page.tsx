@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { apiGet } from '@/utils/api';
 
 type Pet = {
@@ -214,13 +215,20 @@ export default function SellerDashboard() {
                     </div>
                     {pet.location && <p className="text-[11px] text-gray-400 mt-2">📍 {pet.location}</p>}
 
-                    {/* Delete */}
-                    <button
-                      onClick={() => handleDelete(pet.id)}
-                      className="mt-3 w-full text-[11px] font-bold uppercase tracking-wider py-2 rounded-lg border border-red-200 text-red-400 opacity-0 group-hover:opacity-100 transition-all hover:bg-red-50 hover:text-red-600"
-                    >
-                      Remove Listing
-                    </button>
+                    <div className="mt-3 flex gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all">
+                      <Link
+                        href={`/dashboard/edit-pet/${pet.id}`}
+                        className="flex-1 text-center text-[11px] font-bold uppercase tracking-wider py-2 rounded-lg border border-[#FFC501]/60 text-[#7B5800] bg-[#FFF8E1] hover:bg-[#FFC501]/20 transition-all"
+                      >
+                        Edit
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(pet.id)}
+                        className="flex-1 text-[11px] font-bold uppercase tracking-wider py-2 rounded-lg border border-red-200 text-red-400 hover:bg-red-50 hover:text-red-600 transition-all"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
